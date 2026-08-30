@@ -150,6 +150,7 @@
 
     const MISSION_AMERICA_INTRO_CONFIG = {
       sessionKey: "missionAmericaIntroSeen",
+      replayEachLoad: true,
       mobileQuery: "(max-width: 430px)",
       reducedMotionQuery: "(prefers-reduced-motion: reduce)",
       secondaryWipeDuration: 80,
@@ -204,9 +205,9 @@
 
       const forceReplay = new URLSearchParams(window.location.search).get("intro") === "1";
       try {
-        if (!forceReplay && window.sessionStorage.getItem(config.sessionKey) === "true") return;
+        if (!config.replayEachLoad && !forceReplay && window.sessionStorage.getItem(config.sessionKey) === "true") return;
       } catch (error) {
-        if (!forceReplay) return;
+        if (!config.replayEachLoad && !forceReplay) return;
       }
 
       const logoSource = document.querySelector(".tracker-mark-mobile-logo")?.getAttribute("src") || "../assets/mission-america-logo.png";
@@ -252,7 +253,7 @@
       });
 
       const finish = async () => {
-        if (!forceReplay) {
+        if (!config.replayEachLoad && !forceReplay) {
           try {
             window.sessionStorage.setItem(config.sessionKey, "true");
           } catch (error) {}
