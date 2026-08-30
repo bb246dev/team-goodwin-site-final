@@ -2841,6 +2841,11 @@
         display: block;
       }
 
+      #articles .inside-accordion-trigger,
+      #articles .inside-accordion-icon {
+        color: var(--color-white);
+      }
+
       #articles .inside-section-cta {
         padding: 26px 20px;
       }
