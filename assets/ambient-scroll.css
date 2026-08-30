@@ -919,13 +919,19 @@ body.has-ambient-scroll .site-footer-link-disabled {
 
   body.has-ambient-scroll #rsvp .rsvp-mobile-controls label {
     grid-column: auto;
+    justify-self: stretch;
+    text-align: left;
     color: var(--color-white);
   }
 
   body.has-ambient-scroll #rsvp .rsvp-mobile-controls select,
   body.has-ambient-scroll #rsvp .rsvp-mobile-controls .tracker-button {
-    border-color: rgba(255, 255, 255, 0.66);
+    border-color: rgba(255, 255, 255, 0.86);
     color: var(--color-white);
+  }
+
+  body.has-ambient-scroll #rsvp .rsvp-mobile-controls .tracker-button {
+    background: transparent;
   }
 }
 
