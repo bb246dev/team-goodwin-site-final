@@ -2773,7 +2773,8 @@
         content: ":";
         position: absolute;
         top: 11px;
-        right: -5px;
+        right: auto;
+        left: calc(50% + 24px);
         z-index: 1;
         color: var(--tracker-ink);
         font-size: clamp(2.15rem, 12vw, 3.25rem);
@@ -3222,7 +3223,7 @@
       }
 
       .partner-logo-item:nth-child(15) {
-        grid-column: 2;
+        grid-column: 1 / -1;
       }
 
       .partner-logo-item img {
