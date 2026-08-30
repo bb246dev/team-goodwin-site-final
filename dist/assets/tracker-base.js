@@ -714,25 +714,6 @@
       { n: 50, state: "New York", abbr: "NY", city: "New York City", date: "Nov 1", lat: 40.7128, lng: -74.006 }
     ];
 
-    const scheduledFlights = [
-      { date: "10/9", from: "HNL", to: "ANC", time: "11:11pm - 7:22am", airline: "Alaska Airlines" },
-      { date: "10/10", from: "ANC", to: "PDX", time: "3:51pm - 8:35pm", airline: "Alaska Airlines" },
-      { date: "10/11", from: "PDX", to: "SLC", time: "5:15pm - 8:10pm", airline: "Delta Airlines" },
-      { date: "10/20", from: "CMH", to: "LAX", time: "7:03pm - 9:11pm", airline: "American Airlines" },
-      { date: "10/24", from: "MIA", to: "ATL", time: "4:21pm - 6:24pm", airline: "Delta Airlines" }
-    ];
-
-    const airportPoints = {
-      HNL: { abbr: "HI" },
-      ANC: { abbr: "AK" },
-      PDX: { lat: 45.5898, lng: -122.5951 },
-      SLC: { lat: 40.7899, lng: -111.9791 },
-      CMH: { lat: 39.998, lng: -82.8919 },
-      LAX: { lat: 33.9416, lng: -118.4085 },
-      MIA: { lat: 25.7959, lng: -80.287 },
-      ATL: { lat: 33.6407, lng: -84.4277 }
-    };
-
     const startDate = new Date("2026-10-09T06:00:00-04:00");
     const endDate = new Date("2026-11-01T18:00:00-05:00");
     const userProgress = Number(window.missionTrackingProgress);
@@ -935,17 +916,6 @@
       return points.length ? `M${points.map((point) => point.join(",")).join("L")}` : "";
     }
 
-    function curvedPath(start, end, curve = 0.16) {
-      const midX = (start[0] + end[0]) / 2;
-      const midY = (start[1] + end[1]) / 2;
-      const dx = end[0] - start[0];
-      const dy = end[1] - start[1];
-      const distance = Math.hypot(dx, dy) || 1;
-      const controlX = midX - (dy / distance) * distance * curve;
-      const controlY = midY + (dx / distance) * distance * curve;
-      return `M${start[0]},${start[1]}Q${controlX},${controlY} ${end[0]},${end[1]}`;
-    }
-
     const mainlandTransform = { x: 105, y: 35, scale: 0.88 };
     const insetTransforms = {
       AK: { x: -18, y: -267, scale: 0.65 },
@@ -1002,13 +972,6 @@
     function pointByStopNumber(stopNumber, centroids) {
       const stop = stopByNumber(stopNumber);
       return stop ? routePoint(stop, centroids) : null;
-    }
-
-    function pointByAirport(code, centroids) {
-      const airport = airportPoints[code];
-      if (!airport) return null;
-      if (airport.abbr) return centroids[airport.abbr] || null;
-      return displayPoint(projectLower48(airport.lat, airport.lng), "");
     }
 
     function pointFromTracking(entity, centroids, fallbackPoint) {
@@ -1139,18 +1102,6 @@
       svg.appendChild(routeLayer);
 
       const travelLayer = document.createElementNS(svgNS, "g");
-      scheduledFlights.forEach((flight) => {
-        const flightStartPoint = pointByAirport(flight.from, centroids);
-        const flightEndPoint = pointByAirport(flight.to, centroids);
-        if (!flightStartPoint || !flightEndPoint) return;
-        const flightPath = document.createElementNS(svgNS, "path");
-        flightPath.setAttribute("class", "map-route scheduled-flight");
-        flightPath.setAttribute("d", curvedPath(flightStartPoint, flightEndPoint));
-        const title = document.createElementNS(svgNS, "title");
-        title.textContent = `${flight.date} | ${flight.from} > ${flight.to} | ${flight.time} | ${flight.airline}`;
-        flightPath.appendChild(title);
-        travelLayer.appendChild(flightPath);
-      });
       const forcedFlightPoint = displayPoint(projectLower48(39.8, -98.5), "KS");
       const hasActiveFlight = MAP_FLIGHT_PREVIEW || trackingData.flight.active === true || trackingData.flight.active === "true";
       const flightStart = !MAP_FLIGHT_PREVIEW && hasActiveFlight ? pointByStopNumber(trackingData.flight.fromStop, centroids) : null;

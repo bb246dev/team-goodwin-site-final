@@ -553,14 +553,6 @@
       stroke-dasharray: 12 10;
     }
 
-    .map-route.scheduled-flight {
-      stroke: #d8ad55;
-      stroke-width: 2.4;
-      stroke-dasharray: 2 9;
-      opacity: 0.9;
-      filter: drop-shadow(0 0 5px rgba(216, 173, 85, 0.34));
-    }
-
     .map-route.rv {
       stroke: var(--color-accent);
       stroke-width: 3.6;
