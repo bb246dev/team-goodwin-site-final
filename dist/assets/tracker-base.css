@@ -2892,7 +2892,8 @@
       }
 
       .week-card.week-card-grind {
-        background-position: 8% 22%;
+        background-size: 132% auto;
+        background-position: 0% 22%;
       }
 
       .week-card.week-card-finish {
