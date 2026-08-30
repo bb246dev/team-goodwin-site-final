@@ -332,6 +332,8 @@ const deployAssetPaths = [
   "assets/intro-fence-stretch.jpg",
   "assets/intro-solo-track-running.jpg",
   "assets/hero-runner-Ci5y42DW.jpg",
+  "assets/road-aerial-DbGvJBXy.jpg",
+  "assets/goodge-portrait-BKrZBh3V.jpg",
   "assets/overview-the-run.jpeg",
   "assets/athlete-will.jpeg",
   "assets/world-record-50-states.jpeg",
