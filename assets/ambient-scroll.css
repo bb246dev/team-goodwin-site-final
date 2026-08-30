@@ -888,20 +888,19 @@ body.has-ambient-scroll .site-footer-link-disabled {
   }
 
   body.has-ambient-scroll .ticker-track {
-    width: 100%;
-    animation: none;
+    width: max-content;
+    animation: tickerScroll 28s linear infinite;
   }
 
   body.has-ambient-scroll .ticker-item {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    width: 100%;
-    min-width: 0;
-    white-space: normal;
+    display: inline-flex;
+    width: auto;
+    min-width: min(620px, 88vw);
+    white-space: nowrap;
   }
 
   body.has-ambient-scroll .ticker-item:nth-child(n + 2) {
-    display: none;
+    display: inline-flex;
   }
 
   body.has-ambient-scroll .ticker-item time {

@@ -2417,7 +2417,7 @@
       }
 
       .tracker-map {
-        height: clamp(340px, 82vw, 460px);
+        height: clamp(280px, 72vw, 330px);
       }
 
       .tracking-map-key {
@@ -2544,7 +2544,7 @@
       }
 
       .tracker-map {
-        height: clamp(320px, 92vw, 390px);
+        height: clamp(280px, 72vw, 330px);
       }
 
       .metric-row,

@@ -481,11 +481,13 @@
     }
 
     function renderTickerUnavailable() {
-      return '<div class="ticker-item"><time>Updates</time><span>Latest updates are temporarily unavailable.</span></div>';
+      const item = '<div class="ticker-item"><time>Updates</time><span>Latest updates are temporarily unavailable.</span></div>';
+      return item + item;
     }
 
     function renderTickerEmpty() {
-      return '<div class="ticker-item"><time>Updates</time><span>Updates from the road are coming.</span></div>';
+      const item = '<div class="ticker-item"><time>Updates</time><span>Updates from the road are coming.</span></div>';
+      return item + item;
     }
 
     let missionTrackingStatusPromise = null;
