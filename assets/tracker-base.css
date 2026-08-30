@@ -862,17 +862,85 @@
     }
 
     .feature-card {
+      position: relative;
+      display: block;
+      overflow: hidden;
       min-width: 0;
       min-height: 220px;
       padding: clamp(24px, 3vw, 38px);
       background: var(--color-white);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
       color: var(--tracker-ink);
       text-decoration: none;
       transition: background 160ms ease, color 160ms ease, transform 160ms ease;
     }
 
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.6)),
+        rgba(80, 80, 80, 0.34);
+      pointer-events: none;
+    }
+
+    .feature-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card.has-image,
+    .feature-card.has-image:hover {
+      color: var(--color-white);
+    }
+
+    .feature-card.has-image h2,
+    .feature-card.has-image p,
+    .feature-card.has-image .tracker-eyebrow,
+    .feature-card.has-image .feature-link {
+      color: var(--color-white);
+    }
+
+    .feature-card-overview {
+      background-image: url("../assets/overview-the-run.jpeg");
+      background-position: 58% 50%;
+    }
+
+    .feature-card-overview,
+    .feature-card-overview:hover {
+      border-right-color: transparent;
+    }
+
+    .feature-card-athlete {
+      background-image: url("../assets/athlete-will.jpeg");
+      background-position: calc(43% + 15px) calc(49% + 5px);
+      background-size: 135.2% auto;
+    }
+
+    .feature-card.has-image.feature-card-athlete,
+    .feature-card.has-image.feature-card-athlete:hover {
+      background-position: calc(43% + 15px) calc(49% + 5px);
+      background-size: 135.2% auto;
+    }
+
+    .feature-card-record {
+      background-image: url("../assets/world-record-50-states.jpeg");
+      background-position: calc(50% + 40px) 58%;
+      background-size: calc(100% + 80px) auto;
+    }
+
+    .feature-card.has-image.feature-card-record,
+    .feature-card.has-image.feature-card-record:hover {
+      background-position: calc(50% + 40px) 58%;
+      background-size: calc(100% + 80px) auto;
+    }
+
     .feature-card:hover {
-      background: var(--tracker-ink);
+      background-color: var(--tracker-ink);
       color: #fff;
       transform: translateY(-2px);
     }
@@ -3321,9 +3389,55 @@
     }
 
     .feature-card:hover {
-      background: transparent;
+      background-color: transparent;
       color: var(--color-accent);
       transform: none;
+    }
+
+    .feature-card.has-image,
+    .feature-card.has-image:hover {
+      background-color: var(--tracker-ink);
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: var(--color-white);
+    }
+
+    .feature-card.has-image:hover::before {
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.7)),
+        rgba(80, 80, 80, 0.42);
+    }
+
+    .feature-card.has-image:first-child {
+      padding-left: clamp(24px, 3vw, 38px);
+    }
+
+    .feature-card-overview {
+      background-image: url("../assets/overview-the-run.jpeg");
+      background-position: 58% 50%;
+    }
+
+    .feature-card-athlete {
+      background-image: url("../assets/athlete-will.jpeg");
+      background-position: calc(43% + 15px) calc(49% + 5px);
+      background-size: 135.2% auto;
+    }
+
+    .feature-card-record {
+      background-image: url("../assets/world-record-50-states.jpeg");
+      background-position: calc(50% + 40px) 58%;
+      background-size: calc(100% + 80px) auto;
+    }
+
+    .feature-card.has-image h2,
+    .feature-card.has-image p,
+    .feature-card.has-image .tracker-eyebrow,
+    .feature-card.has-image .feature-link,
+    .feature-card.has-image:hover h2,
+    .feature-card.has-image:hover p,
+    .feature-card.has-image:hover .tracker-eyebrow,
+    .feature-card.has-image:hover .feature-link {
+      color: var(--color-white);
     }
 
     .feature-card h2 {
@@ -3464,6 +3578,15 @@
       .feature-card {
         min-height: 0;
         padding: 26px 0;
+      }
+
+      .feature-card.has-image {
+        padding-inline: clamp(24px, 3vw, 38px);
+      }
+
+      .feature-card.has-image.feature-card-record,
+      .feature-card.has-image.feature-card-record:hover {
+        background-position: calc(50% + 40px) calc(58% + 8px);
       }
 
       .feature-card:last-child,

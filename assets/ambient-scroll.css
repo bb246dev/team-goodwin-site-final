@@ -111,7 +111,6 @@ body.has-ambient-scroll .tracker-page,
 body.has-ambient-scroll .tracker-content,
 body.has-ambient-scroll .tracker-section,
 body.has-ambient-scroll .feature-row,
-body.has-ambient-scroll .feature-card,
 body.has-ambient-scroll .ticker-panel,
 body.has-ambient-scroll .tracker-grid,
 body.has-ambient-scroll .tracker-panel,
@@ -149,6 +148,18 @@ body.has-ambient-scroll .tracker-page {
 body.has-ambient-scroll #why .article-card,
 body.has-ambient-scroll .week-card.has-image {
   --ambient-ink: 248 247 239;
+}
+
+body.has-ambient-scroll .feature-card.has-image {
+  background-color: var(--tracker-ink);
+}
+
+body.has-ambient-scroll .feature-card.has-image,
+body.has-ambient-scroll .feature-card.has-image h2,
+body.has-ambient-scroll .feature-card.has-image p,
+body.has-ambient-scroll .feature-card.has-image .tracker-eyebrow,
+body.has-ambient-scroll .feature-card.has-image .feature-link {
+  color: var(--color-white);
 }
 
 body.has-ambient-scroll .tracker-content {
@@ -451,8 +462,21 @@ body.has-ambient-scroll .feature-card:hover,
 body.has-ambient-scroll .article-card:hover,
 body.has-ambient-scroll .run-card:hover,
 body.has-ambient-scroll .article-card.is-selected {
-  background: rgb(var(--ambient-ink) / 7%);
+  background-color: rgb(var(--ambient-ink) / 7%);
   color: rgb(var(--ambient-ink));
+}
+
+body.has-ambient-scroll .feature-card-overview,
+body.has-ambient-scroll .feature-card-overview:hover {
+  border-right-color: transparent;
+}
+
+body.has-ambient-scroll .feature-card.has-image:hover,
+body.has-ambient-scroll .feature-card.has-image:hover h2,
+body.has-ambient-scroll .feature-card.has-image:hover p,
+body.has-ambient-scroll .feature-card.has-image:hover .tracker-eyebrow,
+body.has-ambient-scroll .feature-card.has-image:hover .feature-link {
+  color: var(--color-white);
 }
 
 body.has-ambient-scroll .ticker-panel {
