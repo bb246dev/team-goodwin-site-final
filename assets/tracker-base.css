@@ -1974,6 +1974,13 @@
       min-width: 0;
     }
 
+    .partner-logo-item a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+    }
+
     .partner-logo-item img {
       display: block;
       width: auto;
@@ -1984,7 +1991,8 @@
       transition: opacity 160ms ease;
     }
 
-    .partner-logo-item img:hover {
+    .partner-logo-item a:hover img,
+    .partner-logo-item a:focus-visible img {
       opacity: 1;
     }
 

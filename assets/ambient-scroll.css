@@ -173,6 +173,24 @@ body.has-ambient-scroll #articles [hidden] {
   display: none !important;
 }
 
+body.has-ambient-scroll #articles {
+  --inside-section-ink: rgb(var(--inside-ambient-ink, var(--ambient-ink)));
+  color: var(--inside-section-ink);
+}
+
+body.has-ambient-scroll #articles .section-head h2,
+body.has-ambient-scroll #articles .section-head p,
+body.has-ambient-scroll #articles .tracker-eyebrow,
+body.has-ambient-scroll #articles .article-card,
+body.has-ambient-scroll #articles .article-card h3,
+body.has-ambient-scroll #articles .article-card p,
+body.has-ambient-scroll #articles .article-card-affordance,
+body.has-ambient-scroll #articles .inside-desktop-answer-content,
+body.has-ambient-scroll #articles .inside-accordion-trigger,
+body.has-ambient-scroll #articles .inside-accordion-content {
+  color: var(--inside-section-ink);
+}
+
 body.has-ambient-scroll #articles .inside-mobile-accordion {
   display: block;
   width: min(100%, 960px);
@@ -470,81 +488,77 @@ body.has-ambient-scroll .follow-form textarea::placeholder {
   color: rgb(var(--ambient-control-ink, var(--ambient-ink)) / 54%);
 }
 
-body.has-ambient-scroll .tracker-map-stage,
-body.has-ambient-scroll .tracker-map {
-  background-color: transparent;
+body.has-ambient-scroll #map {
+  background: var(--color-black);
+  color: var(--color-white);
 }
 
-body.has-ambient-scroll .tracker-map {
-  background: transparent;
+body.has-ambient-scroll #map .section-head h2,
+body.has-ambient-scroll #map .section-head p,
+body.has-ambient-scroll #map .tracker-eyebrow {
+  color: var(--color-white);
 }
 
-body.has-ambient-scroll .tracker-map::before {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
+body.has-ambient-scroll #map .section-head p,
+body.has-ambient-scroll #map > .legal-note {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+body.has-ambient-scroll #map .follow-panel {
+  border-color: var(--tracker-line);
+  background: var(--color-white);
+  color: var(--tracker-ink);
+}
+
+body.has-ambient-scroll #map .follow-form input {
+  border-color: var(--tracker-line);
+  background: var(--color-white);
+  color: var(--tracker-ink);
+}
+
+body.has-ambient-scroll #map .follow-form input::placeholder {
+  color: var(--tracker-muted);
+}
+
+body.has-ambient-scroll #map .ticker-panel {
+  border-block: 1px solid var(--tracker-line);
+  background: var(--tracker-ink);
+  color: var(--color-white);
+}
+
+body.has-ambient-scroll #map .ticker-panel::before {
+  background: var(--color-accent);
+}
+
+body.has-ambient-scroll #map .ticker-head {
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+}
+
+body.has-ambient-scroll #map .ticker-head .tracker-eyebrow,
+body.has-ambient-scroll #map .ticker-head a,
+body.has-ambient-scroll #map .ticker-item {
+  color: var(--color-white);
+}
+
+body.has-ambient-scroll #map .ticker-item time {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+body.has-ambient-scroll #map .ticker-item span {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+body.has-ambient-scroll #map .tracker-map-stage {
+  background: var(--tracker-night);
+}
+
+body.has-ambient-scroll #map .tracker-map {
   background:
-    linear-gradient(rgb(var(--ambient-ink) / 8%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--ambient-ink) / 8%) 1px, transparent 1px);
-  background-size: 160px 160px;
-  content: "";
-  pointer-events: none;
-}
-
-body.has-ambient-scroll .tracker-map > * {
-  position: relative;
-  z-index: 1;
-}
-
-body.has-ambient-scroll #map .map-state {
-  fill: rgb(var(--ambient-ink) / 5%);
-  stroke: rgb(var(--ambient-ink) / 62%);
-}
-
-body.has-ambient-scroll #map .map-state:hover,
-body.has-ambient-scroll #map .map-state.is-active {
-  fill: rgb(var(--ambient-ink) / 14%);
-  stroke: rgb(var(--ambient-ink));
-}
-
-body.has-ambient-scroll #map .map-route.future {
-  stroke: rgb(var(--ambient-ink) / 34%);
-}
-
-body.has-ambient-scroll #map .map-route.complete,
-body.has-ambient-scroll #map .map-route.flight,
-body.has-ambient-scroll #map .map-route.rv,
-body.has-ambient-scroll #map .map-flight-body {
-  stroke: rgb(var(--ambient-ink));
-  filter: none;
-}
-
-body.has-ambient-scroll #map .map-stop {
-  fill: rgb(var(--ambient-base));
-  stroke: rgb(var(--ambient-ink));
-}
-
-body.has-ambient-scroll #map .map-stop:hover,
-body.has-ambient-scroll #map .map-stop.is-current,
-body.has-ambient-scroll #map .map-stop.is-terminal,
-body.has-ambient-scroll #map .map-live-marker {
-  fill: rgb(var(--ambient-ink));
-  stroke: rgb(var(--ambient-ink));
-  filter: none;
-}
-
-body.has-ambient-scroll #map .map-live-pulse {
-  fill: rgb(var(--ambient-ink) / 14%);
-  stroke: rgb(var(--ambient-ink) / 58%);
-}
-
-body.has-ambient-scroll #map .map-label,
-body.has-ambient-scroll #map .map-endpoint-label {
-  fill: rgb(var(--ambient-ink));
-  paint-order: stroke;
-  stroke: rgb(var(--ambient-base) / 88%);
-  stroke-linejoin: round;
-  stroke-width: 3px;
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 62% 56%, rgba(25, 59, 59, 0.1), transparent 32%),
+    var(--tracker-night);
+  background-size: 160px 160px, 160px 160px, auto, auto;
 }
 
 body.has-ambient-scroll .tracking-map-key {
@@ -554,22 +568,31 @@ body.has-ambient-scroll .tracking-map-key {
   backdrop-filter: blur(14px);
 }
 
+body.has-ambient-scroll #map .tracking-map-key {
+  border-top-color: rgba(255, 255, 255, 0.16);
+  background: rgba(10, 10, 10, 0.92);
+  color: var(--tracker-mint);
+  backdrop-filter: none;
+}
+
+body.has-ambient-scroll #map .tracking-map-key span {
+  border-right-color: rgba(255, 255, 255, 0.16);
+}
+
 body.has-ambient-scroll #map .mission-clock-grid {
   margin-top: clamp(28px, 5vw, 56px);
-  border: 0;
-  background: transparent;
+  border: 1px solid var(--tracker-line);
+  background: var(--tracker-line);
 }
 
 body.has-ambient-scroll #map .mission-clock-grid .tracker-panel {
-  overflow: hidden;
+  overflow: visible;
   border: 0;
-  border-radius: clamp(22px, 3vw, 34px);
-  background:
-    radial-gradient(circle at 86% 10%, rgb(126 206 181 / 24%), transparent 34%),
-    linear-gradient(135deg, rgb(8 24 21 / 98%), rgb(20 68 57 / 95%));
-  color: #fff;
-  padding: clamp(28px, 5vw, 58px);
-  box-shadow: 0 28px 80px rgb(0 0 0 / 22%);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--tracker-ink);
+  padding: clamp(22px, 3vw, 40px);
+  box-shadow: none;
 }
 
 body.has-ambient-scroll #map .mission-clock-grid .tracker-eyebrow,
@@ -577,28 +600,24 @@ body.has-ambient-scroll #map .mission-clock-grid .tracker-panel-heading,
 body.has-ambient-scroll #map .mission-clock-grid .tracker-panel-copy,
 body.has-ambient-scroll #map .mission-clock-grid .metric strong,
 body.has-ambient-scroll #map .mission-clock-grid .metric span {
-  color: #fff;
+  color: var(--tracker-ink);
 }
 
 body.has-ambient-scroll #map .mission-clock-grid .tracker-panel-copy {
-  color: rgb(255 255 255 / 76%);
+  color: var(--tracker-muted);
 }
 
 body.has-ambient-scroll #map .mission-clock-grid .metric-row {
-  gap: clamp(6px, 1vw, 12px);
-  border: 0;
-  background: transparent;
+  gap: 1px;
+  border: 1px solid var(--tracker-line);
+  background: var(--tracker-line);
 }
 
 body.has-ambient-scroll #map .mission-clock-grid .metric {
   border: 0;
-  border-radius: 14px;
-  background: rgb(255 255 255 / 9%);
-  text-align: center;
-}
-
-body.has-ambient-scroll #map .mission-clock-grid .metric:not(:last-child)::after {
-  content: none;
+  border-radius: 0;
+  background: var(--color-white);
+  text-align: left;
 }
 
 body.has-ambient-scroll .week-grid {
