@@ -555,6 +555,17 @@ body.has-ambient-scroll #map .follow-form input::placeholder {
   color: var(--tracker-muted);
 }
 
+body.has-ambient-scroll #map .follow-form .tracker-button {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+body.has-ambient-scroll #map .follow-form .tracker-button:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+}
+
 body.has-ambient-scroll #map .ticker-panel {
   border-block: 1px solid var(--tracker-line);
   background: var(--tracker-ink);
@@ -933,6 +944,13 @@ body.has-ambient-scroll .site-footer-link-disabled {
 
   body.has-ambient-scroll #map .metric strong {
     font-size: clamp(1.45rem, 7vw, 2rem);
+  }
+
+  body.has-ambient-scroll #map .metric:not(:last-child)::after {
+    top: 13px;
+    right: -4px;
+    font-size: clamp(1.45rem, 7vw, 2rem);
+    line-height: 0.88;
   }
 
   body.has-ambient-scroll #map .metric span {
