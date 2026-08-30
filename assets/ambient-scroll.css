@@ -758,6 +758,17 @@ body.has-ambient-scroll #rsvp .route-itinerary.is-selected {
   display: grid;
 }
 
+body.has-ambient-scroll #rsvp .route-itinerary.is-selected .run-card {
+  background: var(--color-white);
+  color: var(--tracker-ink);
+}
+
+body.has-ambient-scroll #rsvp .route-itinerary.is-selected .tracker-button.secondary {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
 body.has-ambient-scroll .site-footer {
   margin-top: 0;
   border-top: 1px solid rgb(var(--ambient-ink) / 20%);

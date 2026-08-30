@@ -786,7 +786,7 @@
             <span class="rsvp-selected-stop-date">${stop.date}</span>
             <span class="rsvp-selected-stop-place">${stop.city}, ${stop.abbr}</span>
           </div>
-          ${stop.n === 50 ? "" : '<div class="button-row"><a class="tracker-button secondary" href="partners.html" data-rsvp-link>RSVP</a></div>'}
+          <div class="button-row"><a class="tracker-button secondary" href="partners.html" data-rsvp-link>RSVP</a></div>
         </article>
       `;
     }
