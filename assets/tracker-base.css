@@ -2720,6 +2720,7 @@
 
       #map .section-head {
         margin-bottom: 30px;
+        padding-inline: 20px;
       }
 
       #map .tracker-panel {
