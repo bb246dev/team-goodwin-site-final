@@ -553,6 +553,14 @@
       stroke-dasharray: 12 10;
     }
 
+    .map-route.scheduled-flight {
+      stroke: #d8ad55;
+      stroke-width: 2.4;
+      stroke-dasharray: 2 9;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 5px rgba(216, 173, 85, 0.34));
+    }
+
     .map-route.rv {
       stroke: var(--color-accent);
       stroke-width: 3.6;
@@ -2412,8 +2420,8 @@
       }
 
       .tracker-map-stage {
-        margin-inline: -20px;
-        border-inline: 0;
+        margin-inline: 0;
+        border-inline: 1px solid rgba(10, 10, 10, 0.32);
       }
 
       .tracker-map {
@@ -3334,7 +3342,7 @@
       }
 
       .tracker-map-stage {
-        margin-inline: -18px;
+        margin-inline: 0;
       }
 
       .section-head h2 {
