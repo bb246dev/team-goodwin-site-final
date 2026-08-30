@@ -2950,11 +2950,11 @@
       .mobile-photo-break.mobile-photo-break-portrait::after {
         background: linear-gradient(
           to top right,
-          rgba(0, 0, 0, 0.92) 0%,
-          rgba(0, 0, 0, 0.78) 30%,
-          rgba(0, 0, 0, 0.45) 52%,
-          rgba(0, 0, 0, 0.18) 72%,
-          rgba(0, 0, 0, 0.1) 100%
+          rgba(0, 0, 0, 0.97) 0%,
+          rgba(0, 0, 0, 0.83) 30%,
+          rgba(0, 0, 0, 0.5) 52%,
+          rgba(0, 0, 0, 0.23) 72%,
+          rgba(0, 0, 0, 0.15) 100%
         );
       }
 
