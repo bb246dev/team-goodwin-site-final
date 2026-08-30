@@ -1518,6 +1518,14 @@
       font-weight: 800;
     }
 
+    @media (min-width: 941px) {
+      .feature-card.has-image,
+      .week-card {
+        aspect-ratio: 1 / 1;
+        min-height: 0;
+      }
+    }
+
     .update-item h3,
     .article-card h3,
     .run-card h3 {
