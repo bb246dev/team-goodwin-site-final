@@ -2423,7 +2423,7 @@
       .tracker-map svg {
         width: 110%;
         max-width: none;
-        margin-left: -5%;
+        margin-left: calc(-5% - 10px);
       }
 
       .tracking-map-key {
@@ -3349,7 +3349,7 @@
 
       .tracker-map svg {
         width: 112%;
-        margin-left: -6%;
+        margin-left: calc(-6% - 10px);
       }
 
       .section-head h2 {
