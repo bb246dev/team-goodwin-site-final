@@ -57,8 +57,20 @@
       const video = document.querySelector("[data-hero-video]");
       if (!video) return;
 
+      const mobileQuery = window.matchMedia("(max-width: 768px)");
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const shouldSkipMobileVideo = () => (
+        mobileQuery.matches
+        && (
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          || connection?.saveData
+          || /(^|-)2g$/.test(connection?.effectiveType || "")
+        )
+      );
+
       const loadVideo = () => {
         if (video.dataset.loaded === "true") return;
+        if (shouldSkipMobileVideo()) return;
         video.querySelectorAll("source[data-src]").forEach((source) => {
           source.src = source.dataset.src;
         });
@@ -67,13 +79,29 @@
         video.play?.().catch(() => {});
       };
 
-      const mobileQuery = window.matchMedia("(max-width: 768px)");
-      if (!mobileQuery.matches || !document.body.classList.contains("has-splash-modal-open")) {
+      const loadWhenIdle = () => {
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(loadVideo, { timeout: 2600 });
+        } else {
+          window.setTimeout(loadVideo, 1800);
+        }
+      };
+
+      if (!mobileQuery.matches) {
         loadVideo();
         return;
       }
 
-      document.addEventListener("goodwin:splashclosed", loadVideo, { once: true });
+      if (document.body.classList.contains("has-splash-modal-open")) {
+        document.addEventListener("goodwin:splashclosed", loadWhenIdle, { once: true });
+        return;
+      }
+
+      if (document.readyState === "complete") {
+        loadWhenIdle();
+      } else {
+        window.addEventListener("load", loadWhenIdle, { once: true });
+      }
     }
 
     initHeroVideoLoading();
@@ -300,7 +328,7 @@
       }
 
       const logoSource = document.querySelector(".tracker-mark-mobile-logo")?.getAttribute("src") || "../assets/mission-america-logo.png";
-      const assetBase = logoSource.replace(/mission-america-logo\.png(?:\?.*)?$/, "");
+      const assetBase = logoSource.replace(/mission-america-logo(?:-mobile)?\.png(?:\?.*)?$/, "");
       const firstIntroSource = `${assetBase}${config.images[0].file}`;
       const root = document.createElement("div");
       root.className = "mission-intro is-active";
@@ -1366,7 +1394,31 @@
       document.getElementById("mission-map").textContent = "Map data could not load. Serve this page from the preview server to view the interactive U.S. route map.";
     }
 
-    loadMissionMap();
+    function initMissionMapLoading() {
+      const mapEl = document.getElementById("mission-map");
+      if (!mapEl) return;
+
+      const start = () => {
+        if (mapEl.dataset.mapLoadStarted === "true") return;
+        mapEl.dataset.mapLoadStarted = "true";
+        loadMissionMap();
+      };
+
+      if (!("IntersectionObserver" in window)) {
+        window.addEventListener("load", start, { once: true });
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        start();
+      }, { rootMargin: "700px 0px" });
+
+      observer.observe(mapEl);
+    }
+
+    initMissionMapLoading();
 
     document.querySelector("[data-follow-form]")?.addEventListener("submit", (event) => {
       event.preventDefault();

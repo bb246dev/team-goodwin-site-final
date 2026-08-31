@@ -24,6 +24,23 @@
   document.body.prepend(background);
   document.body.classList.add("has-ambient-pages");
 
+  const trackerNav = document.querySelector(".tracker-nav");
+  const trackerMenuToggle = document.querySelector(".tracker-menu-toggle");
+  if (trackerNav && trackerMenuToggle) {
+    trackerMenuToggle.addEventListener("click", () => {
+      const isOpen = trackerNav.classList.toggle("is-open");
+      trackerMenuToggle.setAttribute("aria-expanded", String(isOpen));
+      trackerMenuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+    });
+    trackerNav.querySelectorAll(".tracker-navlinks a").forEach((link) => {
+      link.addEventListener("click", () => {
+        trackerNav.classList.remove("is-open");
+        trackerMenuToggle.setAttribute("aria-expanded", "false");
+        trackerMenuToggle.setAttribute("aria-label", "Open navigation menu");
+      });
+    });
+  }
+
   let anchors = [];
   let frame = 0;
   let targetScroll = window.scrollY;

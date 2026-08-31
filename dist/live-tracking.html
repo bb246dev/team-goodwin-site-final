@@ -7,13 +7,13 @@
   <meta name="description" content="50 Marathons, 50 States, 50 days. Follow William Goodge during Goodwin Generated Mission America's record setting cross-country endurance run.">
   <link rel="icon" href="assets/goodwin-favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/goodwin-webclip.png">
+  <link rel="preload" href="assets/hero-video-first-frame.jpg" as="image" media="(max-width: 768px)" fetchpriority="high">
   <link rel="stylesheet" href="fonts/inter.css">
   <link rel="stylesheet" href="assets/styles-ulvf0Dcj.css">
   <link rel="stylesheet" href="assets/index-CIGW-MKW.css">
-  <link rel="stylesheet" href="assets/tracker-base.css?v=20260831fieldnotes-static">
+  <link rel="stylesheet" href="assets/tracker-base.css?v=20260831mobile-critical-path">
   <link rel="stylesheet" href="assets/ambient-scroll.css?v=20260831fieldnotes-static">
-  <script src="assets/us-states-albers-10m.js"></script>
-  <script defer src="assets/tracker-base.js?v=20260831fieldnotes-static"></script>
+  <script defer src="assets/tracker-base.js?v=20260831mobile-critical-path"></script>
   <script defer src="assets/ambient-scroll.js?v=20260830h"></script>
 </head>
 <body>
@@ -32,7 +32,7 @@
     <nav class="tracker-nav" aria-label="Live tracker navigation">
       <a class="tracker-mark" href="#live" aria-label="Back to the top of the Team Goodwin homepage">
         <img src="assets/goodwin-logo.png" alt="GOODWIN">
-        <img class="tracker-mark-mobile-logo" src="assets/mission-america-logo.png" alt="GOODWIN Generated Mission America">
+        <img class="tracker-mark-mobile-logo" src="assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America">
         <span>Endurance</span>
       </a>
       <button class="tracker-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="tracker-navlinks"><span></span></button>
@@ -82,19 +82,19 @@
     <div class="tracker-content">
       <section class="tracker-section" id="the-run" aria-label="Goodwin Generated Mission America feature pages">
         <div class="feature-row">
-          <a class="feature-card feature-card-overview has-image" href="the-run.html">
+          <a class="feature-card feature-card-overview has-image" href="/the-run/">
             <div class="tracker-eyebrow">OVERVIEW</div>
             <h2>The Run</h2>
             <p>50 marathons. 24 days. No margin for error.</p>
             <span class="feature-link">Read the Mission</span>
           </a>
-          <a class="feature-card feature-card-athlete has-image" href="will.html">
+          <a class="feature-card feature-card-athlete has-image" href="/will/">
             <div class="tracker-eyebrow">ATHLETE</div>
             <h2>Will</h2>
             <p>Meet the athlete behind the attempt.</p>
             <span class="feature-link">Meet Will</span>
           </a>
-          <a class="feature-card feature-card-record has-image" href="fifty-runs.html">
+          <a class="feature-card feature-card-record has-image" href="/fifty-runs/">
             <div class="tracker-eyebrow">WORLD RECORD ATTEMPT</div>
             <h2>50 Runs,<br>50 States</h2>
             <p>One world record on the line.</p>
@@ -117,14 +117,14 @@
               <input id="follow-email" name="email" type="email" autocomplete="email" placeholder="Email address" required>
               <button class="tracker-button" type="submit">Follow Along</button>
             </form>
-            <p class="legal-note">By submitting, you agree to receive updates from Team Goodwin. See our <a href="privacy.html">Privacy Policy</a>.</p>
+            <p class="legal-note">By submitting, you agree to receive updates from Team Goodwin. See our <a href="/privacy/">Privacy Policy</a>.</p>
             <div class="follow-note" data-follow-message aria-live="polite"></div>
           </div>
         </div>
         <section class="ticker-panel" aria-label="Goodwin Generated Mission America live ticker">
           <div class="ticker-head">
             <div class="tracker-eyebrow">Latest Updates</div>
-            <a href="updates.html">View All Updates</a>
+            <a href="/updates/">View All Updates</a>
           </div>
           <div class="ticker-track" data-ticker-items>
             <div class="ticker-item"><time>Loading</time><span>Fetching Goodwin Generated Mission America updates.</span></div>
@@ -164,21 +164,21 @@
           </div>
         </div>
         <div class="week-grid">
-          <a class="week-card has-image week-card-launch" href="week-1.html">
+          <a class="week-card has-image week-card-launch" href="/week-1/">
             <div class="tracker-eyebrow">WEEK 1</div>
             <h3>The Launch</h3>
             <p>Oct 9–15</p>
             <p>Hawaii to the West.</p>
             <span class="week-link">View Week 1 →</span>
           </a>
-          <a class="week-card has-image week-card-grind" href="week-2.html">
+          <a class="week-card has-image week-card-grind" href="/week-2/">
             <div class="tracker-eyebrow">WEEK 2</div>
             <h3>The Grind</h3>
             <p>Oct 16–24</p>
             <p>The miles pile up.</p>
             <span class="week-link">View Week 2 →</span>
           </a>
-          <a class="week-card has-image week-card-finish" href="week-3.html">
+          <a class="week-card has-image week-card-finish" href="/week-3/">
             <div class="tracker-eyebrow">WEEK 3</div>
             <h3>The Finish</h3>
             <p>Oct 25–Nov 1</p>
@@ -283,7 +283,7 @@
             <div class="inside-desktop-answer-panel" id="inside-desktop-answer-eat-sleep" role="region" aria-labelledby="inside-desktop-question-eat-sleep" data-inside-desktop-panel>
               <div class="inside-desktop-answer-content">
                 <p>Goodge will be eating and sleeping on the go — in the RV and wherever the schedule allows. Team members are providing nutrition and hydration protocols for every run, along with a regimented rest and sleep schedule.</p>
-                <div class="button-row"><a class="tracker-button secondary" href="fifty-runs.html">View the Itinerary →</a></div>
+                <div class="button-row"><a class="tracker-button secondary" href="/fifty-runs/">View the Itinerary →</a></div>
               </div>
             </div>
             <div class="inside-desktop-answer-panel" id="inside-desktop-answer-logistics" role="region" aria-labelledby="inside-desktop-question-logistics" data-inside-desktop-panel>
@@ -406,7 +406,7 @@
             <div class="inside-accordion-panel" id="inside-answer-eat-sleep" role="region" aria-labelledby="inside-question-eat-sleep">
               <div class="inside-accordion-content">
                 <p>Goodge will be eating and sleeping on the go — in the RV and wherever the schedule allows. Team members are providing nutrition and hydration protocols for every run, along with a regimented rest and sleep schedule.</p>
-                <div class="button-row"><a class="tracker-button secondary" href="fifty-runs.html">View the Itinerary →</a></div>
+                <div class="button-row"><a class="tracker-button secondary" href="/fifty-runs/">View the Itinerary →</a></div>
               </div>
             </div>
           </div>
@@ -467,7 +467,7 @@
             </div>
           </div>
         </div>
-        <div class="button-row inside-section-cta"><a class="tracker-button secondary is-accent" href="faq.html">View FAQ</a></div>
+        <div class="button-row inside-section-cta"><a class="tracker-button secondary is-accent" href="/faq/">View FAQ</a></div>
       </section>
 
       <div class="mobile-photo-break mobile-photo-break-portrait">
@@ -497,12 +497,12 @@
           <article class="article-card">
             <div class="tracker-eyebrow">IMPACT</div>
             <h3>50 states. Thousands of reasons.</h3>
-            <div class="button-row"><a class="tracker-button secondary" href="faq.html">Why It Matters →</a></div>
+            <div class="button-row"><a class="tracker-button secondary" href="/faq/">Why It Matters →</a></div>
           </article>
           <article class="article-card">
             <div class="tracker-eyebrow">GIVING</div>
             <h3>Turn miles into impact.</h3>
-            <div class="button-row"><a class="tracker-button secondary" href="faq.html#donate">Support the Mission →</a></div>
+            <div class="button-row"><a class="tracker-button secondary" href="https://live-mission-america-50.pantheonsite.io/" target="_blank" rel="noopener noreferrer">Support the Mission →</a></div>
           </article>
         </div>
       </section>
@@ -530,10 +530,10 @@
           </div>
           <nav class="site-footer-nav" aria-label="Footer navigation">
             <ul class="site-footer-link-group">
-              <li><a href="the-run.html">The Run</a></li>
-              <li><a href="#map">Live Map</a></li>
-              <li><a href="updates.html">Running Live Archive</a></li>
-              <li><a href="fifty-runs.html">50 Runs, 50 States</a></li>
+              <li><a href="/the-run/">The Run</a></li>
+              <li><a href="/live-tracking/#map">Live Map</a></li>
+              <li><a href="/updates/">Running Live Archive</a></li>
+              <li><a href="/fifty-runs/">50 Runs, 50 States</a></li>
             </ul>
             <ul class="site-footer-link-group">
               <li><a href="https://www.instagram.com/williamgoodge/" target="_blank" rel="noopener noreferrer">Will's Instagram</a></li>
@@ -573,10 +573,10 @@
           <p class="site-footer-partner-disclaimer">All trademarks and logos are the property of their respective owners and are used with permission where applicable.</p>
         </div>
         <nav class="site-footer-legal" aria-label="Legal links">
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
-          <a href="participation-terms.html">Participation Terms</a>
-          <a href="accessibility.html">Accessibility</a>
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/participation-terms/">Participation Terms</a>
+          <a href="/accessibility/">Accessibility</a>
         </nav>
         <p class="site-footer-disclaimer">Goodwin Generated Mission America is an endurance event and world record attempt. Routes, schedules, locations, tracking data and event details are subject to change. World record status is subject to independent verification. Participation in any associated run or event is voluntary and subject to the Participation Terms.</p>
         <div class="site-footer-bottom">

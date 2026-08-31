@@ -20,13 +20,26 @@
     .global-site-footer-legal{display:flex;flex-wrap:wrap;gap:12px 22px;padding:0 0 28px;color:rgba(20,63,60,.62);font-size:.78rem;line-height:1.5}
     .global-site-footer-disclaimer{max-width:980px;margin:0 0 30px;color:rgba(20,63,60,.58);font-size:.72rem;line-height:1.55}
     .global-site-footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 0;border-top:1px solid rgba(20,63,60,.18);color:rgba(20,63,60,.62);font-size:.8rem}
+    .global-site-footer-partners{margin-top:4px;padding:42px clamp(24px,4vw,48px) 46px;border-top:1px solid rgba(255,255,255,.16);background:#0a0a0a;color:#fff}
+    .global-site-footer-partners .tracker-eyebrow{color:rgba(255,255,255,.78);text-align:center}
+    .global-site-footer .global-site-footer-partner-disclaimer{max-width:620px;margin:30px auto 0;color:rgba(255,255,255,.56);font-size:.68rem;line-height:1.45;text-align:center}
+    .partner-logo-wall{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;justify-items:center;column-gap:32px;row-gap:34px;margin-top:38px}
+    .partner-logo-item{display:flex;grid-column:span 2;align-items:center;justify-content:center;min-width:0}
+    .partner-logo-item a{display:flex;align-items:center;justify-content:center;min-width:0}
+    .partner-logo-item img{display:block;width:auto;max-width:min(168px,100%);max-height:34px;object-fit:contain;opacity:.76;transition:opacity 160ms ease}
+    .partner-logo-item a:hover img,.partner-logo-item a:focus-visible img{opacity:1}
+    @media(min-width:941px){.partner-logo-item{grid-column:auto;min-height:42px}.partner-logo-item:nth-child(1){order:1}.partner-logo-item:nth-child(2){order:2}.partner-logo-item:nth-child(4){order:3}.partner-logo-item:nth-child(5){order:4}.partner-logo-item:nth-child(6){order:5}.partner-logo-item:nth-child(7){order:6}.partner-logo-item:nth-child(8){order:7}.partner-logo-item:nth-child(9){order:8}.partner-logo-item:nth-child(10){order:9}.partner-logo-item:nth-child(11){order:10}.partner-logo-item:nth-child(3){order:11}.partner-logo-item:nth-child(12){order:12}.partner-logo-item:nth-child(13){order:13}.partner-logo-item:nth-child(14){order:14}.partner-logo-item:nth-child(15){order:15}}
     @media(max-width:840px){.global-site-footer-main{grid-template-columns:1fr}.global-site-footer-bottom{display:block}}
-    @media(max-width:430px){.global-site-footer-nav{grid-template-columns:1fr;gap:18px}.global-site-footer-nav a,.global-site-footer-link-disabled{display:flex;align-items:center;min-height:44px}}
+    @media(max-width:430px){.global-site-footer-nav{grid-template-columns:1fr;gap:18px}.global-site-footer-nav a,.global-site-footer-link-disabled{display:flex;align-items:center;min-height:44px}.global-site-footer-partners{margin-inline:0;padding:32px 0 34px;overflow:visible}.global-site-footer-partners .tracker-eyebrow{padding-inline:20px;text-align:left}.partner-logo-wall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;max-width:100%;align-items:center;justify-items:center;column-gap:22px;row-gap:28px;margin-top:28px;padding:0 20px 4px;overflow:visible}.partner-logo-item{grid-column:auto;min-height:30px}.partner-logo-item:nth-child(15){grid-column:1 / -1}.partner-logo-item img{max-width:92px;max-height:26px;opacity:.78}}
   </style>
 <link rel="stylesheet" href="/assets/ambient-pages.css"><script defer src="/assets/ambient-pages.js"></script></head>
 <body>
   <main class="page">
-    <nav class="nav"><a class="brand" href="live-tracking.html"><img src="assets/goodwin-logo.png" alt="Goodwin"></a><a class="back" href="live-tracking.html#updates">Back to road updates</a></nav>
+    <nav class="tracker-nav" aria-label="Site navigation">
+      <a class="tracker-mark" href="/live-tracking/" aria-label="Goodwin home"><img src="assets/goodwin-logo.png" alt="GOODWIN"><img class="tracker-mark-mobile-logo" src="assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America"><span>Endurance</span></a>
+      <button class="tracker-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="tracker-navlinks"><span></span></button>
+      <div class="tracker-navlinks" id="tracker-navlinks"><a href="/live-tracking/#the-run">The Run</a><a href="/live-tracking/#map">50 States</a><a href="/updates/">News</a><a href="/live-tracking/#why">Will</a><a class="tracker-cta" href="/live-tracking/#rsvp">Join the Run</a></div>
+    </nav>
     <section class="hero"><div class="eyebrow">Week 3 | East & Finish</div><h1>October 25–November 1</h1><p class="lede">The final stretch moves through the Southeast, Appalachia, Mid-Atlantic and New England before the finish at the New York City Marathon. By this point, the question isn’t what Will can do fresh. It’s what he can still do after weeks of accumulated miles.</p></section>
     <section class="schedule" aria-label="Week 3 Goodwin Generated Mission America dates">
       <article class="stop"><div class="date">Oct 25</div><div class="city">Greenville</div><div class="state">South Carolina</div></article>
@@ -53,14 +66,13 @@
     <div class="global-site-footer-main">
       <div>
         <div class="global-site-footer-brand"><img src="assets/goodwin-logo.png" alt="Goodwin"></div>
-        <p>Goodwin Company builds next-generation infrastructure for charter aviation and backs athletes redefining human endurance.</p>
       </div>
       <nav class="global-site-footer-nav" aria-label="Footer navigation">
         <ul class="global-site-footer-link-group">
-          <li><a href="the-run.html">The Run</a></li>
-          <li><a href="fifty-runs.html">50 Runs, 50 States</a></li>
-          <li><a href="updates.html">Updates Archive</a></li>
-          <li><a href="live-tracking.html#map">Live Map</a></li>
+          <li><a href="/the-run/">The Run</a></li>
+          <li><a href="/live-tracking/#map">Live Map</a></li>
+          <li><a href="/updates/">Running Live Archive</a></li>
+          <li><a href="/fifty-runs/">50 Runs, 50 States</a></li>
         </ul>
         <ul class="global-site-footer-link-group">
           <li><a href="https://www.instagram.com/williamgoodge/" target="_blank" rel="noopener noreferrer">Will's Instagram</a></li>
@@ -74,8 +86,30 @@
           <li><a href="https://www.youtube.com/@goodwinsoftwarecompany" target="_blank" rel="noopener noreferrer">Goodwin's YouTube</a></li>
           <li><a href="https://x.com/goteamgoodwin" target="_blank" rel="noopener noreferrer">Goodwin's X</a></li>
           <li><a href="https://teamgoodwin.com/" target="_blank" rel="noopener noreferrer">TeamGoodwin.com</a></li>
+          <li><a href="mailto:run@teamgoodwin.com">Contact</a></li>
         </ul>
       </nav>
+    </div>
+    <div class="global-site-footer-partners" aria-label="Partners">
+      <div class="tracker-eyebrow">MADE POSSIBLE BY</div>
+      <div class="partner-logo-wall">
+        <div class="partner-logo-item"><a href="https://www.arsenalaviation.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Arsenal Aviation"><img src="/assets/partners/arsenal-aviation-footer.svg" alt="Arsenal Aviation logo"></a></div>
+        <div class="partner-logo-item"><a href="https://www.trilogyaviationgroup.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Trilogy Aviation Group"><img src="/assets/partners/trilogy-aviation-footer.svg" alt="Trilogy Aviation Group logo"></a></div>
+        <div class="partner-logo-item"><a href="https://titanflights.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Titan Aviation Group"><img src="/assets/partners/titan-aviation-footer.png" alt="Titan Aviation Group logo"></a></div>
+        <div class="partner-logo-item"><a href="https://fly1200.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit FLY1200"><img src="/assets/partners/fly1200-footer.svg" alt="FLY1200 logo"></a></div>
+        <div class="partner-logo-item"><a href="https://www.flyexclusive.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit flyExclusive"><img src="/assets/partners/flyexclusive-footer.svg" alt="flyExclusive logo"></a></div>
+        <div class="partner-logo-item"><a href="https://jetlinx.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Jet Linx"><img src="/assets/partners/jet-linx-footer.svg" alt="Jet Linx logo"></a></div>
+        <div class="partner-logo-item"><a href="https://skywardaviation.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Skyward Aviation"><img src="/assets/partners/skyward-aviation-footer.svg" alt="Skyward Aviation logo"></a></div>
+        <div class="partner-logo-item"><a href="https://flytrueskies.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit TrueSkies Aviation Group"><img src="/assets/partners/trueskies-footer.svg" alt="TrueSkies Aviation Group logo"></a></div>
+        <div class="partner-logo-item"><a href="https://magellanjets.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Magellan Jets"><img src="/assets/partners/magellan-jets-footer.svg" alt="Magellan Jets logo"></a></div>
+        <div class="partner-logo-item"><a href="https://www.charterflightsupport.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Charter Flight Support"><img src="/assets/partners/charter-flight-support-footer.svg" alt="Charter Flight Support logo"></a></div>
+        <div class="partner-logo-item"><a href="https://www.spyrollstudios.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Spyroll Studios"><img src="/assets/partners/spyroll-studios-footer.svg" alt="Spyroll Studios logo"></a></div>
+        <div class="partner-logo-item"><a href="https://davidprotein.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit David"><img src="/assets/partners/david-footer.png" alt="David logo"></a></div>
+        <div class="partner-logo-item"><a href="https://humantra.co.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Humantra"><img src="/assets/partners/humantra-footer.png" alt="Humantra logo"></a></div>
+        <div class="partner-logo-item"><a href="https://rizkia.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Rizkia"><img src="/assets/partners/rizkia-footer.png" alt="Rizkia logo"></a></div>
+        <div class="partner-logo-item"><a href="https://www.whoop.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit WHOOP"><img src="/assets/partners/whoop-footer.png" alt="WHOOP logo"></a></div>
+      </div>
+      <p class="global-site-footer-partner-disclaimer">All trademarks and logos are the property of their respective owners and are used with permission where applicable.</p>
     </div>
     <nav class="global-site-footer-legal" aria-label="Legal links">
       <a href="/privacy/">Privacy</a>
