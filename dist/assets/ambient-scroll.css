@@ -1007,13 +1007,6 @@ body.has-ambient-scroll .site-footer-link-disabled {
   }
 }
 
-@media (max-width: 430px) {
-  body.has-ambient-scroll .tracker-hero-bg {
-    top: clamp(112px, 32vw, 124px);
-    height: calc(100% - clamp(112px, 32vw, 124px));
-  }
-}
-
 @media (max-width: 380px) {
   body.has-ambient-scroll .site-footer-nav {
     grid-template-columns: 1fr;
