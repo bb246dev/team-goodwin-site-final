@@ -2697,13 +2697,14 @@
       }
 
       .tracker-hero::after {
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.82) 38%, rgba(0, 0, 0, 0.45) 55%, rgba(0, 0, 0, 0) 68%);
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.66) 0%, rgba(0, 0, 0, 0.52) 38%, rgba(0, 0, 0, 0.24) 55%, rgba(0, 0, 0, 0) 70%);
       }
 
       .tracker-headline {
         width: 100%;
         max-width: min(16rem, 62vw);
         margin-top: clamp(108px, 30vw, 132px);
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.72);
       }
 
       .mission-logo-stack {
@@ -2745,7 +2746,7 @@
 
       .tracker-headline .hero-mobile-copy span:not(.mission-line) + span:not(.mission-line) {
         margin-top: 18px;
-        color: rgba(255, 255, 255, 0.78);
+        color: rgba(255, 255, 255, 0.86);
         font-size: clamp(1.05rem, 4.45vw, 1.13rem);
         line-height: 1.5;
         opacity: 1;
