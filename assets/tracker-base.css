@@ -158,6 +158,8 @@
       overflow: hidden;
       background: #000;
       color: #fff;
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     .mission-intro::before {
@@ -192,6 +194,8 @@
       overflow: hidden;
       background: #050505;
       transform-origin: center;
+      backface-visibility: hidden;
+      will-change: clip-path, transform, opacity;
     }
 
     .mission-intro-wipe-frame {
@@ -276,28 +280,28 @@
     }
 
     .mission-intro-stage.is-collapsing {
-      animation: missionIntroCollapse 240ms cubic-bezier(0.72, 0, 0.2, 1) forwards;
+      animation: missionIntroCollapse 320ms cubic-bezier(0.62, 0, 0.18, 1) forwards;
     }
 
     .mission-intro.is-blooming {
-      animation: missionIntroReveal 820ms cubic-bezier(0.18, 0.7, 0.08, 1) forwards;
+      animation: missionIntroReveal 1150ms cubic-bezier(0.2, 0.82, 0.16, 1) forwards;
       background: transparent;
     }
 
     .mission-intro.is-blooming::before {
-      opacity: 0;
+      animation: missionIntroBackdropFade 1150ms cubic-bezier(0.2, 0.82, 0.16, 1) forwards;
     }
 
     .mission-intro.is-blooming .mission-intro-burn-mask {
-      animation: missionIntroBurnLayer 820ms cubic-bezier(0.18, 0.7, 0.08, 1) forwards;
+      animation: missionIntroBurnLayer 1150ms cubic-bezier(0.2, 0.82, 0.16, 1) forwards;
     }
 
     .mission-intro.is-blooming .mission-intro-burn-hole {
-      animation: missionIntroBurnHole 820ms cubic-bezier(0.14, 0.72, 0.04, 1) forwards;
+      animation: missionIntroBurnHole 1150ms cubic-bezier(0.18, 0.82, 0.14, 1) forwards;
     }
 
     .mission-intro.is-blooming .mission-intro-reveal-rim {
-      animation: missionIntroRevealRim 820ms cubic-bezier(0.14, 0.72, 0.04, 1) forwards;
+      animation: missionIntroRevealRim 1150ms cubic-bezier(0.18, 0.82, 0.14, 1) forwards;
     }
 
     .mission-intro.is-hidden {
@@ -346,13 +350,39 @@
       }
     }
 
-    @keyframes missionIntroBurnLayer {
-      0%,
-      78% {
+    @keyframes missionIntroBackdropFade {
+      0% {
         opacity: 1;
       }
 
-      92% {
+      22% {
+        opacity: 0.92;
+      }
+
+      48% {
+        opacity: 0.58;
+      }
+
+      76% {
+        opacity: 0.22;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes missionIntroBurnLayer {
+      0%,
+      68% {
+        opacity: 1;
+      }
+
+      84% {
+        opacity: 0.62;
+      }
+
+      94% {
         opacity: 0.28;
       }
 
@@ -366,20 +396,24 @@
         transform: translate(0, 0) scale(0.08, 0.055);
       }
 
-      17% {
-        transform: translate(-0.8%, 0.7%) scale(0.27, 0.25);
+      14% {
+        transform: translate(-0.4%, 0.35%) scale(0.2, 0.18);
       }
 
-      36% {
-        transform: translate(2.1%, -1.8%) scale(1.12, 0.9);
+      28% {
+        transform: translate(0.5%, -0.4%) scale(0.55, 0.46);
       }
 
-      44% {
-        transform: translate(3.2%, -2.5%) scale(1.42, 1.08);
+      45% {
+        transform: translate(2.2%, -1.8%) scale(1.22, 0.98);
       }
 
-      78% {
-        transform: translate(6.6%, -5.7%) scale(2.78, 2.14);
+      62% {
+        transform: translate(4.3%, -3.6%) scale(1.95, 1.52);
+      }
+
+      82% {
+        transform: translate(6.8%, -5.8%) scale(2.85, 2.18);
       }
 
       100% {
@@ -391,31 +425,37 @@
       0% {
         opacity: 0;
         transform: translate(-50%, -50%) scaleX(0.24) scaleY(0.18) rotate(-8deg);
-        filter: blur(6px) brightness(2.4) saturate(1.7);
+        filter: blur(6px) brightness(2.15) saturate(1.55);
       }
 
-      17% {
-        opacity: 0.9;
-        transform: translate(calc(-50% - 0.8vw), calc(-50% + 0.7vw)) scaleX(1) scaleY(0.94) rotate(-7deg);
-        filter: blur(8px) brightness(3) saturate(2);
+      14% {
+        opacity: 0.78;
+        transform: translate(calc(-50% - 0.4vw), calc(-50% + 0.35vw)) scaleX(0.78) scaleY(0.7) rotate(-7deg);
+        filter: blur(8px) brightness(2.65) saturate(1.82);
       }
 
-      36% {
-        opacity: 0.96;
-        transform: translate(calc(-50% + 2.1vw), calc(-50% - 1.8vw)) scaleX(4.1) scaleY(3.25) rotate(-3deg);
-        filter: blur(14px) brightness(3.28) saturate(2.05);
+      28% {
+        opacity: 0.92;
+        transform: translate(calc(-50% + 0.5vw), calc(-50% - 0.4vw)) scaleX(2.2) scaleY(1.78) rotate(-5deg);
+        filter: blur(10px) brightness(2.92) saturate(1.95);
       }
 
-      44% {
+      45% {
         opacity: 0.98;
-        transform: translate(calc(-50% + 3.2vw), calc(-50% - 2.5vw)) scaleX(4.95) scaleY(3.9) rotate(-1deg);
-        filter: blur(13px) brightness(3.42) saturate(2.12);
+        transform: translate(calc(-50% + 2.2vw), calc(-50% - 1.8vw)) scaleX(4.5) scaleY(3.55) rotate(-2deg);
+        filter: blur(13px) brightness(3.18) saturate(2.04);
       }
 
-      78% {
+      62% {
+        opacity: 0.82;
+        transform: translate(calc(-50% + 4.3vw), calc(-50% - 3.6vw)) scaleX(7.1) scaleY(5.65) rotate(1deg);
+        filter: blur(20px) brightness(2.55) saturate(1.78);
+      }
+
+      82% {
         opacity: 0.5;
-        transform: translate(calc(-50% + 6.6vw), calc(-50% - 5.7vw)) scaleX(10.1) scaleY(8.15) rotate(4deg);
-        filter: blur(29px) brightness(1.9) saturate(1.42);
+        transform: translate(calc(-50% + 6.8vw), calc(-50% - 5.8vw)) scaleX(10.2) scaleY(8.2) rotate(4deg);
+        filter: blur(30px) brightness(1.82) saturate(1.38);
       }
 
       100% {

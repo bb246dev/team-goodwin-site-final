@@ -154,10 +154,10 @@
       mobileQuery: "(max-width: 430px)",
       reducedMotionQuery: "(prefers-reduced-motion: reduce)",
       secondaryWipeDuration: 80,
-      secondaryHold: 100,
+      secondaryHold: 140,
       secondaryImages: [0, 1, 2, 3, 4],
-      collapseDuration: 240,
-      revealDuration: 820,
+      collapseDuration: 320,
+      revealDuration: 1150,
       images: [
         {
           original: "[image] - 7479884.jpeg",
@@ -225,7 +225,7 @@
         <svg class="mission-intro-burn-mask" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <defs>
             <filter id="mission-intro-burn-soften" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="3.8"></feGaussianBlur>
+              <feGaussianBlur stdDeviation="2.8"></feGaussianBlur>
             </filter>
             <mask id="mission-intro-burn-mask-shape" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
               <rect width="100" height="100" fill="#fff"></rect>
