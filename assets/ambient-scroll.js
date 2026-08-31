@@ -82,11 +82,11 @@
     document.documentElement.style.setProperty("--ambient-glow-one", rgb(palette.glowOne));
     document.documentElement.style.setProperty("--ambient-glow-two", rgb(palette.glowTwo));
     const baseLuminance = relativeLuminance(palette.base);
-    const usesDarkInk = baseLuminance > 0.179;
+    const ambientInkAmount = smoothstep(clamp((0.52 - baseLuminance) / 0.48));
     const insideInkAmount = smoothstep(clamp((0.13 - baseLuminance) / 0.08));
     document.documentElement.style.setProperty("--inside-ambient-ink", rgb(mix(DARK_INK, LIGHT_INK, insideInkAmount)));
-    document.documentElement.style.setProperty("--ambient-ink", rgb(usesDarkInk ? DARK_INK : LIGHT_INK));
-    document.documentElement.dataset.ambientTheme = usesDarkInk ? "light" : "dark";
+    document.documentElement.style.setProperty("--ambient-ink", rgb(mix(DARK_INK, LIGHT_INK, ambientInkAmount)));
+    document.documentElement.dataset.ambientTheme = baseLuminance > 0.179 ? "light" : "dark";
     document.documentElement.style.setProperty("--ambient-cloud-lag", Math.abs(lag).toFixed(2));
     document.documentElement.style.setProperty("--ambient-rendered-scroll", renderedScroll.toFixed(2));
   };
