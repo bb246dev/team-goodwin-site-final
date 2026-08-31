@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 const root = process.cwd();
@@ -301,15 +301,23 @@ const deployInstagramFeed = [
   timestamp: null,
 }));
 
-function deployDirectoryAssetPaths(relativeDir) {
-  const absoluteDir = join(dist, relativeDir);
-  if (!existsSync(absoluteDir)) return [];
-
-  return readdirSync(absoluteDir, { withFileTypes: true })
-    .filter((entry) => entry.isFile())
-    .map((entry) => `${relativeDir}/${entry.name}`)
-    .sort();
-}
+const liveTrackingPartnerAssetPaths = [
+  "assets/partners/arsenal-aviation-footer.svg",
+  "assets/partners/trilogy-aviation-footer.svg",
+  "assets/partners/titan-aviation-footer.png",
+  "assets/partners/fly1200-footer.svg",
+  "assets/partners/flyexclusive-footer.svg",
+  "assets/partners/jet-linx-footer.svg",
+  "assets/partners/skyward-aviation-footer.svg",
+  "assets/partners/trueskies-footer.svg",
+  "assets/partners/magellan-jets-footer.svg",
+  "assets/partners/charter-flight-support-footer.svg",
+  "assets/partners/spyroll-studios-footer.svg",
+  "assets/partners/david-footer.png",
+  "assets/partners/humantra-footer.png",
+  "assets/partners/rizkia-footer.png",
+  "assets/partners/whoop-footer.png",
+];
 
 const deployAssetPaths = [
   "assets/styles-ulvf0Dcj.css",
@@ -345,15 +353,11 @@ const deployAssetPaths = [
   "fonts/inter-500-subset.woff2",
   "fonts/inter-600-subset.woff2",
   "fonts/inter-700-subset.woff2",
-  "fonts/font-8.ttf",
-  "fonts/font-9.ttf",
-  "fonts/font-10.ttf",
-  "fonts/font-11.ttf",
   "assets/instagram/williamgoodge-01.jpg",
   "assets/instagram/williamgoodge-02.jpg",
   "assets/instagram/williamgoodge-03.jpg",
   "assets/instagram/williamgoodge-04.jpg",
-  ...deployDirectoryAssetPaths("assets/partners"),
+  ...liveTrackingPartnerAssetPaths,
 ];
 
 function contentType(pathname) {
