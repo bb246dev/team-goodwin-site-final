@@ -37,6 +37,30 @@
 
     initMobileNavigation();
 
+    function initSplashModal() {
+      const modal = document.querySelector("[data-splash-modal]");
+      if (!modal) {
+        document.body.classList.remove("has-splash-modal-open");
+        return;
+      }
+
+      const close = () => {
+        document.body.classList.remove("has-splash-modal-open");
+      };
+
+      modal.querySelectorAll("[data-splash-modal-close]").forEach((control) => {
+        control.addEventListener("click", close);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && document.body.classList.contains("has-splash-modal-open")) {
+          close();
+        }
+      });
+    }
+
+    initSplashModal();
+
     function initInsideDesktopAnswers() {
       const grid = document.querySelector("[data-inside-desktop-grid]");
       if (!grid) return;
@@ -262,12 +286,7 @@
 
         root.classList.add("is-hidden");
         document.body.classList.remove("mission-intro-active");
-        const landingSplash = document.getElementById("landing");
-        if (landingSplash) {
-          landingSplash.scrollIntoView({ block: "start", behavior: "instant" });
-        } else {
-          window.scrollTo(0, 0);
-        }
+        window.scrollTo(0, 0);
         await sleep(180);
         root.remove();
       };
