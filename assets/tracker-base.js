@@ -262,7 +262,12 @@
 
         root.classList.add("is-hidden");
         document.body.classList.remove("mission-intro-active");
-        window.scrollTo(0, 0);
+        const landingSplash = document.getElementById("landing");
+        if (landingSplash) {
+          landingSplash.scrollIntoView({ block: "start", behavior: "instant" });
+        } else {
+          window.scrollTo(0, 0);
+        }
         await sleep(180);
         root.remove();
       };
