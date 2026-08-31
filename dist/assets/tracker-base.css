@@ -594,13 +594,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
-      border: 1px solid rgba(255, 255, 255, 0.42);
+      width: 34px;
+      height: 34px;
+      border: 0;
       border-radius: 0;
-      background: rgba(5, 15, 15, 0.58);
-      color: var(--color-white);
-      font-size: 1.45rem;
+      background: rgba(5, 15, 15, 0.24);
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 1.25rem;
       line-height: 1;
       cursor: pointer;
     }
@@ -2528,6 +2528,10 @@
         background:
           linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.48)),
           radial-gradient(circle at 50% 44%, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.56) 74%);
+      }
+
+      .splash-modal-close {
+        background: rgba(76, 91, 92, 0.65);
       }
 
       .splash-modal-content {
