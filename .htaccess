@@ -1,0 +1,17 @@
+RewriteEngine On
+
+RewriteRule ^live-tracking/?$ live-tracking.html [L]
+RewriteRule ^faq/?$ faq.html [L]
+RewriteRule ^updates/?$ updates.html [L]
+RewriteRule ^privacy/?$ privacy.html [L]
+RewriteRule ^terms/?$ terms.html [L]
+RewriteRule ^participation-terms/?$ participation-terms.html [L]
+RewriteRule ^accessibility/?$ accessibility.html [L]
+RewriteRule ^the-run/?$ the-run.html [L]
+RewriteRule ^will/?$ will.html [L]
+RewriteRule ^fifty-runs/?$ fifty-runs.html [L]
+RewriteRule ^week-1/?$ week-1.html [L]
+RewriteRule ^week-2/?$ week-2.html [L]
+RewriteRule ^week-3/?$ week-3.html [L]
+RewriteRule ^athletes/?$ athletes.html [L]
+RewriteRule ^partners/?$ partners.html [L]

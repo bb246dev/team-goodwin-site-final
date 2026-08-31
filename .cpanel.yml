@@ -1,0 +1,38 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/goodfjcw/public_html/
+    - /bin/cp .htaccess $DEPLOYPATH/.htaccess
+    - /bin/cp -R dist/assets $DEPLOYPATH
+    - /bin/cp -R dist/fonts $DEPLOYPATH
+    - /bin/cp dist/live-tracking.html $DEPLOYPATH/index.html
+    - /bin/cp dist/live-tracking.html $DEPLOYPATH/live-tracking.html
+    - /bin/cp -R dist/live-tracking $DEPLOYPATH
+    - /bin/cp dist/faq.html $DEPLOYPATH/faq.html
+    - /bin/cp -R dist/faq $DEPLOYPATH
+    - /bin/cp dist/updates.html $DEPLOYPATH/updates.html
+    - /bin/cp -R dist/updates $DEPLOYPATH
+    - /bin/cp dist/privacy.html $DEPLOYPATH/privacy.html
+    - /bin/cp -R dist/privacy $DEPLOYPATH
+    - /bin/cp dist/terms.html $DEPLOYPATH/terms.html
+    - /bin/cp -R dist/terms $DEPLOYPATH
+    - /bin/cp dist/participation-terms.html $DEPLOYPATH/participation-terms.html
+    - /bin/cp -R dist/participation-terms $DEPLOYPATH
+    - /bin/cp dist/accessibility.html $DEPLOYPATH/accessibility.html
+    - /bin/cp -R dist/accessibility $DEPLOYPATH
+    - /bin/cp dist/the-run.html $DEPLOYPATH/the-run.html
+    - /bin/cp -R dist/the-run $DEPLOYPATH
+    - /bin/cp dist/will.html $DEPLOYPATH/will.html
+    - /bin/cp -R dist/will $DEPLOYPATH
+    - /bin/cp dist/fifty-runs.html $DEPLOYPATH/fifty-runs.html
+    - /bin/cp -R dist/fifty-runs $DEPLOYPATH
+    - /bin/cp dist/week-1.html $DEPLOYPATH/week-1.html
+    - /bin/cp -R dist/week-1 $DEPLOYPATH
+    - /bin/cp dist/week-2.html $DEPLOYPATH/week-2.html
+    - /bin/cp -R dist/week-2 $DEPLOYPATH
+    - /bin/cp dist/week-3.html $DEPLOYPATH/week-3.html
+    - /bin/cp -R dist/week-3 $DEPLOYPATH
+    - /bin/cp dist/athletes.html $DEPLOYPATH/athletes.html
+    - /bin/cp -R dist/athletes $DEPLOYPATH
+    - /bin/cp dist/partners.html $DEPLOYPATH/partners.html
+    - /bin/cp -R dist/partners $DEPLOYPATH
