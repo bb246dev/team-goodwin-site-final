@@ -788,17 +788,17 @@
     <div class="updates-content">
       <section class="updates-hero">
         <div>
-          <div class="tracker-eyebrow">UPDATES ARCHIVE</div>
-          <h1>Every update from the road.</h1>
+          <div class="tracker-eyebrow">RUNNING LIVE</div>
+          <h1>From the road.</h1>
         </div>
-        <p>Every published update from Goodwin Generated Mission America, newest first.</p>
+        <p>50 states. 24 days. This is where we’ll share what’s happening along the way — runs, transfers, milestones and everything in between.</p>
       </section>
 
       <section class="updates-archive" data-updates-archive aria-live="polite">
         <article class="update">
-          <time>Loading</time>
+          <time></time>
           <div>
-            <h2>Fetching updates</h2>
+            <h2>Connecting to the road…</h2>
           </div>
         </article>
       </section>
@@ -1050,7 +1050,7 @@
       try {
         const updates = await loadUpdates(options);
         if (!updates.length) {
-          container.innerHTML = '<article class="update"><time>Updates</time><div><h2>Updates from the road are coming.</h2><p>When Goodwin Generated Mission America gets underway, live updates from the team will appear here.</p></div></article>';
+          container.innerHTML = '<article class="update"><time>Updates</time><div><h2>The road starts October 9.</h2><p>Once Mission America is underway, updates from Will and the team will appear here as they happen.</p></div></article>';
           return;
         }
         container.innerHTML = updates.map((update) => `
@@ -1064,7 +1064,7 @@
           </article>
         `).join("");
       } catch (error) {
-        container.innerHTML = '<article class="update"><time>Updates</time><div><h2>Latest updates are temporarily unavailable.</h2></div></article>';
+        container.innerHTML = '<article class="update"><time>Updates</time><div><h2>We lost the signal.</h2><p>Live updates are temporarily unavailable. Check back shortly.</p></div></article>';
       }
     }
 
