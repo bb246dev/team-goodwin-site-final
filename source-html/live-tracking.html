@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="../fonts/inter.css">
   <link rel="stylesheet" href="../assets/styles-ulvf0Dcj.css">
   <link rel="stylesheet" href="../assets/index-CIGW-MKW.css">
-  <link rel="stylesheet" href="../assets/tracker-base.css?v=20260831splashmodalrect">
+  <link rel="stylesheet" href="../assets/tracker-base.css?v=20260831videodefer">
   <link rel="stylesheet" href="../assets/ambient-scroll.css?v=20260830j">
   <script src="../assets/us-states-albers-10m.js"></script>
-  <script defer src="../assets/tracker-base.js?v=20260831splashmodalrect"></script>
+  <script defer src="../assets/tracker-base.js?v=20260831videodefer"></script>
   <script defer src="../assets/ambient-scroll.js?v=20260830h"></script>
 </head>
 <body class="has-splash-modal-open">
@@ -37,13 +37,13 @@
     <div class="splash-modal" role="dialog" aria-modal="true" aria-labelledby="splash-modal-title" data-splash-modal>
       <button class="splash-modal-backdrop" type="button" aria-label="Close splash" data-splash-modal-close></button>
       <div class="splash-modal-panel">
-        <img class="splash-modal-photo" src="../assets/hero-runner-Ci5y42DW.jpg" alt="" aria-hidden="true">
+        <img class="splash-modal-photo" src="../assets/hero-runner-Ci5y42DW.jpg" alt="" aria-hidden="true" fetchpriority="high">
         <div class="splash-modal-shade" aria-hidden="true"></div>
         <button class="splash-modal-close" type="button" aria-label="Close splash" data-splash-modal-close>×</button>
         <div class="splash-modal-content">
           <h2 class="sr-only" id="splash-modal-title">Goodwin Generated Mission America</h2>
           <div class="splash-modal-actions" aria-label="Splash links">
-            <a class="splash-modal-button splash-modal-button-team" href="https://teamgoodwin.com/" target="_blank" rel="noopener noreferrer">Follow Along</a>
+            <a class="splash-modal-button splash-modal-button-team" href="#live" data-splash-modal-close>Follow Along</a>
             <a class="splash-modal-button splash-modal-button-donate" href="https://live-mission-america-50.pantheonsite.io/" target="_blank" rel="noopener noreferrer">Donate</a>
           </div>
         </div>
@@ -51,8 +51,8 @@
     </div>
 
     <section class="tracker-hero" id="live" aria-labelledby="page-title">
-      <video class="tracker-hero-bg" autoplay muted loop playsinline preload="metadata" poster="../assets/hero-runner-Ci5y42DW.jpg" aria-hidden="true">
-        <source src="../assets/hero-signal-2026-08-30-232350.mp4" type="video/mp4">
+      <video class="tracker-hero-bg" autoplay muted loop playsinline preload="none" poster="../assets/hero-runner-Ci5y42DW.jpg" aria-hidden="true" data-hero-video>
+        <source data-src="../assets/hero-signal-2026-08-30-232350.mp4" type="video/mp4">
       </video>
       <div class="tracker-hero-inner">
         <div class="tracker-headline">

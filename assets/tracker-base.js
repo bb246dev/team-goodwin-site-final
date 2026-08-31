@@ -37,6 +37,31 @@
 
     initMobileNavigation();
 
+    function initHeroVideoLoading() {
+      const video = document.querySelector("[data-hero-video]");
+      if (!video) return;
+
+      const loadVideo = () => {
+        if (video.dataset.loaded === "true") return;
+        video.querySelectorAll("source[data-src]").forEach((source) => {
+          source.src = source.dataset.src;
+        });
+        video.dataset.loaded = "true";
+        video.load();
+        video.play?.().catch(() => {});
+      };
+
+      const mobileQuery = window.matchMedia("(max-width: 768px)");
+      if (!mobileQuery.matches || !document.body.classList.contains("has-splash-modal-open")) {
+        loadVideo();
+        return;
+      }
+
+      document.addEventListener("goodwin:splashclosed", loadVideo, { once: true });
+    }
+
+    initHeroVideoLoading();
+
     function initSplashModal() {
       const modal = document.querySelector("[data-splash-modal]");
       if (!modal) {
@@ -46,6 +71,7 @@
 
       const close = () => {
         document.body.classList.remove("has-splash-modal-open");
+        document.dispatchEvent(new CustomEvent("goodwin:splashclosed"));
       };
 
       modal.querySelectorAll("[data-splash-modal-close]").forEach((control) => {
