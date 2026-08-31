@@ -77,16 +77,16 @@ const sharedFooterHtml = `
           <li><a href="live-tracking.html#map">Live Map</a></li>
         </ul>
         <ul class="global-site-footer-link-group">
-          <li><a href="https://www.instagram.com/williamgoodge/" target="_blank" rel="noopener noreferrer">Will — Instagram</a></li>
-          <li><a href="https://www.tiktok.com/@williamgoodge?_r=1&amp;_t=ZP-99HtuOCkdiA" target="_blank" rel="noopener noreferrer">Will — TikTok</a></li>
-          <li><a href="https://www.youtube.com/@goodge" target="_blank" rel="noopener noreferrer">Will — YouTube</a></li>
+          <li><a href="https://www.instagram.com/williamgoodge/" target="_blank" rel="noopener noreferrer">Will's Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@williamgoodge?_r=1&amp;_t=ZP-99HtuOCkdiA" target="_blank" rel="noopener noreferrer">Will's TikTok</a></li>
+          <li><a href="https://www.youtube.com/@goodge" target="_blank" rel="noopener noreferrer">Will's YouTube</a></li>
           <li><a href="https://rizkia.com/" target="_blank" rel="noopener noreferrer">Rizkia</a></li>
           <li><a href="https://live-mission-america-50.pantheonsite.io/#faq" target="_blank" rel="noopener noreferrer">WilliamGoodge.com</a></li>
         </ul>
         <ul class="global-site-footer-link-group">
-          <li><a href="https://www.linkedin.com/company/teamgoodwin/" target="_blank" rel="noopener noreferrer">Goodwin — LinkedIn</a></li>
-          <li><a href="https://www.youtube.com/@goodwinsoftwarecompany" target="_blank" rel="noopener noreferrer">Goodwin — YouTube</a></li>
-          <li><a href="https://x.com/goteamgoodwin" target="_blank" rel="noopener noreferrer">Goodwin — X</a></li>
+          <li><a href="https://www.linkedin.com/company/teamgoodwin/" target="_blank" rel="noopener noreferrer">Goodwin's LinkedIn</a></li>
+          <li><a href="https://www.youtube.com/@goodwinsoftwarecompany" target="_blank" rel="noopener noreferrer">Goodwin's YouTube</a></li>
+          <li><a href="https://x.com/goteamgoodwin" target="_blank" rel="noopener noreferrer">Goodwin's X</a></li>
           <li><a href="https://teamgoodwin.com/" target="_blank" rel="noopener noreferrer">TeamGoodwin.com</a></li>
         </ul>
       </nav>
