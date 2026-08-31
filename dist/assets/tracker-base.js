@@ -212,6 +212,7 @@
 
       const logoSource = document.querySelector(".tracker-mark-mobile-logo")?.getAttribute("src") || "../assets/mission-america-logo.png";
       const assetBase = logoSource.replace(/mission-america-logo\.png(?:\?.*)?$/, "");
+      const firstIntroSource = `${assetBase}${config.images[0].file}`;
       const root = document.createElement("div");
       root.className = "mission-intro is-active";
       root.setAttribute("aria-hidden", "true");
@@ -219,7 +220,7 @@
         <img class="mission-intro-logo" src="${logoSource}" alt="">
         <div class="mission-intro-stage">
           <img class="mission-intro-frame" alt="">
-          <img class="mission-intro-wipe-frame" alt="" aria-hidden="true">
+          <img class="mission-intro-wipe-frame" src="${firstIntroSource}" alt="" aria-hidden="true">
         </div>
         <svg class="mission-intro-burn-mask" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <defs>

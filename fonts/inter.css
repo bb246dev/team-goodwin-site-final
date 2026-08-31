@@ -3,7 +3,9 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("font-8.ttf") format("truetype");
+  src:
+    url("inter-400-subset.woff2") format("woff2"),
+    url("font-8.ttf") format("truetype");
 }
 
 @font-face {
@@ -11,7 +13,9 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("font-9.ttf") format("truetype");
+  src:
+    url("inter-500-subset.woff2") format("woff2"),
+    url("font-9.ttf") format("truetype");
 }
 
 @font-face {
@@ -19,7 +23,9 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("font-10.ttf") format("truetype");
+  src:
+    url("inter-600-subset.woff2") format("woff2"),
+    url("font-10.ttf") format("truetype");
 }
 
 @font-face {
@@ -27,5 +33,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("font-11.ttf") format("truetype");
+  src:
+    url("inter-700-subset.woff2") format("woff2"),
+    url("font-11.ttf") format("truetype");
 }

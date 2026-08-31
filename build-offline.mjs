@@ -341,6 +341,10 @@ const deployAssetPaths = [
   "assets/field-notes-week-2-grind.jpg",
   "assets/field-notes-week-3-finish.jpg",
   "fonts/inter.css",
+  "fonts/inter-400-subset.woff2",
+  "fonts/inter-500-subset.woff2",
+  "fonts/inter-600-subset.woff2",
+  "fonts/inter-700-subset.woff2",
   "fonts/font-8.ttf",
   "fonts/font-9.ttf",
   "fonts/font-10.ttf",
@@ -357,6 +361,7 @@ function contentType(pathname) {
   if (pathname.endsWith(".js") || pathname.endsWith(".mjs")) return "text/javascript; charset=utf-8";
   if (pathname.endsWith(".json")) return "application/json; charset=utf-8";
   if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg")) return "image/jpeg";
+  if (pathname.endsWith(".woff2")) return "font/woff2";
   if (pathname.endsWith(".mp4")) return "video/mp4";
   if (pathname.endsWith(".png")) return "image/png";
   if (pathname.endsWith(".svg")) return "image/svg+xml";
