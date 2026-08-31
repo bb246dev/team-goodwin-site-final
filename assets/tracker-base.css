@@ -4075,6 +4075,35 @@
     }
 
     @media (min-width: 769px) {
+      .tracker-page #the-run .feature-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        border: 0;
+        background: transparent;
+      }
+
+      .tracker-page #the-run .feature-card,
+      .tracker-page #the-run .feature-card:hover,
+      .tracker-page #the-run .feature-card:focus,
+      .tracker-page #the-run .feature-card:focus-visible {
+        width: auto;
+        min-width: 0;
+        min-height: 0;
+        aspect-ratio: 1 / 1;
+        border: 0;
+        transform: none;
+      }
+
+      .tracker-page #the-run .feature-card.has-image,
+      .tracker-page #the-run .feature-card.has-image:hover,
+      .tracker-page #the-run .feature-card.has-image:focus,
+      .tracker-page #the-run .feature-card.has-image:focus-visible {
+        background-color: var(--tracker-ink);
+        background-repeat: no-repeat;
+        color: var(--color-white);
+      }
+
       .tracker-page #updates .week-grid {
         display: grid;
         grid-auto-flow: row;
