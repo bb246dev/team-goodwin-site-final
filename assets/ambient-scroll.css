@@ -175,8 +175,8 @@ body.has-ambient-scroll .tracker-eyebrow {
 body.has-ambient-scroll .tracker-hero-bg {
   inset: 0;
   height: 100%;
-  object-position: 28% 45%;
-  transform: scale(1.08);
+  object-position: 28% top;
+  transform: none;
 }
 
 body.has-ambient-scroll #articles [hidden] {
@@ -948,7 +948,7 @@ body.has-ambient-scroll .site-footer-link-disabled {
 
 @media (max-width: 560px) {
   body.has-ambient-scroll .tracker-hero-bg {
-    object-position: 40% 45%;
+    object-position: 40% top;
   }
 
   body.has-ambient-scroll .mobile-photo-break-road .tracker-eyebrow,
