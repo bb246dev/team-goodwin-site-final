@@ -119,6 +119,18 @@
       gap: clamp(16px, 2.4vw, 34px);
       color: rgba(255, 255, 255, 0.86);
       font-size: 0.95rem;
+      transition: opacity 220ms ease;
+    }
+
+    @media (min-width: 769px) {
+      .tracker-nav.is-scrolled .tracker-navlinks {
+        opacity: 0.38;
+      }
+
+      .tracker-nav.is-scrolled .tracker-navlinks:hover,
+      .tracker-nav.is-scrolled .tracker-navlinks:focus-within {
+        opacity: 1;
+      }
     }
 
     .tracker-navlinks a {
@@ -1956,6 +1968,8 @@
       max-height: 664px;
       overflow-y: auto;
       overscroll-behavior: contain;
+      scrollbar-color: rgba(255, 255, 255, 0.9) rgba(255, 255, 255, 0.18);
+      scrollbar-width: thin;
     }
 
     .route-itinerary::-webkit-scrollbar {
@@ -1963,19 +1977,73 @@
     }
 
     .route-itinerary::-webkit-scrollbar-track {
-      background: rgba(10, 10, 10, 0.08);
+      background: rgba(255, 255, 255, 0.18);
     }
 
     .route-itinerary::-webkit-scrollbar-thumb {
-      background: rgba(10, 10, 10, 0.34);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 999px;
+      border: 2px solid rgba(20, 63, 60, 0.24);
     }
 
     .route-itinerary .run-card {
       display: grid;
       grid-template-columns: auto 1fr auto;
-      gap: 18px;
-      align-items: start;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 26px;
+    }
+
+    #rsvp .route-itinerary .run-card {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+    }
+
+    #rsvp .route-itinerary .run-card:last-child {
+      border-bottom: 0;
+    }
+
+    #rsvp .route-itinerary .run-card h3 {
+      margin: 0;
+      line-height: 1.08;
+    }
+
+    #rsvp .route-itinerary .run-card .tracker-eyebrow {
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .route-itinerary.is-selected .run-card {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      width: min(100%, 560px);
+      margin-inline: auto;
+      border-radius: 999px;
+    }
+
+    .route-itinerary.is-selected .rsvp-selected-stop-label {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+      font-weight: 700;
+    }
+
+    .route-itinerary.is-selected .rsvp-selected-stop-date {
+      color: var(--tracker-ink);
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .route-itinerary.is-selected .rsvp-selected-stop-place {
+      color: var(--tracker-muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .route-itinerary.is-selected .button-row {
+      justify-content: flex-end;
+      margin-top: 0;
     }
 
     .rsvp-mobile-controls {
@@ -3277,10 +3345,20 @@
         min-height: 50px;
         border: 1px solid var(--tracker-line);
         border-radius: 999px;
-        background: var(--color-white);
-        color: var(--tracker-ink);
+        background: #fff;
+        background-color: #fff;
+        color: #0a0a0a;
+        -webkit-text-fill-color: #0a0a0a;
+        color-scheme: light;
         padding: 0 18px;
         font-size: 1rem;
+      }
+
+      .rsvp-mobile-controls select option {
+        background: #fff;
+        background-color: #fff;
+        color: #0a0a0a;
+        -webkit-text-fill-color: #0a0a0a;
       }
 
       #rsvp .route-itinerary {
@@ -3307,10 +3385,13 @@
 
       #rsvp .route-itinerary.is-selected .run-card {
         display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
         gap: 16px;
+        width: 100%;
         padding: 20px;
-        border-radius: 16px;
-        border-left: 2px solid var(--color-accent);
+        border: 1px solid var(--tracker-line);
+        border-radius: 999px;
       }
 
       #rsvp .route-itinerary.is-selected .rsvp-selected-stop-label {
@@ -3323,7 +3404,7 @@
       #rsvp .route-itinerary.is-selected .rsvp-selected-stop-date {
         color: var(--tracker-muted);
         font-size: 0.9rem;
-        font-weight: 400;
+        font-weight: 800;
         line-height: 1.2;
       }
 
@@ -3336,6 +3417,7 @@
 
       #rsvp .route-itinerary.is-selected .button-row {
         margin-top: 0;
+        justify-content: flex-end;
       }
 
       #why {
@@ -3398,6 +3480,28 @@
 
       #rsvp .rsvp-mobile-controls select {
         border-color: rgba(255, 255, 255, 0.42);
+        background: #fff;
+        background-color: #fff;
+        color: #0a0a0a;
+        -webkit-text-fill-color: #0a0a0a;
+        color-scheme: light;
+      }
+
+      #rsvp #rsvp-state-select,
+      #rsvp select[data-rsvp-state-select] {
+        background: #fff !important;
+        background-color: #fff !important;
+        color: #0a0a0a !important;
+        -webkit-text-fill-color: #0a0a0a !important;
+        color-scheme: light !important;
+      }
+
+      #rsvp #rsvp-state-select option,
+      #rsvp select[data-rsvp-state-select] option {
+        background: #fff !important;
+        background-color: #fff !important;
+        color: #0a0a0a !important;
+        -webkit-text-fill-color: #0a0a0a !important;
       }
 
       #rsvp .rsvp-mobile-controls .tracker-button {
@@ -3408,6 +3512,15 @@
 
       #rsvp .route-itinerary .run-card {
         background: var(--color-white);
+      }
+
+      #rsvp .route-itinerary.is-selected .run-card {
+        grid-template-columns: 1fr;
+        border-radius: 16px;
+      }
+
+      #rsvp .route-itinerary.is-selected .button-row {
+        justify-content: flex-start;
       }
 
       .site-footer-partners {
@@ -3471,6 +3584,41 @@
         max-width: 92px;
         max-height: 26px;
         opacity: 0.78;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 940px) {
+      #rsvp .rsvp-mobile-controls {
+        display: none;
+      }
+
+      #rsvp .route-itinerary {
+        display: grid;
+        grid-template-columns: 1fr;
+        max-height: 664px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        border-top: 1px solid rgba(255, 255, 255, 0.24);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+        scrollbar-color: rgba(255, 255, 255, 0.9) rgba(255, 255, 255, 0.18);
+        scrollbar-width: thin;
+      }
+
+      #rsvp .route-itinerary .run-card,
+      #rsvp .route-itinerary.is-expanded .run-card {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 16px;
+        align-items: center;
+        padding: 18px 26px;
+        border: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+      }
+    }
+
+    @media (min-width: 769px) {
+      #rsvp .section-head .tracker-eyebrow {
+        display: none;
       }
     }
 

@@ -10,13 +10,24 @@
   <link rel="stylesheet" href="../fonts/inter.css">
   <link rel="stylesheet" href="../assets/styles-ulvf0Dcj.css">
   <link rel="stylesheet" href="../assets/index-CIGW-MKW.css">
-  <link rel="stylesheet" href="../assets/tracker-base.css?v=20260831videodefer">
-  <link rel="stylesheet" href="../assets/ambient-scroll.css?v=20260830j">
+  <link rel="stylesheet" href="../assets/tracker-base.css?v=20260831rsvpdesktop2">
+  <link rel="stylesheet" href="../assets/ambient-scroll.css?v=20260831rsvpdesktop2">
   <script src="../assets/us-states-albers-10m.js"></script>
-  <script defer src="../assets/tracker-base.js?v=20260831videodefer"></script>
+  <script defer src="../assets/tracker-base.js?v=20260831rsvpdesktop2"></script>
   <script defer src="../assets/ambient-scroll.js?v=20260830h"></script>
 </head>
-<body class="has-splash-modal-open">
+<body>
+  <script>
+    (() => {
+      try {
+        if (window.localStorage.getItem("goodwinSplashSeen") !== "true") {
+          document.body.classList.add("has-splash-modal-open");
+        }
+      } catch {
+        document.body.classList.add("has-splash-modal-open");
+      }
+    })();
+  </script>
   <main class="tracker-page">
     <nav class="tracker-nav" aria-label="Live tracker navigation">
       <a class="tracker-mark" href="#live" aria-label="Back to the top of the Team Goodwin homepage">
@@ -106,14 +117,14 @@
               <input id="follow-email" name="email" type="email" autocomplete="email" placeholder="Email address" required>
               <button class="tracker-button" type="submit">Follow Along</button>
             </form>
-            <p class="legal-note">By submitting, you agree to receive updates from Team Goodwin. See our <a href="/privacy/">Privacy Policy</a>.</p>
+            <p class="legal-note">By submitting, you agree to receive updates from Team Goodwin. See our <a href="privacy.html">Privacy Policy</a>.</p>
             <div class="follow-note" data-follow-message aria-live="polite"></div>
           </div>
         </div>
         <section class="ticker-panel" aria-label="Goodwin Generated Mission America live ticker">
           <div class="ticker-head">
             <div class="tracker-eyebrow">Latest Updates</div>
-            <a href="/updates/">View All Updates</a>
+            <a href="updates.html">View All Updates</a>
           </div>
           <div class="ticker-track" data-ticker-items>
             <div class="ticker-item"><time>Loading</time><span>Fetching Goodwin Generated Mission America updates.</span></div>
@@ -456,7 +467,7 @@
             </div>
           </div>
         </div>
-        <div class="button-row inside-section-cta"><a class="tracker-button secondary is-accent" href="/faq/">View FAQ</a></div>
+        <div class="button-row inside-section-cta"><a class="tracker-button secondary is-accent" href="faq.html">View FAQ</a></div>
       </section>
 
       <div class="mobile-photo-break mobile-photo-break-portrait">
@@ -486,12 +497,12 @@
           <article class="article-card">
             <div class="tracker-eyebrow">IMPACT</div>
             <h3>50 states. Thousands of reasons.</h3>
-            <div class="button-row"><a class="tracker-button secondary" href="/faq/">Why It Matters →</a></div>
+            <div class="button-row"><a class="tracker-button secondary" href="faq.html">Why It Matters →</a></div>
           </article>
           <article class="article-card">
             <div class="tracker-eyebrow">GIVING</div>
             <h3>Turn miles into impact.</h3>
-            <div class="button-row"><a class="tracker-button secondary" href="/faq/#donate">Support the Mission →</a></div>
+            <div class="button-row"><a class="tracker-button secondary" href="faq.html#donate">Support the Mission →</a></div>
           </article>
         </div>
       </section>
@@ -521,7 +532,7 @@
             <ul class="site-footer-link-group">
               <li><a href="the-run.html">The Run</a></li>
               <li><a href="#map">Live Map</a></li>
-              <li><a href="/updates/">Running Live Archive</a></li>
+              <li><a href="updates.html">Running Live Archive</a></li>
               <li><a href="fifty-runs.html">50 Runs, 50 States</a></li>
             </ul>
             <ul class="site-footer-link-group">
@@ -562,10 +573,10 @@
           <p class="site-footer-partner-disclaimer">All trademarks and logos are the property of their respective owners and are used with permission where applicable.</p>
         </div>
         <nav class="site-footer-legal" aria-label="Legal links">
-          <a href="/privacy/">Privacy</a>
-          <a href="/terms/">Terms</a>
-          <a href="/participation-terms/">Participation Terms</a>
-          <a href="/accessibility/">Accessibility</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="participation-terms.html">Participation Terms</a>
+          <a href="accessibility.html">Accessibility</a>
         </nav>
         <p class="site-footer-disclaimer">Goodwin Generated Mission America is an endurance event and world record attempt. Routes, schedules, locations, tracking data and event details are subject to change. World record status is subject to independent verification. Participation in any associated run or event is voluntary and subject to the Participation Terms.</p>
         <div class="site-footer-bottom">

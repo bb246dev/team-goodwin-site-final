@@ -293,6 +293,10 @@ body.has-ambient-scroll .tracker-nav {
   transition: none;
 }
 
+body.has-ambient-scroll .tracker-navlinks {
+  transition: opacity 220ms ease;
+}
+
 body.has-ambient-scroll .tracker-navlinks,
 body.has-ambient-scroll .tracker-mark {
   color: rgb(var(--ambient-ink));
@@ -335,6 +339,13 @@ body.has-ambient-scroll .tracker-cta:hover,
 body.has-ambient-scroll .tracker-button:hover {
   border-color: rgb(var(--ambient-ink));
   background: rgb(var(--ambient-ink) / 15%);
+}
+
+body.has-ambient-scroll #rsvp .route-itinerary .tracker-button.secondary,
+body.has-ambient-scroll #rsvp .route-itinerary .tracker-button.secondary:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-white);
 }
 
 body.has-ambient-scroll .tracker-navlinks a.tracker-cta {
@@ -715,7 +726,7 @@ body.has-ambient-scroll #rsvp .section-head p {
 }
 
 body.has-ambient-scroll #rsvp .rsvp-mobile-controls {
-  display: grid;
+  display: none;
   grid-template-columns: minmax(220px, 1fr) auto;
   gap: 12px;
   max-width: 720px;
@@ -751,7 +762,22 @@ body.has-ambient-scroll #rsvp .route-itinerary.is-expanded {
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
+  scrollbar-color: rgba(255, 255, 255, 0.9) rgba(255, 255, 255, 0.18);
   scrollbar-width: thin;
+}
+
+body.has-ambient-scroll #rsvp .route-itinerary.is-expanded::-webkit-scrollbar {
+  width: 10px;
+}
+
+body.has-ambient-scroll #rsvp .route-itinerary.is-expanded::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+body.has-ambient-scroll #rsvp .route-itinerary.is-expanded::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(20, 63, 60, 0.24);
+  border-radius: 999px;
 }
 
 body.has-ambient-scroll #rsvp .route-itinerary.is-selected {
@@ -924,6 +950,7 @@ body.has-ambient-scroll .site-footer-link-disabled {
   }
 
   body.has-ambient-scroll #rsvp .rsvp-mobile-controls {
+    display: grid;
     grid-template-columns: 1fr;
   }
 

@@ -37,6 +37,22 @@
 
     initMobileNavigation();
 
+    function initDesktopNavFade() {
+      const nav = document.querySelector(".tracker-nav");
+      if (!nav) return;
+
+      const desktopQuery = window.matchMedia("(min-width: 769px)");
+      const updateNavFade = () => {
+        nav.classList.toggle("is-scrolled", desktopQuery.matches && window.scrollY > 180);
+      };
+
+      updateNavFade();
+      window.addEventListener("scroll", updateNavFade, { passive: true });
+      desktopQuery.addEventListener?.("change", updateNavFade);
+    }
+
+    initDesktopNavFade();
+
     function initHeroVideoLoading() {
       const video = document.querySelector("[data-hero-video]");
       if (!video) return;
@@ -64,12 +80,35 @@
 
     function initSplashModal() {
       const modal = document.querySelector("[data-splash-modal]");
+      const storageKey = "goodwinSplashSeen";
+      const hasSeenSplash = () => {
+        try {
+          return window.localStorage.getItem(storageKey) === "true";
+        } catch {
+          return false;
+        }
+      };
+      const markSplashSeen = () => {
+        try {
+          window.localStorage.setItem(storageKey, "true");
+        } catch {
+          // The modal still closes when storage is unavailable.
+        }
+      };
+
       if (!modal) {
         document.body.classList.remove("has-splash-modal-open");
         return;
       }
 
+      if (hasSeenSplash()) {
+        document.body.classList.remove("has-splash-modal-open");
+        document.dispatchEvent(new CustomEvent("goodwin:splashclosed"));
+        return;
+      }
+
       const close = () => {
+        markSplashSeen();
         document.body.classList.remove("has-splash-modal-open");
         document.dispatchEvent(new CustomEvent("goodwin:splashclosed"));
       };
@@ -818,6 +857,7 @@
 
     let rsvpMobileMode = "select";
     let selectedRouteStop = "";
+    const rsvpDesktopQuery = window.matchMedia("(min-width: 769px)");
 
     function getRouteStopMarkup(stop) {
       return `
@@ -836,8 +876,7 @@
       return `
         <article class="run-card">
           <div class="rsvp-selected-stop-label">
-            <span class="rsvp-selected-stop-date">${stop.date}</span>
-            <span class="rsvp-selected-stop-place">${stop.city}, ${stop.abbr}</span>
+            <span class="rsvp-selected-stop-date">${stop.date} - ${stop.city}</span>
           </div>
           <div class="button-row"><a class="tracker-button secondary" href="partners.html" data-rsvp-link>RSVP</a></div>
         </article>
@@ -870,10 +909,11 @@
       const container = document.querySelector("[data-route-itinerary]");
       if (!container) return;
       populateRsvpMobileControls();
-      container.classList.toggle("is-expanded", rsvpMobileMode === "all");
-      container.classList.toggle("is-selected", rsvpMobileMode === "selected");
+      const rsvpMode = rsvpDesktopQuery.matches ? "all" : rsvpMobileMode;
+      container.classList.toggle("is-expanded", rsvpMode === "all");
+      container.classList.toggle("is-selected", rsvpMode === "selected");
 
-      if (rsvpMobileMode === "all") {
+      if (rsvpMode === "all") {
         container.innerHTML = routeStops.map(getRouteStopMarkup).join("");
         return;
       }
@@ -889,6 +929,7 @@
 
     updateCountdown();
     renderRunItinerary();
+    rsvpDesktopQuery.addEventListener?.("change", renderRunItinerary);
     window.setInterval(updateCountdown, 1000);
 
     const stateAbbr = {
