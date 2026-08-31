@@ -13,7 +13,7 @@ if (existsSync(join(root, "api"))) {
 }
 
 const pages = [
-  ["source-html/index.raw.html", "index.html"],
+  ["source-html/live-tracking.html", "index.html"],
   ["source-html/athletes.raw.html", "athletes.html"],
   ["source-html/partners.raw.html", "partners.html"],
   ["source-html/live-tracking.html", "live-tracking.html"],
@@ -80,7 +80,7 @@ const sharedFooterHtml = `
       <nav class="global-site-footer-nav" aria-label="Footer navigation">
         <ul class="global-site-footer-link-group">
           <li><a href="/the-run/">The Run</a></li>
-          <li><a href="/live-tracking/#map">Live Map</a></li>
+          <li><a href="/#map">Live Map</a></li>
           <li><a href="/updates/">Running Live Archive</a></li>
           <li><a href="/fifty-runs/">50 Runs, 50 States</a></li>
         </ul>
@@ -136,14 +136,14 @@ const sharedFooterHtml = `
 
 const sharedHeaderHtml = `
   <nav class="tracker-nav" aria-label="Site navigation">
-    <a class="tracker-mark" href="/live-tracking/" aria-label="Goodwin home"><img src="/assets/goodwin-logo.png" alt="GOODWIN"><img class="tracker-mark-mobile-logo" src="/assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America"><span>Endurance</span></a>
+    <a class="tracker-mark" href="/" aria-label="Goodwin home"><img src="/assets/goodwin-logo.png" alt="GOODWIN"><img class="tracker-mark-mobile-logo" src="/assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America"><span>Endurance</span></a>
     <button class="tracker-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="tracker-navlinks"><span></span></button>
     <div class="tracker-navlinks" id="tracker-navlinks">
-      <a href="/live-tracking/#the-run">The Run</a>
-      <a href="/live-tracking/#map">50 States</a>
+      <a href="/#the-run">The Run</a>
+      <a href="/#map">50 States</a>
       <a href="/updates/">News</a>
-      <a href="/live-tracking/#why">Will</a>
-      <a class="tracker-cta" href="/live-tracking/#rsvp">Join the Run</a>
+      <a href="/#why">Will</a>
+      <a class="tracker-cta" href="/#rsvp">Join the Run</a>
     </div>
   </nav>`;
 
@@ -170,15 +170,9 @@ function localize(html, pageName) {
     .replace(/(href|src)="\/assets\//g, '$1="assets/')
     .replace(/(href|src)="\.\.\/fonts\//g, '$1="fonts/')
     .replace(/url\((["']?)\.\.\/assets\//g, "url($1assets/")
-    .replace(/content="\/"/g, 'content="index.html"')
-    .replace(/content="\/athletes"/g, 'content="athletes.html"')
-    .replace(/content="\/partners"/g, 'content="partners.html"')
     .replace(/(href|src)="\.\.\/assets\//g, '$1="assets/')
-    .replace(/href="\/#([^"]+)"/g, 'href="index.html#$1"')
-    .replace(/href="\/athletes#([^"]+)"/g, 'href="athletes.html#$1"')
-    .replace(/href="\/athletes"/g, 'href="athletes.html"')
-    .replace(/href="\/partners"/g, 'href="partners.html"')
-    .replace(/href="\/"/g, 'href="index.html"');
+    .replace(/content="\/athletes"/g, 'content="/athletes/"')
+    .replace(/content="\/partners"/g, 'content="/partners/"');
 
   if (pageName !== "live-tracking.html") {
     out = out.replace(
@@ -197,21 +191,6 @@ function localize(html, pageName) {
     out = out.replace(
       new RegExp(`https://i\\.ytimg\\.com/vi/${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/hqdefault\\.jpg`, "g"),
       `assets/youtube/${id}.jpg`,
-    );
-  }
-
-  if (pageName === "index.html") {
-    out = out.replace(
-      '<h1 class="font-display text-[clamp(3rem,9vw,7.5rem)] font-medium leading-[0.92] text-white whitespace-nowrap">',
-      '<h1 class="font-display text-[clamp(3rem,9vw,7.5rem)] font-medium leading-[0.92] text-white whitespace-nowrap" style="font-size:clamp(3rem,10vw,8.75rem)">',
-    );
-    out = out.replace(
-      'class="absolute inset-0 w-full h-full object-cover object-[center_25%] sm:object-center"',
-      'style="object-position:center center;transform:translateY(44px) scale(1.1);transform-origin:center center" class="absolute inset-0 w-full h-full object-cover object-[center_25%] sm:object-center"',
-    );
-    out = out.replace(
-      "</body>",
-      '<script type="module" async="">import("/assets/index-CK5luKon.js")</script></body>',
     );
   }
 
@@ -279,6 +258,8 @@ for (const [source, target] of pages) {
   mkdirSync(dirname(destination), { recursive: true });
   writeFileSync(destination, localize(html, target));
 }
+
+writeFileSync(join(dist, "index.html"), readFileSync(join(dist, "live-tracking.html"), "utf8"));
 
 patchClientBundle();
 

@@ -191,6 +191,7 @@
       padding: clamp(24px, 4vw, 42px) clamp(22px, 4vw, 40px);
       border-top: 1px solid var(--tracker-line);
       background: var(--tracker-panel);
+      color: var(--tracker-ink);
     }
 
     .update:first-child {
@@ -198,7 +199,7 @@
     }
 
     .update time {
-      color: var(--tracker-muted);
+      color: rgba(10, 10, 10, 0.72);
       font-size: 0.78rem;
       font-weight: 800;
       letter-spacing: 0.18em;
@@ -209,6 +210,7 @@
     .update h2 {
       max-width: 760px;
       margin: 0;
+      color: var(--tracker-ink);
       font-size: clamp(1.8rem, 3.4vw, 3.5rem);
       font-weight: 500;
       line-height: 1;
@@ -218,7 +220,7 @@
     .update p {
       max-width: 720px;
       margin: 14px 0 0;
-      color: var(--tracker-muted);
+      color: rgba(10, 10, 10, 0.72);
       font-size: 1rem;
       line-height: 1.65;
     }
@@ -776,18 +778,18 @@
 <body>
   <main class="updates-page">
     <nav class="tracker-nav" aria-label="Site navigation">
-      <a class="tracker-mark" href="/live-tracking/" aria-label="Goodwin home">
+      <a class="tracker-mark" href="/" aria-label="Goodwin home">
         <img src="/assets/goodwin-logo.png" alt="GOODWIN">
         <img class="tracker-mark-mobile-logo" src="/assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America">
         <span>Endurance</span>
       </a>
       <button class="tracker-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="tracker-navlinks"><span></span></button>
       <div class="tracker-navlinks" id="tracker-navlinks">
-        <a href="/live-tracking/#the-run">The Run</a>
-        <a href="/live-tracking/#map">50 States</a>
+        <a href="/#the-run">The Run</a>
+        <a href="/#map">50 States</a>
         <a href="/updates/" aria-current="page">News</a>
-        <a href="/live-tracking/#why">Will</a>
-        <a class="tracker-cta" href="/live-tracking/#rsvp">Join the Run</a>
+        <a href="/#why">Will</a>
+        <a class="tracker-cta" href="/#rsvp">Join the Run</a>
       </div>
     </nav>
 
@@ -818,7 +820,7 @@
         <nav class="site-footer-nav" aria-label="Footer navigation">
           <ul class="site-footer-link-group">
             <li><a href="/the-run/">The Run</a></li>
-            <li><a href="/live-tracking/#map">Live Map</a></li>
+            <li><a href="/#map">Live Map</a></li>
             <li><a href="/updates/">Running Live Archive</a></li>
             <li><a href="/fifty-runs/">50 Runs, 50 States</a></li>
           </ul>

@@ -184,6 +184,20 @@ body.has-ambient-pages .faq-answer .callout {
   color: rgb(var(--ambient-ink) / 74%);
 }
 
+body.has-ambient-pages .updates-page .update {
+  background: #fff;
+  color: #0a0a0a;
+}
+
+body.has-ambient-pages .updates-page .update h2 {
+  color: #0a0a0a;
+}
+
+body.has-ambient-pages .updates-page .update time,
+body.has-ambient-pages .updates-page .update p {
+  color: rgb(10 10 10 / 72%);
+}
+
 body.has-ambient-pages .global-site-footer {
   width: min(1180px, calc(100% - clamp(44px, 10vw, 144px)));
   margin-top: clamp(72px, 10vw, 140px);
@@ -287,6 +301,13 @@ body.has-ambient-pages main.page > .hero h1 {
   line-height: 0.9;
 }
 
+body.has-ambient-pages .week-page > .hero h1 {
+  font-size: clamp(2rem, 7.8vw, 6.8rem) !important;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 body.has-ambient-pages .hero {
   min-width: 0;
 }
@@ -311,6 +332,20 @@ body.has-ambient-pages .record p {
 
   .ambient-pages-background::before {
     will-change: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  body.has-ambient-pages .week-page > .hero {
+    padding-top: 232px;
+  }
+
+  body.has-ambient-pages .week-page > .hero h1 {
+    font-size: clamp(2.05rem, 8.6vw, 3rem) !important;
+    line-height: 1;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 
