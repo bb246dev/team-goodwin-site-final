@@ -142,7 +142,7 @@ const sharedHeaderHtml = `
       <a href="/#the-run">The Run</a>
       <a href="/#map">50 States</a>
       <a href="/updates/">News</a>
-      <a href="/#why">Will</a>
+      <a href="/will/">Will</a>
       <a class="tracker-cta" href="/#rsvp">Join the Run</a>
     </div>
   </nav>`;

@@ -89,6 +89,7 @@ body.has-ambient-pages .record {
 body.has-ambient-pages .record > div,
 body.has-ambient-pages .card,
 body.has-ambient-pages .state,
+body.has-ambient-pages .itinerary-week,
 body.has-ambient-pages .stop {
   min-width: 0;
   background: rgb(var(--ambient-ink) / 8%);
@@ -132,6 +133,8 @@ body.has-ambient-pages .record strong {
 body.has-ambient-pages p,
 body.has-ambient-pages li,
 body.has-ambient-pages .state span,
+body.has-ambient-pages .week-heading span,
+body.has-ambient-pages .stop-city,
 body.has-ambient-pages .record span,
 body.has-ambient-pages .stat span,
 body.has-ambient-pages .muted,
@@ -144,6 +147,39 @@ body.has-ambient-pages .eyebrow,
 body.has-ambient-pages .kicker,
 body.has-ambient-pages .tracker-eyebrow {
   color: rgb(var(--ambient-ink) / 62%);
+}
+
+body.has-ambient-pages .itinerary-tabs a {
+  border-color: rgb(var(--ambient-ink) / 22%);
+  color: rgb(var(--ambient-ink) / 78%);
+}
+
+body.has-ambient-pages .itinerary-tabs a:hover {
+  background: rgb(var(--ambient-ink) / 10%);
+  color: rgb(var(--ambient-ink));
+}
+
+body.has-ambient-pages .itinerary-week {
+  border-color: rgb(var(--ambient-ink) / 18%);
+}
+
+body.has-ambient-pages .week-heading {
+  border-bottom-color: rgb(var(--ambient-ink) / 18%);
+  background: rgb(var(--ambient-ink) / 7%);
+}
+
+body.has-ambient-pages .week-heading h3,
+body.has-ambient-pages .stop-date,
+body.has-ambient-pages .stop-state {
+  color: rgb(var(--ambient-ink));
+}
+
+body.has-ambient-pages .stop-row {
+  border-top-color: rgb(var(--ambient-ink) / 14%);
+}
+
+body.has-ambient-pages .stop-number {
+  color: #c7aa72;
 }
 
 body.has-ambient-pages input,
@@ -182,6 +218,17 @@ body.has-ambient-pages .faq-question .faq-icon {
 body.has-ambient-pages .faq-answer p,
 body.has-ambient-pages .faq-answer .callout {
   color: rgb(var(--ambient-ink) / 74%);
+}
+
+body.has-ambient-pages .faq-answer .tracker-button,
+body.has-ambient-pages .faq-answer .tracker-button:visited {
+  background: #fff;
+  color: #0a0a0a;
+}
+
+body.has-ambient-pages .faq-answer .tracker-button:hover {
+  background: var(--emerald);
+  color: #fff;
 }
 
 body.has-ambient-pages .updates-page .update {
@@ -505,6 +552,8 @@ body.has-ambient-pages .record p {
   body.has-ambient-pages .grid,
   body.has-ambient-pages .record,
   body.has-ambient-pages .states,
+  body.has-ambient-pages .itinerary-section,
+  body.has-ambient-pages .itinerary-board,
   body.has-ambient-pages .schedule {
     max-width: 100%;
     min-width: 0;
