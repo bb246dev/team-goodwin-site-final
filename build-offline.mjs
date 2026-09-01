@@ -79,10 +79,10 @@ const sharedFooterHtml = `
       </div>
       <nav class="global-site-footer-nav" aria-label="Footer navigation">
         <ul class="global-site-footer-link-group">
-          <li><a href="/the-run/">The Run</a></li>
-          <li><a href="/#map">Live Map</a></li>
-          <li><a href="/updates/">Running Live Archive</a></li>
-          <li><a href="/fifty-runs/">50 Runs, 50 States</a></li>
+      <li><a href="/the-run/">The Run</a></li>
+      <li><a href="/live-tracking.html#map">Live Map</a></li>
+      <li><a href="/updates/">Running Live Archive</a></li>
+      <li><a href="/fifty-runs/">50 Runs, 50 States</a></li>
         </ul>
         <ul class="global-site-footer-link-group">
           <li><a href="https://www.instagram.com/williamgoodge/" target="_blank" rel="noopener noreferrer">Will's Instagram</a></li>
@@ -136,14 +136,14 @@ const sharedFooterHtml = `
 
 const sharedHeaderHtml = `
   <nav class="tracker-nav" aria-label="Site navigation">
-    <a class="tracker-mark" href="/" aria-label="Goodwin home"><img src="/assets/goodwin-logo.png" alt="GOODWIN"><img class="tracker-mark-mobile-logo" src="/assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America"><span>Endurance</span></a>
+    <a class="tracker-mark" href="/live-tracking.html" aria-label="Goodwin home"><img src="/assets/goodwin-logo.png" alt="GOODWIN"><img class="tracker-mark-mobile-logo" src="/assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America"><span>Endurance</span></a>
     <button class="tracker-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="tracker-navlinks"><span></span></button>
     <div class="tracker-navlinks" id="tracker-navlinks">
-      <a href="/#the-run">The Run</a>
-      <a href="/#map">50 States</a>
+      <a href="/live-tracking.html#the-run">The Run</a>
+      <a href="/live-tracking.html#map">50 States</a>
       <a href="/updates/">News</a>
-      <a href="/#why">Will</a>
-      <a class="tracker-cta" href="/#rsvp">Join the Run</a>
+      <a href="/live-tracking.html#why">Will</a>
+      <a class="tracker-cta" href="/live-tracking.html#rsvp">Join the Run</a>
     </div>
   </nav>`;
 
