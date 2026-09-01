@@ -135,8 +135,9 @@
         return;
       }
 
+      markSplashSeen();
+
       const close = () => {
-        markSplashSeen();
         document.body.classList.remove("has-splash-modal-open");
         document.dispatchEvent(new CustomEvent("goodwin:splashclosed"));
       };
@@ -267,7 +268,7 @@
 
     const MISSION_AMERICA_INTRO_CONFIG = {
       sessionKey: "missionAmericaIntroSeen",
-      replayEachLoad: true,
+      replayEachLoad: false,
       mobileQuery: "(max-width: 430px)",
       reducedMotionQuery: "(prefers-reduced-motion: reduce)",
       secondaryWipeDuration: 80,
@@ -322,7 +323,7 @@
 
       const forceReplay = new URLSearchParams(window.location.search).get("intro") === "1";
       try {
-        if (!config.replayEachLoad && !forceReplay && window.sessionStorage.getItem(config.sessionKey) === "true") return;
+        if (!config.replayEachLoad && !forceReplay && window.localStorage.getItem(config.sessionKey) === "true") return;
       } catch (error) {
         if (!config.replayEachLoad && !forceReplay) return;
       }
@@ -358,6 +359,12 @@
       document.body.classList.add("mission-intro-active");
       window.scrollTo(0, 0);
 
+      if (!config.replayEachLoad && !forceReplay) {
+        try {
+          window.localStorage.setItem(config.sessionKey, "true");
+        } catch (error) {}
+      }
+
       const frame = root.querySelector(".mission-intro-frame");
       const wipeFrame = root.querySelector(".mission-intro-wipe-frame");
       const stage = root.querySelector(".mission-intro-stage");
@@ -371,12 +378,6 @@
       });
 
       const finish = async () => {
-        if (!config.replayEachLoad && !forceReplay) {
-          try {
-            window.sessionStorage.setItem(config.sessionKey, "true");
-          } catch (error) {}
-        }
-
         root.classList.add("is-hidden");
         document.body.classList.remove("mission-intro-active");
         window.scrollTo(0, 0);
