@@ -75,7 +75,7 @@ const sharedFooterHtml = `
   <footer class="global-site-footer">
     <div class="global-site-footer-main">
       <div>
-        <div class="global-site-footer-brand"><img src="assets/goodwin-logo.png" alt="Goodwin"></div>
+        <div class="global-site-footer-brand"><img src="/assets/goodwin-logo.png" alt="Goodwin"></div>
       </div>
       <nav class="global-site-footer-nav" aria-label="Footer navigation">
         <ul class="global-site-footer-link-group">
@@ -166,11 +166,11 @@ function localize(html, pageName) {
     .replace(/<link rel="modulepreload"[^>]*>/g, "")
     .replace(/<link rel="stylesheet" href="\/assets\/styles-ulvf0Dcj\.css"/, `<link rel="stylesheet" href="${offlineFontStylesheet}"/><link rel="stylesheet" href="/assets/styles-ulvf0Dcj.css"`)
     .replace(/https:\/\/mission-america-journey\.lovable\.app\/partners/g, "partners.html")
-    .replace(/https:\/\/pub-bb2e103a32db4e198524a2e9ed8f35b4\.r2\.dev\/[^"]+id-preview[^"]+\.png/g, "assets/hero-runner-Ci5y42DW.jpg")
-    .replace(/(href|src)="\/assets\//g, '$1="assets/')
-    .replace(/(href|src)="\.\.\/fonts\//g, '$1="fonts/')
-    .replace(/url\((["']?)\.\.\/assets\//g, "url($1assets/")
-    .replace(/(href|src)="\.\.\/assets\//g, '$1="assets/')
+    .replace(/https:\/\/pub-bb2e103a32db4e198524a2e9ed8f35b4\.r2\.dev\/[^"]+id-preview[^"]+\.png/g, "/assets/hero-runner-Ci5y42DW.jpg")
+    .replace(/(href|src)="(?:\.\.\/)?assets\//g, '$1="/assets/')
+    .replace(/(href|src)="(?:\.\.\/)?fonts\//g, '$1="/fonts/')
+    .replace(/url\((["']?)(?:\.\.\/)?assets\//g, "url($1/assets/")
+    .replace(/url\((["']?)(?:\.\.\/)?fonts\//g, "url($1/fonts/")
     .replace(/content="\/athletes"/g, 'content="/athletes/"')
     .replace(/content="\/partners"/g, 'content="/partners/"');
 
@@ -190,7 +190,7 @@ function localize(html, pageName) {
   for (const id of videoIds) {
     out = out.replace(
       new RegExp(`https://i\\.ytimg\\.com/vi/${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/hqdefault\\.jpg`, "g"),
-      `assets/youtube/${id}.jpg`,
+      `/assets/youtube/${id}.jpg`,
     );
   }
 
