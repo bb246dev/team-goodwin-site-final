@@ -36,6 +36,8 @@ jobs:
           test -d dist/accessibility
 
       - name: Deploy dist to Namecheap production
+        id: ftp_attempt_1
+        continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -45,3 +47,45 @@ jobs:
           server-dir: /public_html/
           dangerous-clean-slate: false
           state-name: .ftp-deploy-sync-state-production.json
+
+      - name: Wait before FTP retry 2
+        if: ${{ steps.ftp_attempt_1.outcome == 'failure' }}
+        run: sleep 25
+
+      - name: Retry production FTP deployment
+        id: ftp_attempt_2
+        if: ${{ steps.ftp_attempt_1.outcome == 'failure' }}
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /public_html/
+          dangerous-clean-slate: false
+          state-name: .ftp-deploy-sync-state-production.json
+
+      - name: Wait before FTP retry 3
+        if: ${{ steps.ftp_attempt_1.outcome == 'failure' && steps.ftp_attempt_2.outcome == 'failure' }}
+        run: sleep 25
+
+      - name: Retry production FTP deployment again
+        id: ftp_attempt_3
+        if: ${{ steps.ftp_attempt_1.outcome == 'failure' && steps.ftp_attempt_2.outcome == 'failure' }}
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /public_html/
+          dangerous-clean-slate: false
+          state-name: .ftp-deploy-sync-state-production.json
+
+      - name: Confirm production FTP deployment succeeded
+        if: ${{ steps.ftp_attempt_1.outcome == 'failure' && steps.ftp_attempt_2.outcome == 'failure' && steps.ftp_attempt_3.outcome == 'failure' }}
+        run: |
+          echo "Production FTP deployment failed after 3 attempts."
+          exit 1
