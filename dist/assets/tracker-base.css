@@ -4078,9 +4078,9 @@
       .tracker-page #the-run .feature-row {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0;
-        border: 0;
-        background: transparent;
+        gap: 1px;
+        border: 1px solid var(--tracker-line);
+        background: var(--tracker-line);
       }
 
       .tracker-page #the-run .feature-card,
@@ -4089,8 +4089,8 @@
       .tracker-page #the-run .feature-card:focus-visible {
         width: auto;
         min-width: 0;
-        min-height: 0;
-        aspect-ratio: 1 / 1;
+        min-height: 300px;
+        aspect-ratio: auto;
         border: 0;
         transform: none;
       }
