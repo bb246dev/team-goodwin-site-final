@@ -27,6 +27,9 @@ jobs:
           test -d dist
           test -f dist/index.html
           test -f dist/live-tracking.html
+          test -f dist/robots.txt
+          test -f dist/sitemap.xml
+          test -f dist/.htaccess
           test -d dist/assets
           test -d dist/faq
           test -d dist/updates
@@ -47,6 +50,9 @@ jobs:
           server-dir: /public_html/
           dangerous-clean-slate: false
           state-name: .ftp-deploy-sync-state-production.json
+          exclude: |
+            **/server/**
+            **/api/**
 
       - name: Wait before FTP retry 2
         if: ${{ steps.ftp_attempt_1.outcome == 'failure' }}
@@ -65,6 +71,9 @@ jobs:
           server-dir: /public_html/
           dangerous-clean-slate: false
           state-name: .ftp-deploy-sync-state-production.json
+          exclude: |
+            **/server/**
+            **/api/**
 
       - name: Wait before FTP retry 3
         if: ${{ steps.ftp_attempt_1.outcome == 'failure' && steps.ftp_attempt_2.outcome == 'failure' }}
@@ -83,6 +92,9 @@ jobs:
           server-dir: /public_html/
           dangerous-clean-slate: false
           state-name: .ftp-deploy-sync-state-production.json
+          exclude: |
+            **/server/**
+            **/api/**
 
       - name: Confirm production FTP deployment succeeded
         if: ${{ steps.ftp_attempt_1.outcome == 'failure' && steps.ftp_attempt_2.outcome == 'failure' && steps.ftp_attempt_3.outcome == 'failure' }}

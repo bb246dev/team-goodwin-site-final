@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 
 const root = process.cwd();
 const dist = join(root, "dist");
+const publicRootFiles = ["robots.txt", "sitemap.xml", ".htaccess"];
 
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
@@ -10,6 +11,11 @@ cpSync(join(root, "assets"), join(dist, "assets"), { recursive: true });
 cpSync(join(root, "fonts"), join(dist, "fonts"), { recursive: true });
 if (existsSync(join(root, "api"))) {
   cpSync(join(root, "api"), join(dist, "api"), { recursive: true });
+}
+for (const file of publicRootFiles) {
+  if (existsSync(join(root, file))) {
+    cpSync(join(root, file), join(dist, file));
+  }
 }
 
 const pages = [
@@ -75,7 +81,7 @@ const sharedFooterHtml = `
   <footer class="global-site-footer">
     <div class="global-site-footer-main">
       <div>
-        <div class="global-site-footer-brand"><img src="/assets/goodwin-logo.png" alt="Goodwin"></div>
+        <div class="global-site-footer-brand"><img src="/assets/goodwin-logo.png" alt="Goodwin" width="2000" height="304"></div>
       </div>
       <nav class="global-site-footer-nav" aria-label="Footer navigation">
         <ul class="global-site-footer-link-group">
@@ -103,21 +109,21 @@ const sharedFooterHtml = `
     <div class="global-site-footer-partners" aria-label="Partners">
       <div class="tracker-eyebrow">MADE POSSIBLE BY</div>
       <div class="partner-logo-wall">
-        <div class="partner-logo-item"><a href="https://www.arsenalaviation.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Arsenal Aviation"><img src="/assets/partners/arsenal-aviation-footer.svg" alt="Arsenal Aviation logo"></a></div>
-        <div class="partner-logo-item"><a href="https://www.trilogyaviationgroup.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Trilogy Aviation Group"><img src="/assets/partners/trilogy-aviation-footer.svg" alt="Trilogy Aviation Group logo"></a></div>
-        <div class="partner-logo-item"><a href="https://titanflights.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Titan Aviation Group"><img src="/assets/partners/titan-aviation-footer.png" alt="Titan Aviation Group logo"></a></div>
-        <div class="partner-logo-item"><a href="https://fly1200.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit FLY1200"><img src="/assets/partners/fly1200-footer.svg" alt="FLY1200 logo"></a></div>
-        <div class="partner-logo-item"><a href="https://www.flyexclusive.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit flyExclusive"><img src="/assets/partners/flyexclusive-footer.svg" alt="flyExclusive logo"></a></div>
-        <div class="partner-logo-item"><a href="https://jetlinx.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Jet Linx"><img src="/assets/partners/jet-linx-footer.svg" alt="Jet Linx logo"></a></div>
-        <div class="partner-logo-item"><a href="https://skywardaviation.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Skyward Aviation"><img src="/assets/partners/skyward-aviation-footer.svg" alt="Skyward Aviation logo"></a></div>
-        <div class="partner-logo-item"><a href="https://flytrueskies.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit TrueSkies Aviation Group"><img src="/assets/partners/trueskies-footer.svg" alt="TrueSkies Aviation Group logo"></a></div>
-        <div class="partner-logo-item"><a href="https://magellanjets.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Magellan Jets"><img src="/assets/partners/magellan-jets-footer.svg" alt="Magellan Jets logo"></a></div>
-        <div class="partner-logo-item"><a href="https://www.charterflightsupport.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Charter Flight Support"><img src="/assets/partners/charter-flight-support-footer.svg" alt="Charter Flight Support logo"></a></div>
-        <div class="partner-logo-item"><a href="https://www.spyrollstudios.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Spyroll Studios"><img src="/assets/partners/spyroll-studios-footer.svg" alt="Spyroll Studios logo"></a></div>
-        <div class="partner-logo-item"><a href="https://davidprotein.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit David"><img src="/assets/partners/david-footer.png" alt="David logo"></a></div>
-        <div class="partner-logo-item"><a href="https://humantra.co.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Humantra"><img src="/assets/partners/humantra-footer.png" alt="Humantra logo"></a></div>
-        <div class="partner-logo-item"><a href="https://rizkia.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Rizkia"><img src="/assets/partners/rizkia-footer.png" alt="Rizkia logo"></a></div>
-        <div class="partner-logo-item"><a href="https://www.whoop.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit WHOOP"><img src="/assets/partners/whoop-footer.png" alt="WHOOP logo"></a></div>
+        <div class="partner-logo-item"><a href="https://www.arsenalaviation.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Arsenal Aviation"><img src="/assets/partners/arsenal-aviation-footer.svg" alt="Arsenal Aviation logo" width="849" height="624"></a></div>
+        <div class="partner-logo-item"><a href="https://www.trilogyaviationgroup.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Trilogy Aviation Group"><img src="/assets/partners/trilogy-aviation-footer.svg" alt="Trilogy Aviation Group logo" width="367" height="76"></a></div>
+        <div class="partner-logo-item"><a href="https://titanflights.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Titan Aviation Group"><img src="/assets/partners/titan-aviation-footer.png" alt="Titan Aviation Group logo" width="375" height="111"></a></div>
+        <div class="partner-logo-item"><a href="https://fly1200.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit FLY1200"><img src="/assets/partners/fly1200-footer.svg" alt="FLY1200 logo" width="2769" height="1112"></a></div>
+        <div class="partner-logo-item"><a href="https://www.flyexclusive.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit flyExclusive"><img src="/assets/partners/flyexclusive-footer.svg" alt="flyExclusive logo" width="582" height="108"></a></div>
+        <div class="partner-logo-item"><a href="https://jetlinx.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Jet Linx"><img src="/assets/partners/jet-linx-footer.svg" alt="Jet Linx logo" width="250" height="158"></a></div>
+        <div class="partner-logo-item"><a href="https://skywardaviation.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Skyward Aviation"><img src="/assets/partners/skyward-aviation-footer.svg" alt="Skyward Aviation logo" width="1443" height="1012"></a></div>
+        <div class="partner-logo-item"><a href="https://flytrueskies.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit TrueSkies Aviation Group"><img src="/assets/partners/trueskies-footer.svg" alt="TrueSkies Aviation Group logo" width="1697" height="543"></a></div>
+        <div class="partner-logo-item"><a href="https://magellanjets.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Magellan Jets"><img src="/assets/partners/magellan-jets-footer.svg" alt="Magellan Jets logo" width="265" height="25"></a></div>
+        <div class="partner-logo-item"><a href="https://www.charterflightsupport.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Charter Flight Support"><img src="/assets/partners/charter-flight-support-footer.svg" alt="Charter Flight Support logo" width="250" height="100"></a></div>
+        <div class="partner-logo-item"><a href="https://www.spyrollstudios.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Spyroll Studios"><img src="/assets/partners/spyroll-studios-footer.svg" alt="Spyroll Studios logo" width="692" height="104"></a></div>
+        <div class="partner-logo-item"><a href="https://davidprotein.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit David"><img src="/assets/partners/david-footer.png" alt="David logo" width="905" height="386"></a></div>
+        <div class="partner-logo-item"><a href="https://humantra.co.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Humantra"><img src="/assets/partners/humantra-footer.png" alt="Humantra logo" width="1501" height="273"></a></div>
+        <div class="partner-logo-item"><a href="https://rizkia.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Rizkia"><img src="/assets/partners/rizkia-footer.png" alt="Rizkia logo" width="1493" height="369"></a></div>
+        <div class="partner-logo-item"><a href="https://www.whoop.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit WHOOP"><img src="/assets/partners/whoop-footer.png" alt="WHOOP logo" width="1501" height="255"></a></div>
       </div>
       <p class="global-site-footer-partner-disclaimer">All trademarks and logos are the property of their respective owners and are used with permission where applicable.</p>
     </div>
@@ -136,7 +142,7 @@ const sharedFooterHtml = `
 
 const sharedHeaderHtml = `
   <nav class="tracker-nav" aria-label="Site navigation">
-    <a class="tracker-mark" href="/" aria-label="Goodwin home"><img src="/assets/goodwin-logo.png" alt="GOODWIN"><span>Endurance</span></a>
+    <a class="tracker-mark" href="/" aria-label="GOODWIN ENDURANCE"><img src="/assets/goodwin-logo.png" alt="GOODWIN" width="2000" height="304"><span>Endurance</span></a>
     <button class="tracker-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="tracker-navlinks"><span></span></button>
     <div class="tracker-navlinks" id="tracker-navlinks">
       <a href="/#the-run">The Run</a>

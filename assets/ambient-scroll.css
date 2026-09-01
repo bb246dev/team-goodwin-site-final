@@ -561,6 +561,14 @@ body.has-ambient-scroll #map .follow-panel {
   color: var(--tracker-ink);
 }
 
+body.has-ambient-scroll #map .follow-panel .legal-note {
+  color: rgba(10, 10, 10, 0.82);
+}
+
+body.has-ambient-scroll #map .follow-panel .legal-note a {
+  color: var(--tracker-ink);
+}
+
 body.has-ambient-scroll #map .follow-form input {
   border-color: var(--tracker-line);
   background: var(--color-white);
