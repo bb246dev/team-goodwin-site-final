@@ -1,0 +1,47 @@
+name: Deploy Team Goodwin Production
+
+on:
+  push:
+    tags:
+      - "production-*"
+
+jobs:
+  production-deploy:
+    name: Deploy to Namecheap production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build static site
+        run: node build-offline.mjs
+
+      - name: Verify dist output
+        run: |
+          test -d dist
+          test -f dist/index.html
+          test -f dist/live-tracking.html
+          test -d dist/assets
+          test -d dist/faq
+          test -d dist/updates
+          test -d dist/privacy
+          test -d dist/terms
+          test -d dist/participation-terms
+          test -d dist/accessibility
+
+      - name: Deploy dist to Namecheap production
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /public_html/
+          dangerous-clean-slate: false
+          state-name: .ftp-deploy-sync-state-production.json

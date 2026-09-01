@@ -1,22 +1,18 @@
 name: Namecheap Staging Deployment
 
 on:
-  workflow_dispatch:
-    inputs:
-      confirm_deploy:
-        description: 'Type DEPLOY to upload dist/ to /public_html/github-staging/'
-        required: true
-        type: string
+  push:
+    branches:
+      - main
 
 jobs:
   staging-deploy:
     name: Deploy to Namecheap staging
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.confirm_deploy == 'DEPLOY' }}
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -47,6 +43,8 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: /public_html/github-staging/
+          dangerous-clean-slate: false
+          state-name: .ftp-deploy-sync-state-staging.json
 
       - name: Verify remote staging contents
         env:
