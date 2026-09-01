@@ -702,6 +702,46 @@
       width: 100%;
       height: 100%;
       display: block;
+      cursor: grab;
+      touch-action: pan-y;
+    }
+
+    .tracker-map svg.is-panning {
+      cursor: grabbing;
+    }
+
+    .map-zoom-controls {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 4;
+      display: grid;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(10, 10, 10, 0.62);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.26);
+    }
+
+    .map-zoom-button {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 0;
+      background: transparent;
+      color: var(--tracker-cream);
+      cursor: pointer;
+      font: 700 1.45rem/1 var(--font-sans);
+    }
+
+    .map-zoom-button:last-child {
+      border-bottom: 0;
+    }
+
+    .map-zoom-button:hover,
+    .map-zoom-button:focus-visible {
+      background: rgba(255, 255, 255, 0.14);
+      outline: none;
     }
 
     .map-state {
@@ -741,16 +781,23 @@
       stroke-width: 2;
       stroke-opacity: 0.55;
       stroke-dasharray: 7 9;
-      cursor: pointer;
-      pointer-events: stroke;
+      pointer-events: none;
     }
 
-    .map-flight-hit {
+    .map-flight-plane {
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    .map-flight-plane-body {
       fill: none;
-      stroke: transparent;
-      stroke-width: 14;
-      cursor: pointer;
-      pointer-events: stroke;
+      stroke: #C6A15B;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+      transform: scale(0.87);
+      transform-box: fill-box;
+      transform-origin: center;
       vector-effect: non-scaling-stroke;
     }
 
@@ -854,7 +901,7 @@
 
     .tracking-map-key .legend-plane {
       fill: none;
-      stroke: var(--color-accent);
+      stroke: #C6A15B;
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-width: 1.8;
@@ -934,6 +981,37 @@
       fill: rgba(10, 10, 10, 0.7);
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .map-card-transport {
+      pointer-events: none;
+    }
+
+    .map-card-transport-rv,
+    .map-card-transport-flight {
+      opacity: 0;
+    }
+
+    .map-card-transport.is-rv .map-card-transport-rv,
+    .map-card-transport.is-flight .map-card-transport-flight {
+      opacity: 1;
+    }
+
+    .map-card-transport-flight {
+      fill: none;
+      stroke: #C6A15B;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .map-card-transport-label {
+      fill: rgba(10, 10, 10, 0.62);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
     }
 
     .map-flight-card .map-flight-card-route {
@@ -2924,6 +3002,10 @@
         stroke-width: 1.5;
         stroke-opacity: 0.45;
         stroke-dasharray: 6 8;
+      }
+
+      .map-flight-plane-body {
+        transform: scale(1.8);
       }
 
       .tracker-nav {

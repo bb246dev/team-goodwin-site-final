@@ -1072,10 +1072,24 @@
       return points.length ? `M${points.map((point) => point.join(",")).join("L")}` : "";
     }
 
-    const flightGroundTransitionKeys = new Set(["1-2", "2-3", "4-5", "24-25", "32-33"]);
+    const flightTransitions = [
+      { fromStop: 1, toStop: 2 },
+      { fromStop: 2, toStop: 3 },
+      { fromStop: 4, toStop: 5 },
+      { fromStop: 24, toStop: 26, groundExclusions: ["24-25", "25-26"] },
+      { fromStop: 32, toStop: 33 }
+    ];
+    const flightGroundTransitionKeys = new Set(
+      flightTransitions.flatMap(({ fromStop, toStop, groundExclusions }) => groundExclusions || [`${fromStop}-${toStop}`])
+    );
+    const flightDepartureStopNumbers = new Set(flightTransitions.map(({ fromStop }) => fromStop));
 
     function routeTransitionKey(fromStop, toStop) {
       return `${fromStop?.n}-${toStop?.n}`;
+    }
+
+    function stopOutboundMode(stop) {
+      return flightDepartureStopNumbers.has(Number(stop?.n)) ? "flight" : "rv";
     }
 
     function routePathWithoutFlightTransitions(points, stops) {
@@ -1178,7 +1192,7 @@
       return displayPoint(projectLower48(airport.lat, airport.lng), "");
     }
 
-    function appendStaticFlightLegs(layer, svgNS, centroids, showFlightCard) {
+    function appendStaticFlightLegs(layer, svgNS, centroids) {
       flightItinerary.forEach((flight) => {
         const start = flightAirportPoint(flight.from, centroids);
         const end = flightAirportPoint(flight.to, centroids);
@@ -1187,29 +1201,20 @@
         const flightPath = document.createElementNS(svgNS, "path");
         flightPath.setAttribute("class", "map-route flight");
         flightPath.setAttribute("d", routePath([start, end]));
-        flightPath.setAttribute("tabindex", "0");
-        flightPath.setAttribute("role", "button");
-        flightPath.setAttribute("aria-label", `${flight.from} to ${flight.to}, ${flight.date}, ${flight.time}, ${flight.airline}`);
-        const title = document.createElementNS(svgNS, "title");
-        title.textContent = `${flight.from} \u2192 ${flight.to}\n${flight.date}\n${flight.time}\n${flight.airline}`;
-        flightPath.appendChild(title);
-        const selectFlight = () => showFlightCard(flight, midpoint);
-        flightPath.addEventListener("mouseenter", selectFlight);
-        flightPath.addEventListener("focus", selectFlight);
-        flightPath.addEventListener("click", (event) => {
-          event.stopPropagation();
-          selectFlight();
-        });
-        const flightHitPath = document.createElementNS(svgNS, "path");
-        flightHitPath.setAttribute("class", "map-flight-hit");
-        flightHitPath.setAttribute("d", routePath([start, end]));
-        flightHitPath.setAttribute("aria-hidden", "true");
-        flightHitPath.addEventListener("mouseenter", selectFlight);
-        flightHitPath.addEventListener("click", (event) => {
-          event.stopPropagation();
-          selectFlight();
-        });
-        layer.append(flightPath, flightHitPath);
+        flightPath.setAttribute("aria-hidden", "true");
+        layer.appendChild(flightPath);
+        if (flight.from === "HNL" && flight.to === "ANC") {
+          const angle = Math.atan2(end[1] - start[1], end[0] - start[0]) * 180 / Math.PI + 90;
+          const plane = document.createElementNS(svgNS, "g");
+          plane.setAttribute("class", "map-flight-plane");
+          plane.setAttribute("transform", `translate(${midpoint[0]} ${midpoint[1]}) rotate(${angle.toFixed(2)})`);
+          plane.setAttribute("aria-hidden", "true");
+          const planeBody = document.createElementNS(svgNS, "path");
+          planeBody.setAttribute("class", "map-flight-plane-body");
+          planeBody.setAttribute("d", "M0 -21 Q3 -21 3 -18 L3 -4 L16 4 L16 8 L3 5 L3 18 L8 21 L8 23 L0 20 L-8 23 L-8 21 L-3 18 L-3 5 L-16 8 L-16 4 L-3 -4 L-3 -18 Q-3 -21 0 -21 Z");
+          plane.appendChild(planeBody);
+          layer.appendChild(plane);
+        }
       });
     }
 
@@ -1249,7 +1254,48 @@
       const svgNS = "http://www.w3.org/2000/svg";
       const svg = document.createElementNS(svgNS, "svg");
       const [minX, minY, maxX, maxY] = topo.bbox;
-      svg.setAttribute("viewBox", `${minX - 116} ${minY - 18} ${maxX - minX + 160} ${maxY - minY + 56}`);
+      const initialViewBox = {
+        x: minX - 116,
+        y: minY - 18,
+        width: maxX - minX + 160,
+        height: maxY - minY + 56
+      };
+      let currentViewBox = { ...initialViewBox };
+      let finishStopMarker = null;
+      let finishEndpointLabel = null;
+      const constrainViewBox = (box) => {
+        const width = Math.min(initialViewBox.width, Math.max(initialViewBox.width * 0.42, box.width));
+        const height = Math.min(initialViewBox.height, Math.max(initialViewBox.height * 0.42, box.height));
+        const maxX = initialViewBox.x + initialViewBox.width - width;
+        const maxY = initialViewBox.y + initialViewBox.height - height;
+        return {
+          x: width >= initialViewBox.width ? initialViewBox.x : Math.max(initialViewBox.x, Math.min(maxX, box.x)),
+          y: height >= initialViewBox.height ? initialViewBox.y : Math.max(initialViewBox.y, Math.min(maxY, box.y)),
+          width,
+          height
+        };
+      };
+      const updateFinishScale = () => {
+        if (!finishStopMarker && !finishEndpointLabel) return;
+        const zoomRatio = initialViewBox.width / currentViewBox.width;
+        const finishScale = Math.max(0.38, Math.min(1, 1 / Math.pow(zoomRatio, 1.35)));
+        if (finishStopMarker) {
+          const cx = Number(finishStopMarker.getAttribute("cx"));
+          const cy = Number(finishStopMarker.getAttribute("cy"));
+          finishStopMarker.setAttribute("transform", `translate(${cx} ${cy}) scale(${finishScale}) translate(${-cx} ${-cy})`);
+        }
+        if (finishEndpointLabel) {
+          const anchorX = Number(finishEndpointLabel.dataset.anchorX);
+          const anchorY = Number(finishEndpointLabel.dataset.anchorY);
+          finishEndpointLabel.setAttribute("transform", `translate(${anchorX} ${anchorY}) scale(${finishScale}) translate(${-anchorX} ${-anchorY})`);
+        }
+      };
+      const setViewBox = (box) => {
+        currentViewBox = constrainViewBox(box);
+        svg.setAttribute("viewBox", `${currentViewBox.x} ${currentViewBox.y} ${currentViewBox.width} ${currentViewBox.height}`);
+        updateFinishScale();
+      };
+      setViewBox(currentViewBox);
       svg.setAttribute("aria-hidden", "true");
 
       const { geometryToPath, bestCentroid } = decodeTopology(topo);
@@ -1310,50 +1356,9 @@
       }
       svg.appendChild(travelLayer);
 
-      const flightCard = document.createElementNS(svgNS, "g");
-      flightCard.setAttribute("class", "map-flight-card");
-      flightCard.setAttribute("aria-hidden", "true");
-      const flightCardRect = document.createElementNS(svgNS, "rect");
-      flightCardRect.setAttribute("x", "0");
-      flightCardRect.setAttribute("y", "0");
-      flightCardRect.setAttribute("width", "170");
-      flightCardRect.setAttribute("height", "86");
-      flightCardRect.setAttribute("rx", "0");
-      const flightCardRoute = document.createElementNS(svgNS, "text");
-      flightCardRoute.setAttribute("class", "map-flight-card-route");
-      flightCardRoute.setAttribute("x", "14");
-      flightCardRoute.setAttribute("y", "24");
-      const flightCardDate = document.createElementNS(svgNS, "text");
-      flightCardDate.setAttribute("class", "map-flight-card-date");
-      flightCardDate.setAttribute("x", "14");
-      flightCardDate.setAttribute("y", "44");
-      const flightCardTime = document.createElementNS(svgNS, "text");
-      flightCardTime.setAttribute("class", "map-flight-card-copy");
-      flightCardTime.setAttribute("x", "14");
-      flightCardTime.setAttribute("y", "61");
-      const flightCardAirline = document.createElementNS(svgNS, "text");
-      flightCardAirline.setAttribute("class", "map-flight-card-copy");
-      flightCardAirline.setAttribute("x", "14");
-      flightCardAirline.setAttribute("y", "77");
-      flightCard.append(flightCardRect, flightCardRoute, flightCardDate, flightCardTime, flightCardAirline);
-
-      const showFlightCard = (flight, point) => {
-        const viewBox = svg.viewBox.baseVal;
-        const cardWidth = 170;
-        const cardHeight = 86;
-        const offsetX = point[0] > viewBox.x + viewBox.width - cardWidth - 24 ? -cardWidth - 16 : 16;
-        const offsetY = point[1] > viewBox.y + viewBox.height - cardHeight - 24 ? -cardHeight - 14 : 14;
-        flightCard.setAttribute("transform", `translate(${point[0] + offsetX} ${point[1] + offsetY})`);
-        flightCardRoute.textContent = `${flight.from} \u2192 ${flight.to}`;
-        flightCardDate.textContent = flight.date;
-        flightCardTime.textContent = flight.time;
-        flightCardAirline.textContent = flight.airline;
-        flightCard.classList.add("is-visible");
-      };
-
       const flightLayer = document.createElementNS(svgNS, "g");
       flightLayer.setAttribute("class", "map-flight-layer");
-      appendStaticFlightLegs(flightLayer, svgNS, centroids, showFlightCard);
+      appendStaticFlightLegs(flightLayer, svgNS, centroids);
       svg.insertBefore(flightLayer, routeLayer);
 
       const stopCard = document.createElementNS(svgNS, "g");
@@ -1377,7 +1382,28 @@
       stopCardDate.setAttribute("class", "map-card-date");
       stopCardDate.setAttribute("x", "18");
       stopCardDate.setAttribute("y", "78");
-      stopCard.append(stopCardRect, stopCardKicker, stopCardCity, stopCardDate);
+      const stopCardTransport = document.createElementNS(svgNS, "g");
+      stopCardTransport.setAttribute("class", "map-card-transport");
+      stopCardTransport.setAttribute("transform", "translate(216 46)");
+      const stopCardTransportRv = document.createElementNS(svgNS, "image");
+      stopCardTransportRv.setAttribute("class", "map-card-transport-rv");
+      stopCardTransportRv.setAttribute("href", mapEntityAssets.rv);
+      stopCardTransportRv.setAttribute("x", "-18");
+      stopCardTransportRv.setAttribute("y", "-21");
+      stopCardTransportRv.setAttribute("width", "36");
+      stopCardTransportRv.setAttribute("height", "30");
+      stopCardTransportRv.setAttribute("preserveAspectRatio", "xMidYMid meet");
+      const stopCardTransportFlight = document.createElementNS(svgNS, "path");
+      stopCardTransportFlight.setAttribute("class", "map-card-transport-flight");
+      stopCardTransportFlight.setAttribute("d", "M0 -21 Q3 -21 3 -18 L3 -4 L16 4 L16 8 L3 5 L3 18 L8 21 L8 23 L0 20 L-8 23 L-8 21 L-3 18 L-3 5 L-16 8 L-16 4 L-3 -4 L-3 -18 Q-3 -21 0 -21 Z");
+      stopCardTransportFlight.setAttribute("transform", "scale(0.62)");
+      const stopCardTransportLabel = document.createElementNS(svgNS, "text");
+      stopCardTransportLabel.setAttribute("class", "map-card-transport-label");
+      stopCardTransportLabel.setAttribute("x", "0");
+      stopCardTransportLabel.setAttribute("y", "32");
+      stopCardTransportLabel.setAttribute("text-anchor", "middle");
+      stopCardTransport.append(stopCardTransportRv, stopCardTransportFlight, stopCardTransportLabel);
+      stopCard.append(stopCardRect, stopCardKicker, stopCardCity, stopCardDate, stopCardTransport);
 
       const showStopCard = (stop, point) => {
         const viewBox = svg.viewBox.baseVal;
@@ -1387,14 +1413,17 @@
         const offsetY = point[1] > viewBox.y + viewBox.height - cardHeight - 28 ? -cardHeight - 18 : 18;
         stopCard.setAttribute("transform", `translate(${point[0] + offsetX} ${point[1] + offsetY})`);
         stopCardKicker.textContent = `Stop ${String(stop.n).padStart(2, "0")}`;
-        stopCardCity.textContent = stop.city.length > 18 ? `${stop.city.slice(0, 17)}.` : stop.city;
+        stopCardCity.textContent = stop.city.length > 13 ? `${stop.city.slice(0, 12)}.` : stop.city;
         stopCardDate.textContent = stop.date;
+        const outboundMode = stopOutboundMode(stop);
+        stopCardTransport.classList.toggle("is-flight", outboundMode === "flight");
+        stopCardTransport.classList.toggle("is-rv", outboundMode !== "flight");
+        stopCardTransportLabel.textContent = outboundMode === "flight" ? "Flight" : "RV";
         stopCard.classList.add("is-visible");
       };
 
       const resetStopCard = () => {
         stopCard.classList.remove("is-visible");
-        flightCard.classList.remove("is-visible");
         svg.querySelectorAll(".map-state").forEach((item) => item.classList.remove("is-active"));
         svg.querySelectorAll(".map-stop").forEach((item, index) => item.classList.toggle("is-current", index === currentIndex));
       };
@@ -1429,11 +1458,9 @@
             selectStop();
           }
         });
+        if (stop.n === 50) finishStopMarker = circle;
         svg.appendChild(circle);
       });
-
-      svg.appendChild(stopCard);
-      svg.appendChild(flightCard);
 
       [
         ["START", routePoints[0], 18, -12],
@@ -1441,12 +1468,18 @@
       ].forEach(([label, point, offsetX, offsetY]) => {
         if (!point) return;
         const text = document.createElementNS(svgNS, "text");
-        text.setAttribute("class", "map-endpoint-label");
-        text.setAttribute("x", point[0] + offsetX);
-        text.setAttribute("y", point[1] + offsetY);
+        const anchorX = point[0] + offsetX;
+        const anchorY = point[1] + offsetY;
+        text.setAttribute("class", `map-endpoint-label is-${label.toLowerCase()}`);
+        text.setAttribute("x", anchorX);
+        text.setAttribute("y", anchorY);
+        text.dataset.anchorX = String(anchorX);
+        text.dataset.anchorY = String(anchorY);
         text.textContent = label;
+        if (label === "FINISH") finishEndpointLabel = text;
         svg.appendChild(text);
       });
+      updateFinishScale();
 
       if (liveSvgPoint) {
         const pulse = document.createElementNS(svgNS, "circle");
@@ -1476,9 +1509,138 @@
       appendImageMarker(svg, svgNS, rvPoint, mapEntityAssets.rv, "RV", "rv");
       appendImageMarker(svg, svgNS, runnerPoint, mapEntityAssets.runner, "Runner", "runner");
 
-      mapEl.replaceChildren(svg);
+      svg.appendChild(stopCard);
+      const zoomBy = (factor) => {
+        const nextWidth = currentViewBox.width * factor;
+        const nextHeight = currentViewBox.height * factor;
+        const centerX = currentViewBox.x + currentViewBox.width / 2;
+        const centerY = currentViewBox.y + currentViewBox.height / 2;
+        setViewBox({
+          x: centerX - nextWidth / 2,
+          y: centerY - nextHeight / 2,
+          width: nextWidth,
+          height: nextHeight
+        });
+      };
+      const zoomControls = document.createElement("div");
+      zoomControls.className = "map-zoom-controls";
+      zoomControls.setAttribute("aria-label", "Map zoom controls");
+      const zoomIn = document.createElement("button");
+      zoomIn.type = "button";
+      zoomIn.className = "map-zoom-button";
+      zoomIn.setAttribute("aria-label", "Zoom in");
+      zoomIn.textContent = "+";
+      zoomIn.addEventListener("click", () => zoomBy(0.82));
+      const zoomOut = document.createElement("button");
+      zoomOut.type = "button";
+      zoomOut.className = "map-zoom-button";
+      zoomOut.setAttribute("aria-label", "Zoom out");
+      zoomOut.textContent = "\u2212";
+      zoomOut.addEventListener("click", () => zoomBy(1.22));
+      zoomControls.append(zoomIn, zoomOut);
+
+      let pinchStart = null;
+      const touchDistance = (touches) => Math.hypot(
+        touches[0].clientX - touches[1].clientX,
+        touches[0].clientY - touches[1].clientY
+      );
+      const panBlockedSelector = ".map-stop, .map-stop-card, .map-entity-marker";
+      let panStart = null;
+      let suppressNextMapClick = false;
+      svg.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0 || event.pointerType === "touch" || event.target.closest(panBlockedSelector)) return;
+        panStart = {
+          pointerId: event.pointerId,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          viewBox: { ...currentViewBox },
+          moved: false
+        };
+        svg.classList.add("is-panning");
+        svg.setPointerCapture?.(event.pointerId);
+      });
+      svg.addEventListener("pointermove", (event) => {
+        if (!panStart || panStart.pointerId !== event.pointerId) return;
+        const deltaX = event.clientX - panStart.clientX;
+        const deltaY = event.clientY - panStart.clientY;
+        if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) panStart.moved = true;
+        const svgRect = svg.getBoundingClientRect();
+        setViewBox({
+          x: panStart.viewBox.x - (deltaX / Math.max(1, svgRect.width)) * panStart.viewBox.width,
+          y: panStart.viewBox.y - (deltaY / Math.max(1, svgRect.height)) * panStart.viewBox.height,
+          width: panStart.viewBox.width,
+          height: panStart.viewBox.height
+        });
+      });
+      const endPointerPan = (event) => {
+        if (!panStart || panStart.pointerId !== event.pointerId) return;
+        suppressNextMapClick = panStart.moved;
+        panStart = null;
+        svg.classList.remove("is-panning");
+        svg.releasePointerCapture?.(event.pointerId);
+      };
+      svg.addEventListener("pointerup", endPointerPan);
+      svg.addEventListener("pointercancel", endPointerPan);
+      svg.addEventListener("touchstart", (event) => {
+        if (event.touches.length === 1 && !event.target.closest(panBlockedSelector)) {
+          pinchStart = {
+            type: "pan",
+            clientX: event.touches[0].clientX,
+            clientY: event.touches[0].clientY,
+            viewBox: { ...currentViewBox }
+          };
+          return;
+        }
+        if (event.touches.length === 2) {
+          pinchStart = {
+            type: "pinch",
+            distance: touchDistance(event.touches),
+            viewBox: { ...currentViewBox }
+          };
+        }
+      }, { passive: true });
+      svg.addEventListener("touchmove", (event) => {
+        if (!pinchStart) return;
+        event.preventDefault();
+        if (pinchStart.type === "pan" && event.touches.length === 1) {
+          const deltaX = event.touches[0].clientX - pinchStart.clientX;
+          const deltaY = event.touches[0].clientY - pinchStart.clientY;
+          const svgRect = svg.getBoundingClientRect();
+          setViewBox({
+            x: pinchStart.viewBox.x - (deltaX / Math.max(1, svgRect.width)) * pinchStart.viewBox.width,
+            y: pinchStart.viewBox.y - (deltaY / Math.max(1, svgRect.height)) * pinchStart.viewBox.height,
+            width: pinchStart.viewBox.width,
+            height: pinchStart.viewBox.height
+          });
+          return;
+        }
+        if (pinchStart.type === "pinch" && event.touches.length === 2) {
+          const factor = pinchStart.distance / Math.max(1, touchDistance(event.touches));
+          const nextWidth = pinchStart.viewBox.width * factor;
+          const nextHeight = pinchStart.viewBox.height * factor;
+          const centerX = pinchStart.viewBox.x + pinchStart.viewBox.width / 2;
+          const centerY = pinchStart.viewBox.y + pinchStart.viewBox.height / 2;
+          setViewBox({
+            x: centerX - nextWidth / 2,
+            y: centerY - nextHeight / 2,
+            width: nextWidth,
+            height: nextHeight
+          });
+        }
+      }, { passive: false });
+      svg.addEventListener("touchend", (event) => {
+        if (event.touches.length === 0) pinchStart = null;
+      }, { passive: true });
+
+      mapEl.replaceChildren(svg, zoomControls);
       svg.addEventListener("click", (event) => {
-        if (!event.target.closest(".map-stop") && !event.target.closest(".map-route.flight") && !event.target.closest(".map-flight-hit")) resetStopCard();
+        if (suppressNextMapClick) {
+          suppressNextMapClick = false;
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
+        if (!event.target.closest(".map-stop")) resetStopCard();
       });
 
       document.addEventListener("pointerdown", (event) => {
