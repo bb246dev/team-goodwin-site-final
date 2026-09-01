@@ -44,6 +44,16 @@ const legalPageNames = new Set([
   "accessibility.html",
 ]);
 
+const gaMeasurementId = "G-HW9LNT12ZX";
+const googleAnalyticsTag = `
+  <script async src="https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${gaMeasurementId}');
+  </script>`;
+
 const videoIds = [
   "n4ryq66g73w",
   "0pSyTZX-W_k",
@@ -168,6 +178,11 @@ function addSharedFooter(html) {
   return out.replace("</body>", `${sharedFooterHtml}\n</body>`);
 }
 
+function addGoogleAnalytics(html) {
+  if (/googletagmanager\.com\/gtag\/js|function gtag\(\)|gtag\(['"]config['"]/.test(html)) return html;
+  return html.replace("</head>", `${googleAnalyticsTag}\n</head>`);
+}
+
 function localize(html, pageName) {
   let out = html;
   const offlineFontStylesheet = pageName === "live-tracking.html" ? "fonts/inter.css" : "fonts/offline-fonts.css";
@@ -211,6 +226,8 @@ function localize(html, pageName) {
       `/assets/youtube/${id}.jpg`,
     );
   }
+
+  out = addGoogleAnalytics(out);
 
   if (pageName === "partners.html") {
     out = out.replace(

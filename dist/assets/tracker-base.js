@@ -907,6 +907,25 @@
       return `${RUN_WITH_WILL_FORM_URL}?${params.toString()}`;
     }
 
+    function getRunAnalyticsPayload(stop) {
+      return {
+        run_id: getRunWithWillId(stop),
+        city: stop.city,
+        state: stop.state,
+        date: stop.date
+      };
+    }
+
+    function trackAnalyticsEvent(name, params = {}) {
+      try {
+        if (typeof window.gtag === "function") {
+          window.gtag("event", name, params);
+        }
+      } catch (error) {
+        // Analytics must never interrupt navigation or map interaction.
+      }
+    }
+
     function updateCountdown() {
       const remaining = Math.max(0, startDate.getTime() - Date.now());
       const days = Math.floor(remaining / 86400000);
@@ -931,7 +950,7 @@
             <div class="tracker-eyebrow">${stop.date} · ${stop.state}</div>
             <h3>${stop.city}</h3>
           </div>
-          ${stop.n === 50 ? "" : `<div class="button-row"><a class="tracker-button secondary" href="${getRunWithWillUrl(stop)}" data-rsvp-link>RSVP</a></div>`}
+          ${stop.n === 50 ? "" : `<div class="button-row"><a class="tracker-button secondary" href="${getRunWithWillUrl(stop)}" data-rsvp-link data-run-number="${stop.n}">RSVP</a></div>`}
         </article>
       `;
     }
@@ -942,9 +961,18 @@
           <div class="rsvp-selected-stop-label">
             <span class="rsvp-selected-stop-date">${stop.date} - ${stop.city}</span>
           </div>
-          <div class="button-row"><a class="tracker-button secondary" href="${getRunWithWillUrl(stop)}" data-rsvp-link>RSVP</a></div>
+          <div class="button-row"><a class="tracker-button secondary" href="${getRunWithWillUrl(stop)}" data-rsvp-link data-run-number="${stop.n}">RSVP</a></div>
         </article>
       `;
+    }
+
+    function attachRsvpTracking(container) {
+      container.querySelectorAll("[data-rsvp-link]").forEach((link) => {
+        link.addEventListener("click", () => {
+          const stop = routeStops.find((item) => String(item.n) === link.dataset.runNumber);
+          if (stop) trackAnalyticsEvent("rsvp_click", getRunAnalyticsPayload(stop));
+        });
+      });
     }
 
     function populateRsvpMobileControls() {
@@ -979,12 +1007,14 @@
 
       if (rsvpMode === "all") {
         container.innerHTML = routeStops.map(getRouteStopMarkup).join("");
+        attachRsvpTracking(container);
         return;
       }
 
       if (selectedRouteStop) {
         const selectedStop = routeStops.find((stop) => String(stop.n) === selectedRouteStop);
         container.innerHTML = selectedStop ? getSelectedRouteStopMarkup(selectedStop) : "";
+        attachRsvpTracking(container);
         return;
       }
 
@@ -1447,6 +1477,7 @@
           svg.querySelectorAll(".map-state").forEach((item) => item.classList.toggle("is-active", item.dataset.state === stop.abbr));
           circle.classList.add("is-current");
           showStopCard(stop, point);
+          trackAnalyticsEvent("map_city_open", getRunAnalyticsPayload(stop));
         };
         circle.addEventListener("click", (event) => {
           event.stopPropagation();
@@ -1530,19 +1561,28 @@
       zoomIn.className = "map-zoom-button";
       zoomIn.setAttribute("aria-label", "Zoom in");
       zoomIn.textContent = "+";
-      zoomIn.addEventListener("click", () => zoomBy(0.82));
+      zoomIn.addEventListener("click", () => {
+        zoomBy(0.82);
+        trackAnalyticsEvent("map_zoom", { action: "zoom_in" });
+      });
       const zoomOut = document.createElement("button");
       zoomOut.type = "button";
       zoomOut.className = "map-zoom-button";
       zoomOut.setAttribute("aria-label", "Zoom out");
       zoomOut.textContent = "\u2212";
-      zoomOut.addEventListener("click", () => zoomBy(1.22));
+      zoomOut.addEventListener("click", () => {
+        zoomBy(1.22);
+        trackAnalyticsEvent("map_zoom", { action: "zoom_out" });
+      });
       const zoomReset = document.createElement("button");
       zoomReset.type = "button";
       zoomReset.className = "map-zoom-button map-zoom-reset";
       zoomReset.setAttribute("aria-label", "Reset map view");
       zoomReset.textContent = "\u21ba";
-      zoomReset.addEventListener("click", () => setViewBox({ ...initialViewBox }));
+      zoomReset.addEventListener("click", () => {
+        setViewBox({ ...initialViewBox });
+        trackAnalyticsEvent("map_zoom", { action: "reset" });
+      });
       zoomControls.append(zoomIn, zoomOut, zoomReset);
 
       let pinchStart = null;
