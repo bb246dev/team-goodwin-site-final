@@ -10,7 +10,44 @@
   <link rel="preload" href="../assets/hero-video-first-frame.jpg" as="image" media="(max-width: 768px)" fetchpriority="high">
   <link rel="stylesheet" href="../fonts/inter.css">
   <link rel="stylesheet" href="../assets/styles-ulvf0Dcj.css">
-  <link rel="stylesheet" href="../assets/index-CIGW-MKW.css">
+  <script>
+    (() => {
+      const href = "/assets/index-CIGW-MKW.css";
+      let mapStylesheet;
+
+      const loadMapStylesheet = () => {
+        if (mapStylesheet || document.querySelector(`link[href="${href}"]`)) return;
+        mapStylesheet = document.createElement("link");
+        mapStylesheet.rel = "stylesheet";
+        mapStylesheet.href = href;
+        mapStylesheet.dataset.deferredMapStyles = "true";
+        document.head.appendChild(mapStylesheet);
+      };
+
+      const initMapStylesheetLoader = () => {
+        const mapSection = document.getElementById("map");
+        if (!("IntersectionObserver" in window) || !mapSection) {
+          loadMapStylesheet();
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          if (!entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) return;
+          observer.disconnect();
+          loadMapStylesheet();
+        }, { rootMargin: "800px 0px" });
+
+        observer.observe(mapSection);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initMapStylesheetLoader, { once: true });
+      } else {
+        initMapStylesheetLoader();
+      }
+    })();
+  </script>
+  <noscript><link rel="stylesheet" href="../assets/index-CIGW-MKW.css"></noscript>
   <link rel="stylesheet" href="../assets/tracker-base.css?v=20260831mobile-critical-path">
   <link rel="stylesheet" href="../assets/ambient-scroll.css?v=20260831fieldnotes-static">
   <script defer src="../assets/tracker-base.js?v=20260831mobile-critical-path"></script>
