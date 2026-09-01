@@ -874,6 +874,23 @@
       rv: { pathStops: [3, 4, 5, 6], progress: 0.64 }
     };
     const MAP_FLIGHT_PREVIEW = false;
+    const flightAirports = {
+      HNL: { lat: 21.3187, lng: -157.9225, insetOffset: [6, 2] },
+      ANC: { lat: 61.1743, lng: -149.9985, insetOffset: [5, -4] },
+      PDX: { lat: 45.5898, lng: -122.5951 },
+      SLC: { lat: 40.7899, lng: -111.9791 },
+      CMH: { lat: 39.9980, lng: -82.8919 },
+      LAX: { lat: 33.9416, lng: -118.4085 },
+      MIA: { lat: 25.7959, lng: -80.2870 },
+      ATL: { lat: 33.6407, lng: -84.4277 }
+    };
+    const flightItinerary = [
+      { date: "Oct 9", from: "HNL", to: "ANC", time: "11:11 PM - 7:22 AM", airline: "Alaska Airlines" },
+      { date: "Oct 10", from: "ANC", to: "PDX", time: "3:51 PM - 8:35 PM", airline: "Alaska Airlines" },
+      { date: "Oct 11", from: "PDX", to: "SLC", time: "5:15 PM - 8:10 PM", airline: "Delta Airlines" },
+      { date: "Oct 20", from: "CMH", to: "LAX", time: "7:03 PM - 9:11 PM", airline: "American Airlines" },
+      { date: "Oct 24", from: "MIA", to: "ATL", time: "4:21 PM - 6:24 PM", airline: "Delta Airlines" }
+    ];
     const RUN_WITH_WILL_FORM_URL = "https://tally.so/r/lbE0jN";
 
     function getRunWithWillId(stop) {
@@ -1133,6 +1150,52 @@
         .filter(Boolean);
     }
 
+    function flightAirportPoint(code, centroids) {
+      const airport = flightAirports[code];
+      if (!airport) return null;
+      if ((code === "HNL" || code === "ANC") && centroids[code === "HNL" ? "HI" : "AK"]) {
+        const anchor = centroids[code === "HNL" ? "HI" : "AK"];
+        const offset = airport.insetOffset || [0, 0];
+        return [anchor[0] + offset[0], anchor[1] + offset[1]];
+      }
+      return displayPoint(projectLower48(airport.lat, airport.lng), "");
+    }
+
+    function appendStaticFlightLegs(layer, svgNS, centroids, showFlightCard) {
+      flightItinerary.forEach((flight) => {
+        const start = flightAirportPoint(flight.from, centroids);
+        const end = flightAirportPoint(flight.to, centroids);
+        if (!start || !end) return;
+        const midpoint = interpolatePoints(start, end, 0.5);
+        const flightPath = document.createElementNS(svgNS, "path");
+        flightPath.setAttribute("class", "map-route flight");
+        flightPath.setAttribute("d", routePath([start, end]));
+        flightPath.setAttribute("tabindex", "0");
+        flightPath.setAttribute("role", "button");
+        flightPath.setAttribute("aria-label", `${flight.from} to ${flight.to}, ${flight.date}, ${flight.time}, ${flight.airline}`);
+        const title = document.createElementNS(svgNS, "title");
+        title.textContent = `${flight.from} \u2192 ${flight.to}\n${flight.date}\n${flight.time}\n${flight.airline}`;
+        flightPath.appendChild(title);
+        const selectFlight = () => showFlightCard(flight, midpoint);
+        flightPath.addEventListener("mouseenter", selectFlight);
+        flightPath.addEventListener("focus", selectFlight);
+        flightPath.addEventListener("click", (event) => {
+          event.stopPropagation();
+          selectFlight();
+        });
+        const flightHitPath = document.createElementNS(svgNS, "path");
+        flightHitPath.setAttribute("class", "map-flight-hit");
+        flightHitPath.setAttribute("d", routePath([start, end]));
+        flightHitPath.setAttribute("aria-hidden", "true");
+        flightHitPath.addEventListener("mouseenter", selectFlight);
+        flightHitPath.addEventListener("click", (event) => {
+          event.stopPropagation();
+          selectFlight();
+        });
+        layer.append(flightPath, flightHitPath);
+      });
+    }
+
     function appendImageMarker(svg, svgNS, point, imageHref, label, className) {
       if (!point) return;
       const group = document.createElementNS(svgNS, "g");
@@ -1159,28 +1222,6 @@
       text.textContent = label;
 
       group.append(image, text);
-      svg.appendChild(group);
-    }
-
-    function appendFlightMarker(svg, svgNS, point) {
-      if (!point) return;
-      const group = document.createElementNS(svgNS, "g");
-      group.setAttribute("class", "map-entity-marker flight");
-      group.setAttribute("transform", `translate(${point[0]} ${point[1]}) rotate(24)`);
-
-      const plane = document.createElementNS(svgNS, "path");
-      plane.setAttribute("class", "map-flight-body");
-      plane.setAttribute("d", "M0 -21 Q3 -21 3 -18 L3 -4 L16 4 L16 8 L3 5 L3 18 L8 21 L8 23 L0 20 L-8 23 L-8 21 L-3 18 L-3 5 L-16 8 L-16 4 L-3 -4 L-3 -18 Q-3 -21 0 -21 Z");
-
-      const label = document.createElementNS(svgNS, "text");
-      label.setAttribute("class", "map-entity-label");
-      label.setAttribute("x", "0");
-      label.setAttribute("y", "38");
-      label.setAttribute("text-anchor", "middle");
-      label.setAttribute("transform", "rotate(-24)");
-      label.textContent = "Flight";
-
-      group.append(plane, label);
       svg.appendChild(group);
     }
 
@@ -1241,19 +1282,6 @@
       svg.appendChild(routeLayer);
 
       const travelLayer = document.createElementNS(svgNS, "g");
-      const forcedFlightPoint = displayPoint(projectLower48(39.8, -98.5), "KS");
-      const hasActiveFlight = MAP_FLIGHT_PREVIEW || trackingData.flight.active === true || trackingData.flight.active === "true";
-      const flightStart = !MAP_FLIGHT_PREVIEW && hasActiveFlight ? pointByStopNumber(trackingData.flight.fromStop, centroids) : null;
-      const flightEnd = !MAP_FLIGHT_PREVIEW && hasActiveFlight ? pointByStopNumber(trackingData.flight.toStop, centroids) : null;
-      const flightPoint = flightStart && flightEnd
-        ? interpolatePoints(flightStart, flightEnd, trackingData.flight.progress)
-        : MAP_FLIGHT_PREVIEW ? forcedFlightPoint : null;
-      if (!MAP_FLIGHT_PREVIEW && hasActiveFlight && flightStart && flightEnd) {
-        const flightPath = document.createElementNS(svgNS, "path");
-        flightPath.setAttribute("class", "map-route flight");
-        flightPath.setAttribute("d", routePath([flightStart, flightEnd]));
-        travelLayer.appendChild(flightPath);
-      }
 
       const rvStopPath = pathPointsFromStops(trackingData.rv.pathStops, centroids);
       if (rvStopPath.length > 1) {
@@ -1263,6 +1291,52 @@
         travelLayer.appendChild(rvPath);
       }
       svg.appendChild(travelLayer);
+
+      const flightCard = document.createElementNS(svgNS, "g");
+      flightCard.setAttribute("class", "map-flight-card");
+      flightCard.setAttribute("aria-hidden", "true");
+      const flightCardRect = document.createElementNS(svgNS, "rect");
+      flightCardRect.setAttribute("x", "0");
+      flightCardRect.setAttribute("y", "0");
+      flightCardRect.setAttribute("width", "170");
+      flightCardRect.setAttribute("height", "86");
+      flightCardRect.setAttribute("rx", "0");
+      const flightCardRoute = document.createElementNS(svgNS, "text");
+      flightCardRoute.setAttribute("class", "map-flight-card-route");
+      flightCardRoute.setAttribute("x", "14");
+      flightCardRoute.setAttribute("y", "24");
+      const flightCardDate = document.createElementNS(svgNS, "text");
+      flightCardDate.setAttribute("class", "map-flight-card-date");
+      flightCardDate.setAttribute("x", "14");
+      flightCardDate.setAttribute("y", "44");
+      const flightCardTime = document.createElementNS(svgNS, "text");
+      flightCardTime.setAttribute("class", "map-flight-card-copy");
+      flightCardTime.setAttribute("x", "14");
+      flightCardTime.setAttribute("y", "61");
+      const flightCardAirline = document.createElementNS(svgNS, "text");
+      flightCardAirline.setAttribute("class", "map-flight-card-copy");
+      flightCardAirline.setAttribute("x", "14");
+      flightCardAirline.setAttribute("y", "77");
+      flightCard.append(flightCardRect, flightCardRoute, flightCardDate, flightCardTime, flightCardAirline);
+
+      const showFlightCard = (flight, point) => {
+        const viewBox = svg.viewBox.baseVal;
+        const cardWidth = 170;
+        const cardHeight = 86;
+        const offsetX = point[0] > viewBox.x + viewBox.width - cardWidth - 24 ? -cardWidth - 16 : 16;
+        const offsetY = point[1] > viewBox.y + viewBox.height - cardHeight - 24 ? -cardHeight - 14 : 14;
+        flightCard.setAttribute("transform", `translate(${point[0] + offsetX} ${point[1] + offsetY})`);
+        flightCardRoute.textContent = `${flight.from} \u2192 ${flight.to}`;
+        flightCardDate.textContent = flight.date;
+        flightCardTime.textContent = flight.time;
+        flightCardAirline.textContent = flight.airline;
+        flightCard.classList.add("is-visible");
+      };
+
+      const flightLayer = document.createElementNS(svgNS, "g");
+      flightLayer.setAttribute("class", "map-flight-layer");
+      appendStaticFlightLegs(flightLayer, svgNS, centroids, showFlightCard);
+      svg.insertBefore(flightLayer, routeLayer);
 
       const stopCard = document.createElementNS(svgNS, "g");
       stopCard.setAttribute("class", "map-stop-card");
@@ -1302,6 +1376,7 @@
 
       const resetStopCard = () => {
         stopCard.classList.remove("is-visible");
+        flightCard.classList.remove("is-visible");
         svg.querySelectorAll(".map-state").forEach((item) => item.classList.remove("is-active"));
         svg.querySelectorAll(".map-stop").forEach((item, index) => item.classList.toggle("is-current", index === currentIndex));
       };
@@ -1340,6 +1415,7 @@
       });
 
       svg.appendChild(stopCard);
+      svg.appendChild(flightCard);
 
       [
         ["START", routePoints[0], 18, -12],
@@ -1379,13 +1455,12 @@
         centroids,
         rvStopPath[rvStopPath.length - 1] || routePoints[Math.min(routePoints.length - 1, currentIndex + 2)]
       );
-      if (hasActiveFlight) appendFlightMarker(svg, svgNS, flightPoint);
       appendImageMarker(svg, svgNS, rvPoint, mapEntityAssets.rv, "RV", "rv");
       appendImageMarker(svg, svgNS, runnerPoint, mapEntityAssets.runner, "Runner", "runner");
 
       mapEl.replaceChildren(svg);
       svg.addEventListener("click", (event) => {
-        if (!event.target.closest(".map-stop")) resetStopCard();
+        if (!event.target.closest(".map-stop") && !event.target.closest(".map-route.flight") && !event.target.closest(".map-flight-hit")) resetStopCard();
       });
 
       document.addEventListener("pointerdown", (event) => {

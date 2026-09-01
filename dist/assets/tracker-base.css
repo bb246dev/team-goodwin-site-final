@@ -737,9 +737,21 @@
     }
 
     .map-route.flight {
-      stroke: rgba(255, 255, 255, 0.78);
-      stroke-width: 2.6;
-      stroke-dasharray: 12 10;
+      stroke: #C6A15B;
+      stroke-width: 2;
+      stroke-opacity: 0.55;
+      stroke-dasharray: 7 9;
+      cursor: pointer;
+      pointer-events: stroke;
+    }
+
+    .map-flight-hit {
+      fill: none;
+      stroke: transparent;
+      stroke-width: 14;
+      cursor: pointer;
+      pointer-events: stroke;
+      vector-effect: non-scaling-stroke;
     }
 
     .map-route.rv {
@@ -802,15 +814,6 @@
       text-transform: uppercase;
     }
 
-    .map-flight-body {
-      fill: none;
-      stroke: var(--color-accent);
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 1.8;
-      vector-effect: non-scaling-stroke;
-    }
-
     .tracking-map-key {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -851,10 +854,16 @@
 
     .tracking-map-key .legend-plane {
       fill: none;
-      stroke: var(--color-accent);
+      stroke: #C6A15B;
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-width: 1.8;
+      stroke-width: 2;
+      stroke-dasharray: 7 9;
+    }
+
+    .tracking-map-key .legend-flight-line {
+      width: 34px;
+      height: 16px;
     }
 
     .map-label {
@@ -889,7 +898,18 @@
       opacity: 1;
     }
 
-    .map-stop-card rect {
+    .map-flight-card {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease;
+    }
+
+    .map-flight-card.is-visible {
+      opacity: 1;
+    }
+
+    .map-stop-card rect,
+    .map-flight-card rect {
       fill: rgba(255, 255, 255, 0.96);
       stroke: rgba(10, 10, 10, 0.28);
       stroke-width: 1;
@@ -897,7 +917,8 @@
       vector-effect: non-scaling-stroke;
     }
 
-    .map-stop-card .map-card-kicker {
+    .map-stop-card .map-card-kicker,
+    .map-flight-card .map-flight-card-date {
       fill: rgba(10, 10, 10, 0.62);
       font-size: 10px;
       font-weight: 800;
@@ -905,7 +926,8 @@
       text-transform: uppercase;
     }
 
-    .map-stop-card .map-card-city {
+    .map-stop-card .map-card-city,
+    .map-flight-card .map-flight-card-route {
       fill: var(--tracker-ink);
       font-family: var(--font-sans);
       font-size: 24px;
@@ -913,10 +935,19 @@
       letter-spacing: 0;
     }
 
-    .map-stop-card .map-card-date {
+    .map-stop-card .map-card-date,
+    .map-flight-card .map-flight-card-copy {
       fill: rgba(10, 10, 10, 0.7);
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .map-flight-card .map-flight-card-route {
+      font-size: 18px;
+    }
+
+    .map-flight-card .map-flight-card-copy {
+      font-size: 11px;
     }
 
     @keyframes mapPulse {
@@ -2895,6 +2926,18 @@
     }
 
     @media (max-width: 430px) {
+      .map-route.flight {
+        stroke-width: 1.5;
+        stroke-opacity: 0.45;
+        stroke-dasharray: 6 8;
+      }
+
+      .tracking-map-key .legend-plane {
+        stroke-width: 1.5;
+        stroke-opacity: 0.45;
+        stroke-dasharray: 6 8;
+      }
+
       .tracker-nav {
         position: absolute;
         inset: 0 0 auto 0;
