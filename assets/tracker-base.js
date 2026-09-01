@@ -874,6 +874,21 @@
       rv: { pathStops: [3, 4, 5, 6], progress: 0.64 }
     };
     const MAP_FLIGHT_PREVIEW = false;
+    const RUN_WITH_WILL_FORM_URL = "https://tally.so/r/lbE0jN";
+
+    function getRunWithWillId(stop) {
+      return `run-${String(stop.n).padStart(2, "0")}`;
+    }
+
+    function getRunWithWillUrl(stop) {
+      const params = new URLSearchParams({
+        run_id: getRunWithWillId(stop),
+        city: stop.city,
+        state: stop.state,
+        date: stop.date
+      });
+      return `${RUN_WITH_WILL_FORM_URL}?${params.toString()}`;
+    }
 
     function updateCountdown() {
       const remaining = Math.max(0, startDate.getTime() - Date.now());
@@ -899,7 +914,7 @@
             <div class="tracker-eyebrow">${stop.date} · ${stop.state}</div>
             <h3>${stop.city}</h3>
           </div>
-          ${stop.n === 50 ? "" : '<div class="button-row"><a class="tracker-button secondary" href="partners.html" data-rsvp-link>RSVP</a></div>'}
+          ${stop.n === 50 ? "" : `<div class="button-row"><a class="tracker-button secondary" href="${getRunWithWillUrl(stop)}" data-rsvp-link>RSVP</a></div>`}
         </article>
       `;
     }
@@ -910,7 +925,7 @@
           <div class="rsvp-selected-stop-label">
             <span class="rsvp-selected-stop-date">${stop.date} - ${stop.city}</span>
           </div>
-          <div class="button-row"><a class="tracker-button secondary" href="partners.html" data-rsvp-link>RSVP</a></div>
+          <div class="button-row"><a class="tracker-button secondary" href="${getRunWithWillUrl(stop)}" data-rsvp-link>RSVP</a></div>
         </article>
       `;
     }
