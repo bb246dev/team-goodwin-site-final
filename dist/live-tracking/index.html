@@ -21,7 +21,6 @@
     (() => {
       try {
         if (window.localStorage.getItem("goodwinSplashSeen") !== "true") {
-          window.localStorage.setItem("goodwinSplashSeen", "true");
           document.body.classList.add("has-splash-modal-open");
         }
       } catch {
