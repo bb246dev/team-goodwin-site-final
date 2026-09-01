@@ -378,16 +378,12 @@ body.has-ambient-pages .record p {
     opacity: 1;
   }
 
-  body.has-ambient-pages .tracker-mark > img:not(.tracker-mark-mobile-logo),
   body.has-ambient-pages .tracker-mark > span {
     display: none;
   }
 
   body.has-ambient-pages .tracker-mark img.tracker-mark-mobile-logo {
-    display: block;
-    width: 100%;
-    height: auto;
-    filter: none;
+    display: none;
   }
 
   body.has-ambient-pages .tracker-mark.fifty-runs-mark .fifty-runs-mobile-brand {

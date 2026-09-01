@@ -128,8 +128,8 @@
     @media(max-width:430px){
       .tracker-nav{position:absolute;inset:0 0 auto 0;width:100%;max-width:100vw;padding:18px 20px;overflow:visible}
       .tracker-mark{align-items:center;width:min(234px,calc(100vw - 92px));opacity:1}
-      .tracker-mark > img:not(.tracker-mark-mobile-logo),.tracker-mark > span{display:none}
-      .tracker-mark img.tracker-mark-mobile-logo{display:block;width:100%;height:auto;filter:none}
+      .tracker-mark > span{display:none}
+      .tracker-mark img.tracker-mark-mobile-logo{display:none}
       .tracker-menu-toggle{position:relative;inset:auto;margin-left:auto;flex:0 0 44px;border-color:transparent;background:transparent}
       .tracker-navlinks{position:absolute;top:calc(100% - 4px);left:20px;right:20px;width:auto;max-width:calc(100vw - 40px)}
       .site-footer{margin-top:52px}
@@ -158,7 +158,7 @@
     <nav class="tracker-nav" aria-label="Site navigation">
       <a class="tracker-mark" href="/" aria-label="Goodwin home">
         <img src="../assets/goodwin-logo.png" alt="GOODWIN">
-        <img class="tracker-mark-mobile-logo" src="../assets/mission-america-logo-mobile.png" alt="GOODWIN Generated Mission America">
+        
         <span>Endurance</span>
       </a>
       <button class="tracker-menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="tracker-navlinks"><span></span></button>
