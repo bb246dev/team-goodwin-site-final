@@ -41,6 +41,17 @@
     });
   }
 
+  if (trackerNav) {
+    const desktopQuery = window.matchMedia("(min-width: 769px)");
+    const updateNavFade = () => {
+      trackerNav.classList.toggle("is-scrolled", desktopQuery.matches && window.scrollY > 180);
+    };
+
+    updateNavFade();
+    window.addEventListener("scroll", updateNavFade, { passive: true });
+    desktopQuery.addEventListener?.("change", updateNavFade);
+  }
+
   let anchors = [];
   let frame = 0;
   let targetScroll = window.scrollY;
