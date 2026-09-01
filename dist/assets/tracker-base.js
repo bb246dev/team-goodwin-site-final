@@ -1072,6 +1072,23 @@
       return points.length ? `M${points.map((point) => point.join(",")).join("L")}` : "";
     }
 
+    const flightGroundTransitionKeys = new Set(["1-2", "2-3", "4-5", "24-25", "32-33"]);
+
+    function routeTransitionKey(fromStop, toStop) {
+      return `${fromStop?.n}-${toStop?.n}`;
+    }
+
+    function routePathWithoutFlightTransitions(points, stops) {
+      const segments = [];
+      for (let index = 1; index < points.length; index += 1) {
+        const fromStop = stops[index - 1];
+        const toStop = stops[index];
+        if (flightGroundTransitionKeys.has(routeTransitionKey(fromStop, toStop))) continue;
+        segments.push(`M${points[index - 1].join(",")}L${points[index].join(",")}`);
+      }
+      return segments.join("");
+    }
+
     const mainlandTransform = { x: 105, y: 35, scale: 0.88 };
     const insetTransforms = {
       AK: { x: -18, y: -267, scale: 0.65 },
@@ -1264,6 +1281,7 @@
         ]
         : routePoints[currentIndex];
       const completedPoints = routePoints.slice(0, segmentIndex + 1).concat([liveSvgPoint]);
+      const completedStops = routeStops.slice(0, segmentIndex + 1).concat([routeStops[Math.min(routeStops.length - 1, segmentIndex + 1)]]);
       const trackingData = {
         runner: { ...mapTrackingDefaults.runner, ...(window.missionMapTracking?.runner || window.missionRunnerTracking || {}) },
         flight: { ...mapTrackingDefaults.flight, ...(window.missionMapTracking?.flight || window.missionFlightTracking || {}) },
@@ -1273,11 +1291,11 @@
       const routeLayer = document.createElementNS(svgNS, "g");
       const futurePath = document.createElementNS(svgNS, "path");
       futurePath.setAttribute("class", "map-route future");
-      futurePath.setAttribute("d", routePath(routePoints));
+      futurePath.setAttribute("d", routePathWithoutFlightTransitions(routePoints, routeStops));
       routeLayer.appendChild(futurePath);
       const completePath = document.createElementNS(svgNS, "path");
       completePath.setAttribute("class", "map-route complete");
-      completePath.setAttribute("d", routePath(completedPoints));
+      completePath.setAttribute("d", routePathWithoutFlightTransitions(completedPoints, completedStops));
       routeLayer.appendChild(completePath);
       svg.appendChild(routeLayer);
 
