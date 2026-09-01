@@ -442,6 +442,8 @@
       cacheKey: "goodwin-generated-mission-america-updates-v1",
       cacheMs: 2 * 60 * 1000
     };
+    // Live tracking is disabled until an external tracking backend endpoint is configured.
+    const LIVE_TRACKING_ENDPOINT = String(window.MISSION_LIVE_TRACKING_ENDPOINT || "").trim();
     const updatesDebug = new URLSearchParams(window.location.search).get("updatesDebug") === "1";
 
     function escapeHtml(value) {
@@ -612,10 +614,11 @@
     let missionTrackingStatusPromise = null;
 
     async function loadMissionTrackingStatus() {
+      if (!LIVE_TRACKING_ENDPOINT) return null;
       if (missionTrackingStatusPromise) return missionTrackingStatusPromise;
       missionTrackingStatusPromise = (async () => {
         try {
-          const response = await fetch("/api/tracking-status", { headers: { Accept: "application/json" } });
+          const response = await fetch(LIVE_TRACKING_ENDPOINT, { headers: { Accept: "application/json" } });
           if (!response.ok) throw new Error(`Tracking status returned ${response.status}`);
           const status = await response.json();
           if (status?.flightStatus) window.missionPublicFlightStatus = status.flightStatus;
