@@ -37,6 +37,13 @@ const pages = [
   ["source-html/accessibility.raw.html", "accessibility.html"],
 ];
 
+const legalPageNames = new Set([
+  "privacy.html",
+  "terms.html",
+  "participation-terms.html",
+  "accessibility.html",
+]);
+
 const videoIds = [
   "n4ryq66g73w",
   "0pSyTZX-W_k",
@@ -164,6 +171,7 @@ function addSharedFooter(html) {
 function localize(html, pageName) {
   let out = html;
   const offlineFontStylesheet = pageName === "live-tracking.html" ? "fonts/inter.css" : "fonts/offline-fonts.css";
+  const isLegalPage = legalPageNames.has(pageName);
 
   out = out
     .replace(/<script defer src="\/~flock\.js"[^>]*><\/script>/g, "")
@@ -180,7 +188,11 @@ function localize(html, pageName) {
     .replace(/content="\/athletes"/g, 'content="/athletes/"')
     .replace(/content="\/partners"/g, 'content="/partners/"');
 
-  if (pageName !== "live-tracking.html") {
+  if (isLegalPage) {
+    out = out.replace("<body>", '<body class="is-legal-page" data-ambient-pages="disabled">');
+  }
+
+  if (pageName !== "live-tracking.html" && !isLegalPage) {
     out = out.replace(
       "</head>",
       '<link rel="stylesheet" href="/assets/ambient-pages.css"><script defer src="/assets/ambient-pages.js"></script></head>',
