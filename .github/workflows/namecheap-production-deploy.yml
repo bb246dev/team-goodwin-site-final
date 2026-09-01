@@ -2,8 +2,8 @@ name: Deploy Team Goodwin Production
 
 on:
   push:
-    tags:
-      - "production-*"
+    branches:
+      - main
 
 jobs:
   production-deploy:
