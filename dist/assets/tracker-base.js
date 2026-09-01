@@ -1537,7 +1537,13 @@
       zoomOut.setAttribute("aria-label", "Zoom out");
       zoomOut.textContent = "\u2212";
       zoomOut.addEventListener("click", () => zoomBy(1.22));
-      zoomControls.append(zoomIn, zoomOut);
+      const zoomReset = document.createElement("button");
+      zoomReset.type = "button";
+      zoomReset.className = "map-zoom-button map-zoom-reset";
+      zoomReset.setAttribute("aria-label", "Reset map view");
+      zoomReset.textContent = "\u21ba";
+      zoomReset.addEventListener("click", () => setViewBox({ ...initialViewBox }));
+      zoomControls.append(zoomIn, zoomOut, zoomReset);
 
       let pinchStart = null;
       const touchDistance = (touches) => Math.hypot(

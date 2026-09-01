@@ -738,6 +738,10 @@
       border-bottom: 0;
     }
 
+    .map-zoom-reset {
+      display: none;
+    }
+
     .map-zoom-button:hover,
     .map-zoom-button:focus-visible {
       background: rgba(255, 255, 255, 0.14);
@@ -3002,6 +3006,61 @@
         stroke-width: 1.5;
         stroke-opacity: 0.45;
         stroke-dasharray: 6 8;
+      }
+
+      .map-zoom-controls {
+        top: auto;
+        right: 14px;
+        bottom: 14px;
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 4px;
+        overflow: visible;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .map-zoom-button {
+        position: relative;
+        isolation: isolate;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 1.12rem;
+      }
+
+      .map-zoom-button::before {
+        content: "";
+        position: absolute;
+        inset: 6px;
+        z-index: -1;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 2px;
+        background: rgba(10, 10, 10, 0.5);
+      }
+
+      .map-zoom-button:last-child {
+        border-bottom: 0;
+      }
+
+      .map-zoom-reset {
+        display: grid;
+      }
+
+      .map-zoom-button:hover,
+      .map-zoom-button:focus-visible {
+        background: transparent;
+      }
+
+      .map-zoom-button:hover::before,
+      .map-zoom-button:focus-visible::before {
+        border-color: rgba(255, 255, 255, 0.32);
+        background: rgba(10, 10, 10, 0.64);
       }
 
       .map-flight-plane-body {
