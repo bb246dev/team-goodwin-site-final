@@ -2,10 +2,29 @@
   const BLACK = { base: [6, 14, 15], glowOne: [18, 38, 34], glowTwo: [24, 34, 47] };
   const WHITE = { base: [240, 241, 235], glowOne: [255, 251, 239], glowTwo: [207, 225, 218] };
   const GREEN = { base: [25, 59, 59], glowOne: [52, 96, 82], glowTwo: [45, 66, 78] };
-  const palettes = [BLACK, BLACK, WHITE, GREEN, WHITE, BLACK];
-  const anchorSelectors = [".hero", ".grid", ".body", ".schedule", ".faq-list", ".legal-copy", ".site-footer", ".global-site-footer"];
+  const palettes = [BLACK, WHITE, GREEN, WHITE, BLACK, BLACK];
+  const anchorSelectors = [
+    ".hero",
+    ".profile",
+    ".faq-hero",
+    ".updates-hero",
+    ".legal-hero",
+    ".record",
+    ".grid",
+    ".body",
+    ".itinerary-section",
+    ".states",
+    ".schedule",
+    ".faq-list",
+    ".updates-archive",
+    ".legal-copy",
+    ".site-footer",
+    ".global-site-footer",
+  ];
   const LIGHT_INK = [248, 247, 239];
   const DARK_INK = [9, 31, 29];
+  const MIN_TRANSITION_DISTANCE = 960;
+  const TRANSITION_VIEWPORT_FACTOR = 1.5;
 
   const clamp = (value, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value));
   const mix = (start, end, amount) => start.map((channel, index) => channel + (end[index] - channel) * amount);
@@ -62,27 +81,34 @@
 
   const measure = () => {
     anchors = anchorSelectors
-      .map((selector) => document.querySelector(selector))
-      .filter(Boolean)
-      .map((element) => element.getBoundingClientRect().top + window.scrollY);
+      .flatMap((selector) => [...document.querySelectorAll(selector)])
+      .map((element) => Math.round(element.getBoundingClientRect().top + window.scrollY))
+      .sort((a, b) => a - b)
+      .filter((position, index, positions) => index === 0 || Math.abs(position - positions[index - 1]) > 16);
 
     if (!anchors.length) anchors = [0, document.documentElement.scrollHeight];
   };
 
   const paletteAt = (scrollPosition) => {
-    const focus = scrollPosition + window.innerHeight * 0.46;
-    let index = 0;
-    while (index < anchors.length - 1 && focus >= anchors[index + 1]) index += 1;
-    const end = anchors[index + 1] ?? document.documentElement.scrollHeight;
-    const start = anchors[index] ?? 0;
-    const interval = Math.max(1, end - start);
-    const amount = smoothstep(clamp((focus - start) / interval));
-    const current = palettes[Math.min(index, palettes.length - 1)];
-    const next = palettes[Math.min(index + 1, palettes.length - 1)];
+    const focus = scrollPosition;
+    const transitionDistance = Math.max(MIN_TRANSITION_DISTANCE, window.innerHeight * TRANSITION_VIEWPORT_FACTOR);
+    const halfTransition = transitionDistance / 2;
+    let current = palettes[0];
+
+    for (let index = 1; index < anchors.length && index < palettes.length; index += 1) {
+      const boundary = anchors[index];
+      const amount = smoothstep(clamp((focus - boundary + halfTransition) / transitionDistance));
+      current = {
+        base: mix(current.base, palettes[index].base, amount),
+        glowOne: mix(current.glowOne, palettes[index].glowOne, amount),
+        glowTwo: mix(current.glowTwo, palettes[index].glowTwo, amount),
+      };
+    }
+
     return {
-      base: mix(current.base, next.base, amount),
-      glowOne: mix(current.glowOne, next.glowOne, amount),
-      glowTwo: mix(current.glowTwo, next.glowTwo, amount),
+      base: current.base,
+      glowOne: current.glowOne,
+      glowTwo: current.glowTwo,
     };
   };
 
@@ -99,8 +125,8 @@
       scrollVelocity = 0;
     } else {
       const displacement = targetScroll - renderedScroll;
-      scrollVelocity += displacement * 15 * deltaTime;
-      scrollVelocity *= Math.exp(-4.8 * deltaTime);
+      scrollVelocity += displacement * 9 * deltaTime;
+      scrollVelocity *= Math.exp(-3.8 * deltaTime);
       renderedScroll += scrollVelocity * deltaTime;
       if (Math.abs(displacement) < 0.1 && Math.abs(scrollVelocity) < 0.1) {
         renderedScroll = targetScroll;
@@ -111,11 +137,19 @@
     const palette = paletteAt(renderedScroll);
     const baseLuminance = relativeLuminance(palette.base);
     const inkAmount = smoothstep(clamp((0.52 - baseLuminance) / 0.48));
+    const readableAmount = smoothstep(clamp((baseLuminance - 0.5) / 0.18));
+    const readableInk = mix(LIGHT_INK, DARK_INK, readableAmount);
+    const readableMutedInk = mix([210, 221, 214], [53, 73, 69], readableAmount);
+    const panelFill = mix([13, 31, 31], [255, 255, 255], readableAmount);
     const phase = renderedScroll / Math.max(720, window.innerHeight * 1.08);
     document.documentElement.style.setProperty("--ambient-base", rgb(palette.base));
     document.documentElement.style.setProperty("--ambient-glow-one", rgb(palette.glowOne));
     document.documentElement.style.setProperty("--ambient-glow-two", rgb(palette.glowTwo));
     document.documentElement.style.setProperty("--ambient-ink", rgb(mix(DARK_INK, LIGHT_INK, inkAmount)));
+    document.documentElement.style.setProperty("--ambient-readable-ink", rgb(readableInk));
+    document.documentElement.style.setProperty("--ambient-readable-muted", rgb(readableMutedInk));
+    document.documentElement.style.setProperty("--ambient-panel-fill", rgb(panelFill));
+    document.documentElement.dataset.ambientTheme = readableAmount > 0.5 ? "light" : "dark";
     document.documentElement.style.setProperty("--ambient-page-drift-x", `${Math.sin(phase * 0.62) * window.innerWidth * 0.045}px`);
     document.documentElement.style.setProperty("--ambient-page-drift-y", `${Math.cos(phase * 0.5) * 30}px`);
     document.documentElement.style.setProperty("--ambient-page-scale", `${1.06 + Math.sin(phase * 0.35) * 0.03}`);

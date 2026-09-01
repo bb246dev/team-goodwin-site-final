@@ -3,6 +3,9 @@
   --ambient-glow-one: 18 38 34;
   --ambient-glow-two: 24 34 47;
   --ambient-ink: 246 246 239;
+  --ambient-readable-ink: 246 246 239;
+  --ambient-readable-muted: 210 221 214;
+  --ambient-panel-fill: 13 31 31;
 }
 
 body.has-ambient-pages {
@@ -182,6 +185,52 @@ body.has-ambient-pages .stop-number {
   color: #c7aa72;
 }
 
+body.has-ambient-pages .itinerary-section,
+body.has-ambient-pages .itinerary-section h2,
+body.has-ambient-pages .itinerary-week,
+body.has-ambient-pages .week-heading h3,
+body.has-ambient-pages .stop-date,
+body.has-ambient-pages .stop-state {
+  color: rgb(var(--ambient-readable-ink));
+}
+
+body.has-ambient-pages .itinerary-section .itinerary-tabs a,
+body.has-ambient-pages .week-heading span,
+body.has-ambient-pages .stop-city {
+  color: rgb(var(--ambient-readable-muted));
+}
+
+body.has-ambient-pages .itinerary-week {
+  background: rgb(var(--ambient-panel-fill) / 14%);
+  border-color: rgb(var(--ambient-readable-ink) / 18%);
+}
+
+body.has-ambient-pages .week-heading {
+  background: rgb(var(--ambient-panel-fill) / 20%);
+  border-bottom-color: rgb(var(--ambient-readable-ink) / 18%);
+}
+
+body.has-ambient-pages .stop-row {
+  border-top-color: rgb(var(--ambient-readable-ink) / 14%);
+}
+
+body.has-ambient-pages .itinerary-tabs a {
+  border-color: rgb(var(--ambient-readable-ink) / 24%);
+}
+
+body.has-ambient-pages .itinerary-section h2,
+body.has-ambient-pages .itinerary-tabs a,
+body.has-ambient-pages .itinerary-week,
+body.has-ambient-pages .week-heading,
+body.has-ambient-pages .week-heading h3,
+body.has-ambient-pages .week-heading span,
+body.has-ambient-pages .stop-row,
+body.has-ambient-pages .stop-date,
+body.has-ambient-pages .stop-state,
+body.has-ambient-pages .stop-city {
+  transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease, background 240ms ease;
+}
+
 body.has-ambient-pages input,
 body.has-ambient-pages textarea,
 body.has-ambient-pages select,
@@ -243,6 +292,96 @@ body.has-ambient-pages .updates-page .update h2 {
 body.has-ambient-pages .updates-page .update time,
 body.has-ambient-pages .updates-page .update p {
   color: rgb(10 10 10 / 72%);
+}
+
+body.has-ambient-pages .hero,
+body.has-ambient-pages .profile,
+body.has-ambient-pages .body,
+body.has-ambient-pages .grid,
+body.has-ambient-pages .schedule,
+body.has-ambient-pages .faq-hero,
+body.has-ambient-pages .faq-list,
+body.has-ambient-pages .legal-hero,
+body.has-ambient-pages .legal-copy,
+body.has-ambient-pages .updates-hero,
+body.has-ambient-pages .updates-archive {
+  color: rgb(var(--ambient-readable-ink));
+}
+
+body.has-ambient-pages .hero h1,
+body.has-ambient-pages .profile h1,
+body.has-ambient-pages .body h2,
+body.has-ambient-pages .body h3,
+body.has-ambient-pages .grid .card h3,
+body.has-ambient-pages .schedule .stop .state,
+body.has-ambient-pages .faq-hero h1,
+body.has-ambient-pages .faq-question h2,
+body.has-ambient-pages .legal-hero h1,
+body.has-ambient-pages .legal-section h2,
+body.has-ambient-pages .updates-hero h1,
+body.has-ambient-pages .updates-page .update h2,
+body.has-ambient-pages .quote,
+body.has-ambient-pages .stat strong {
+  color: rgb(var(--ambient-readable-ink));
+}
+
+body.has-ambient-pages .hero .lede,
+body.has-ambient-pages .profile .lede,
+body.has-ambient-pages .body p,
+body.has-ambient-pages .body li,
+body.has-ambient-pages .grid .card p,
+body.has-ambient-pages .schedule .stop .city,
+body.has-ambient-pages .faq-intro,
+body.has-ambient-pages .faq-answer p,
+body.has-ambient-pages .legal-intro,
+body.has-ambient-pages .legal-section p,
+body.has-ambient-pages .legal-section li,
+body.has-ambient-pages .updates-page .update time,
+body.has-ambient-pages .updates-page .update p,
+body.has-ambient-pages .stat span {
+  color: rgb(var(--ambient-readable-muted));
+}
+
+body.has-ambient-pages .card,
+body.has-ambient-pages .schedule .stop,
+body.has-ambient-pages .faq-item,
+body.has-ambient-pages .legal-section,
+body.has-ambient-pages .updates-page .update {
+  background: rgb(var(--ambient-panel-fill) / 14%);
+  border-color: rgb(var(--ambient-readable-ink) / 18%);
+}
+
+body.has-ambient-pages .faq-question:hover,
+body.has-ambient-pages .faq-question[aria-expanded="true"],
+body.has-ambient-pages .card:hover,
+body.has-ambient-pages .schedule .stop:hover,
+body.has-ambient-pages .updates-page .update:hover {
+  background: rgb(var(--ambient-panel-fill) / 20%);
+}
+
+body.has-ambient-pages .body a,
+body.has-ambient-pages .legal-section a,
+body.has-ambient-pages .legal-return {
+  color: rgb(var(--ambient-readable-ink));
+}
+
+body.has-ambient-pages .hero,
+body.has-ambient-pages .profile,
+body.has-ambient-pages .body,
+body.has-ambient-pages .grid .card,
+body.has-ambient-pages .schedule .stop,
+body.has-ambient-pages .faq-hero,
+body.has-ambient-pages .faq-item,
+body.has-ambient-pages .faq-question,
+body.has-ambient-pages .faq-answer,
+body.has-ambient-pages .legal-hero,
+body.has-ambient-pages .legal-section,
+body.has-ambient-pages .updates-hero,
+body.has-ambient-pages .updates-page .update,
+body.has-ambient-pages .quote,
+body.has-ambient-pages .stat,
+body.has-ambient-pages .lede {
+  transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease, background 240ms ease;
 }
 
 body.has-ambient-pages .global-site-footer {
@@ -550,9 +689,42 @@ body.has-ambient-pages .record p {
   body.has-ambient-pages .states,
   body.has-ambient-pages .itinerary-section,
   body.has-ambient-pages .itinerary-board,
-  body.has-ambient-pages .schedule {
+  body.has-ambient-pages .schedule,
+  body.has-ambient-pages .tracker-content,
+  body.has-ambient-pages .faq-hero,
+  body.has-ambient-pages .faq-list,
+  body.has-ambient-pages .updates-hero,
+  body.has-ambient-pages .updates-archive,
+  body.has-ambient-pages .legal-hero,
+  body.has-ambient-pages .legal-copy,
+  body.has-ambient-pages .site-footer,
+  body.has-ambient-pages .global-site-footer {
     max-width: 100%;
     min-width: 0;
+  }
+
+  body.has-ambient-pages .faq-item,
+  body.has-ambient-pages .updates-page .update,
+  body.has-ambient-pages .legal-section {
+    overflow: hidden;
+  }
+
+  body.has-ambient-pages .faq-question {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  body.has-ambient-pages .faq-question h2,
+  body.has-ambient-pages .updates-page .update h2,
+  body.has-ambient-pages .updates-page .update p,
+  body.has-ambient-pages .legal-section h2,
+  body.has-ambient-pages .legal-section p,
+  body.has-ambient-pages .legal-section li,
+  body.has-ambient-pages .site-footer a,
+  body.has-ambient-pages .global-site-footer a,
+  body.has-ambient-pages .site-footer-link-disabled {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   body.has-ambient-pages .record strong {
