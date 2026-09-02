@@ -1757,7 +1757,13 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: rgba(0, 0, 0, var(--week-card-overlay, 0));
+      background:
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, var(--week-card-overlay-top, var(--week-card-overlay, 0))),
+          rgba(0, 0, 0, var(--week-card-overlay-bottom, var(--week-card-overlay, 0)))
+        ),
+        rgba(80, 80, 80, var(--week-card-overlay-wash, 0));
       pointer-events: none;
     }
 
@@ -2251,31 +2257,80 @@
       background: var(--color-black);
       border-top-color: rgba(255, 255, 255, 0.2);
       color: #fff;
+      padding-block: clamp(72px, 8vw, 96px);
     }
 
-    #why .section-head h2,
     #why .tracker-eyebrow,
-    #why .article-card h3 {
+    #why .why-impact-heading h2 {
       color: #fff;
     }
 
-    #why .section-head p,
-    #why .article-card p {
+    .why-impact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.95fr) minmax(0, 1fr);
+      gap: clamp(30px, 4vw, 48px);
+      align-items: start;
+    }
+
+    .why-impact-heading {
+      align-self: start;
+    }
+
+    .why-impact-heading h2 {
+      max-width: 520px;
+      margin-top: 18px;
+      font-family: var(--font-sans);
+      font-size: clamp(3.8rem, 5vw, 4.9rem);
+      font-weight: 500;
+      line-height: 0.92;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .why-impact-photo {
+      position: relative;
+      align-self: start;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .why-impact-photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.27) 0%,
+          rgba(0, 0, 0, 0.31) 48%,
+          rgba(0, 0, 0, 0.43) 100%
+        ),
+        rgba(0, 0, 0, 0.285);
+    }
+
+    .why-impact-photo img {
+      display: block;
+      width: min(100%, 342px);
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: 0;
+    }
+
+    .why-impact-story {
+      align-self: center;
+    }
+
+    .why-impact-story p {
       color: rgba(255, 255, 255, 0.72);
+      font-size: 1rem;
+      line-height: 1.6;
     }
 
-    #why .article-grid {
-      grid-template-columns: minmax(0, 380px);
-      justify-content: center;
-      width: min(380px, 100%);
-      margin-inline: auto;
-      border-color: rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    #why .article-card {
-      background: var(--color-black);
-      color: #fff;
+    .why-impact-story .button-row {
+      margin-top: 28px;
     }
 
     #why .tracker-button.secondary {
@@ -3466,26 +3521,6 @@
         );
       }
 
-      .mobile-photo-break-road::before,
-      .mobile-photo-break-portrait::before {
-        position: absolute;
-        right: 20px;
-        bottom: 24px;
-        left: 20px;
-        z-index: 2;
-        color: var(--color-white);
-        font-family: var(--font-sans);
-        font-size: clamp(2.05rem, 10.5vw, 3.2rem);
-        font-weight: 700;
-        line-height: 0.98;
-        letter-spacing: 0;
-        white-space: pre-line;
-      }
-
-      .mobile-photo-break-road::before {
-        content: "INSIDE GOODWIN GENERATED MISSION AMERICA\A\A How do you run 50 marathons in 24 days?";
-      }
-
       .mobile-photo-break-portrait::before {
         content: "WHY\A\A Every Mile Has a Reason\A\A Will began running after losing his mother, Amanda, to cancer in 2018. What started as a way to honor her memory has grown into something much bigger.";
         max-width: min(74vw, 292px);
@@ -3500,24 +3535,48 @@
       }
 
       #articles {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
         padding-top: 0;
         padding-bottom: 64px;
       }
 
       #articles .section-head {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        padding: 0;
+        position: relative;
+        z-index: 2;
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+        width: auto;
+        height: auto;
+        max-width: calc(100% - 40px);
+        margin: 0 20px;
+        padding: 12% 0 0;
         overflow: hidden;
-        clip: rect(0 0 0 0);
-        clip-path: inset(50%);
-        white-space: nowrap;
+        clip: auto;
+        clip-path: none;
+        white-space: normal;
+        pointer-events: none;
       }
 
       #articles .section-head p {
         margin-top: 22px;
+      }
+
+      #articles .section-head h2 {
+        max-width: 100%;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF;
+        font-size: clamp(1.55rem, 6.2vw, 2.05rem);
+        font-weight: 700;
+        line-height: 0.98;
+      }
+
+      #articles .section-head .tracker-eyebrow {
+        margin-bottom: 12px;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF;
       }
 
       .photo-strip {
@@ -3615,44 +3674,74 @@
       }
 
       #why {
-        padding: 0 24px 40px;
+        padding: 56px 24px 64px;
       }
 
-      #why .section-head {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        padding: 0;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        clip-path: inset(50%);
-        white-space: nowrap;
+      .why-impact-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
       }
 
-      #why .tracker-eyebrow {
-        display: block;
-        margin-bottom: 12px;
+      .why-impact-heading,
+      .why-impact-photo {
+        grid-column: 1;
+        grid-row: 1;
       }
 
-      #why .section-head h2 {
+      .why-impact-heading {
+        position: relative;
+        z-index: 2;
+        align-self: start;
+        padding: 12% 20px 0;
+        pointer-events: none;
+      }
+
+      .why-impact-heading h2 {
+        max-width: 100%;
+        margin-top: 12px;
+        color: #FFFFFF !important;
         font-size: clamp(2.625rem, 11vw, 3rem);
         line-height: 1;
+        white-space: normal;
       }
 
-      #why .section-head p {
+      .why-impact-heading .tracker-eyebrow {
+        color: #FFFFFF !important;
+      }
+
+      .why-impact-photo {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .why-impact-photo::after {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.27) 0%,
+            rgba(0, 0, 0, 0.31) 48%,
+            rgba(0, 0, 0, 0.43) 100%
+          ),
+          rgba(0, 0, 0, 0.285);
+      }
+
+      .why-impact-photo img {
+        width: min(100%, 342px);
+      }
+
+      .why-impact-story p {
         max-width: 100%;
-        margin-top: 24px;
         font-size: clamp(1.125rem, 4.8vw, 1.25rem);
         line-height: 1.5;
       }
 
-      #why .article-grid {
-        margin-top: 6px;
+      .why-impact-story .button-row {
+        margin-top: 22px;
+        justify-content: flex-start;
       }
 
-      #why .article-card {
-        padding: 24px;
+      #why .why-impact-story .tracker-button {
+        width: auto;
+        max-width: max-content;
       }
 
       #rsvp {
@@ -4261,13 +4350,12 @@
         padding-inline: 0;
       }
 
-      #why .article-grid {
-        width: min(380px, 100%);
-        margin-inline: auto;
+      .why-impact-layout {
+        gap: 22px;
       }
 
-      #why .article-card {
-        padding-inline: 0;
+      .why-impact-photo img {
+        width: 100%;
       }
 
       #rsvp {
@@ -4280,7 +4368,7 @@
     .tracker-page #updates .week-card:focus,
     .tracker-page #updates .week-card:focus-visible {
       transform: none;
-      transition: none;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
     }
 
     @media (min-width: 769px) {
@@ -4359,9 +4447,28 @@
         scroll-snap-align: none;
         scroll-snap-stop: normal;
       }
+
+      .tracker-page #updates .week-card.has-image::before {
+        background:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.6)),
+          rgba(80, 80, 80, 0.34);
+      }
+
+      .tracker-page #updates .week-card.has-image:hover::before,
+      .tracker-page #updates .week-card.has-image:focus-visible::before {
+        background:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.7)),
+          rgba(80, 80, 80, 0.42);
+      }
     }
 
     @media (max-width: 768px) {
+      .tracker-page #articles {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
       .tracker-page .mobile-photo-break {
         display: block;
         position: relative;
@@ -4371,6 +4478,11 @@
         border: 1px solid rgba(10, 10, 10, 0.28);
         background: var(--color-black);
         overflow: hidden;
+      }
+
+      .tracker-page #articles > .mobile-photo-break-road {
+        grid-column: 1;
+        grid-row: 1;
       }
 
       .tracker-page .mobile-photo-break img {
@@ -4443,7 +4555,7 @@
       .tracker-page .mobile-photo-break .tracker-eyebrow,
       .tracker-page .mobile-photo-break h2,
       .tracker-page .mobile-photo-break p {
-        color: var(--color-white);
+        color: #FFFFFF;
       }
 
       .tracker-page .mobile-photo-break .tracker-eyebrow {
@@ -4477,8 +4589,46 @@
         line-height: 1.42;
       }
 
-    .tracker-page #articles .section-head,
-    .tracker-page #why .section-head {
+      .tracker-page #articles .section-head {
+        position: relative;
+        z-index: 2;
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+        width: auto;
+        height: auto;
+        max-width: calc(100% - 40px);
+        margin: 0 20px;
+        padding: 12% 0 0;
+        overflow: visible;
+        clip: auto;
+        clip-path: none;
+        white-space: normal;
+        pointer-events: none;
+      }
+
+      .tracker-page #articles .section-head h2 {
+        max-width: 100%;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF;
+        font-size: clamp(1.55rem, 6.2vw, 2.05rem);
+        font-weight: 700;
+        line-height: 0.98;
+      }
+
+      .tracker-page #articles .section-head .tracker-eyebrow {
+        margin-bottom: 12px;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF;
+      }
+
+      .tracker-page #why .why-impact-heading h2,
+      .tracker-page #why .why-impact-heading .tracker-eyebrow {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF;
+      }
+
+      .tracker-page #why .section-head {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -4488,7 +4638,7 @@
         clip: rect(0 0 0 0);
         clip-path: inset(50%);
         white-space: nowrap;
-    }
+      }
     }
 
     .tracker-page #why .article-grid {
