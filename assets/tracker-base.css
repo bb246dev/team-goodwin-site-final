@@ -1052,34 +1052,24 @@
       display: block;
       position: relative;
       overflow: hidden;
+      background-image: url("mission-america-logo.png");
+      background-repeat: no-repeat;
+      background-size: 100% auto;
       pointer-events: none;
-    }
-
-    .mission-logo-crop img {
-      display: block;
-      height: auto;
-      max-width: none;
     }
 
     .mission-logo-brand {
       width: min(620px, 54vw);
       aspect-ratio: 2534 / 188;
+      background-position: left top;
       transform: translate(-18px, -4px);
-    }
-
-    .mission-logo-brand img {
-      width: min(620px, 54vw);
     }
 
     .mission-logo-title {
       width: min(600px, 42vw);
       aspect-ratio: 2534 / 842;
+      background-position: left 92.2%;
       transform: translateX(0);
-    }
-
-    .mission-logo-title img {
-      width: min(600px, 42vw);
-      transform: translateY(-17.9%);
     }
 
     .tracker-headline h1 {
@@ -1123,6 +1113,15 @@
       letter-spacing: 0.08em;
     }
 
+    .tracker-headline .hero-copy-secondary {
+      display: block;
+      margin-top: 1.45em;
+    }
+
+    .hero-mobile-break {
+      display: none;
+    }
+
     .tracker-headline .hero-text-link {
       color: inherit;
       pointer-events: auto;
@@ -1132,7 +1131,6 @@
       text-underline-offset: 0.18em;
     }
 
-    .hero-mobile-copy,
     .hero-mobile-action {
       display: none;
     }
@@ -1142,7 +1140,6 @@
       text-decoration: none;
     }
 
-    .tracker-headline .hero-mobile-copy,
     .tracker-headline .hero-mobile-action,
     .tracker-panel-copy.mobile-clock-copy {
       display: none;
@@ -1441,8 +1438,28 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1px;
       margin-top: 28px;
+      position: relative;
       background: var(--tracker-line);
       border: 1px solid var(--tracker-line);
+    }
+
+    .mission-clock-loading {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      background: var(--color-white);
+      color: var(--tracker-muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .metric-row.is-ready .mission-clock-loading {
+      display: none;
     }
 
     .metric {
@@ -3153,11 +3170,7 @@
         max-width: min(16rem, 62vw);
       }
 
-      .tracker-headline .hero-desktop-copy {
-        display: none;
-      }
-
-      .tracker-headline .hero-mobile-copy {
+      .tracker-headline .hero-copy {
         display: block;
         max-width: min(16rem, 62vw);
         margin-top: 24px;
@@ -3165,7 +3178,7 @@
         line-height: 1.45;
       }
 
-      .tracker-headline .hero-mobile-copy .mission-line {
+      .tracker-headline .hero-copy .mission-line {
         margin-bottom: 22px;
         font-size: clamp(1.5rem, 6vw, 1.63rem);
         font-weight: 700;
@@ -3173,16 +3186,20 @@
         letter-spacing: 0.02em;
       }
 
-      .tracker-headline .hero-mobile-copy span:not(.mission-line) {
+      .tracker-headline .hero-copy span:not(.mission-line) {
         display: block;
       }
 
-      .tracker-headline .hero-mobile-copy span:not(.mission-line) + span:not(.mission-line) {
+      .tracker-headline .hero-copy .hero-copy-secondary {
         margin-top: 18px;
         color: rgba(255, 255, 255, 0.86);
         font-size: clamp(1.05rem, 4.45vw, 1.13rem);
         line-height: 1.5;
         opacity: 1;
+      }
+
+      .hero-mobile-break {
+        display: block;
       }
 
       .tracker-headline .hero-mobile-action {
@@ -3449,54 +3466,32 @@
         );
       }
 
-      .mobile-photo-break-road .mobile-photo-break-heading,
-      .mobile-photo-break-portrait .mobile-photo-break-heading {
-        display: block;
+      .mobile-photo-break-road::before,
+      .mobile-photo-break-portrait::before {
         position: absolute;
         right: 20px;
         bottom: 24px;
         left: 20px;
         z-index: 2;
-      }
-
-      .mobile-photo-break-portrait .mobile-photo-break-heading {
-        max-width: min(74vw, 292px);
-        bottom: 16px;
-      }
-
-      .mobile-photo-break-road .tracker-eyebrow,
-      .mobile-photo-break-road h2,
-      .mobile-photo-break-portrait .tracker-eyebrow,
-      .mobile-photo-break-portrait h2,
-      .mobile-photo-break-portrait p {
         color: var(--color-white);
-      }
-
-      .mobile-photo-break-road .tracker-eyebrow,
-      .mobile-photo-break-portrait .tracker-eyebrow {
-        margin-bottom: 12px;
-      }
-
-      .mobile-photo-break-road h2,
-      .mobile-photo-break-portrait h2 {
         font-family: var(--font-sans);
         font-size: clamp(2.05rem, 10.5vw, 3.2rem);
         font-weight: 700;
         line-height: 0.98;
         letter-spacing: 0;
+        white-space: pre-line;
       }
 
-      .mobile-photo-break-portrait h2 {
+      .mobile-photo-break-road::before {
+        content: "INSIDE GOODWIN GENERATED MISSION AMERICA\A\A How do you run 50 marathons in 24 days?";
+      }
+
+      .mobile-photo-break-portrait::before {
+        content: "WHY\A\A Every Mile Has a Reason\A\A Will began running after losing his mother, Amanda, to cancer in 2018. What started as a way to honor her memory has grown into something much bigger.";
+        max-width: min(74vw, 292px);
+        bottom: 16px;
         font-size: clamp(1.55rem, 6.6vw, 2rem);
         line-height: 1.04;
-      }
-
-      .mobile-photo-break-portrait p {
-        max-width: min(74vw, 292px);
-        margin: 8px 0 0;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: clamp(0.72rem, 2.95vw, 0.82rem);
-        line-height: 1.42;
       }
 
       .mobile-photo-break-portrait img {
@@ -3510,7 +3505,15 @@
       }
 
       #articles .section-head {
-        display: none;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
       }
 
       #articles .section-head p {
@@ -3616,7 +3619,15 @@
       }
 
       #why .section-head {
-        display: none;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
       }
 
       #why .tracker-eyebrow {
@@ -3826,15 +3837,15 @@
         width: min(212px, calc(100vw - 92px));
       }
 
-      .tracker-headline .hero-mobile-copy {
+      .tracker-headline .hero-copy {
         font-size: clamp(1.0625rem, 4.3vw, 1.12rem);
       }
 
-      .tracker-headline .hero-mobile-copy .mission-line {
+      .tracker-headline .hero-copy .mission-line {
         font-size: clamp(1.44rem, 5.8vw, 1.5rem);
       }
 
-      .tracker-headline .hero-mobile-copy span:not(.mission-line) + span:not(.mission-line) {
+      .tracker-headline .hero-copy .hero-copy-secondary {
         font-size: clamp(1rem, 4.15vw, 1.06rem);
       }
     }
@@ -4466,10 +4477,18 @@
         line-height: 1.42;
       }
 
-      .tracker-page #articles .section-head,
-      .tracker-page #why .section-head {
-        display: none;
-      }
+    .tracker-page #articles .section-head,
+    .tracker-page #why .section-head {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
     }
 
     .tracker-page #why .article-grid {

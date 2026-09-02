@@ -155,60 +155,6 @@
 
     initSplashModal();
 
-    function initInsideDesktopAnswers() {
-      const grid = document.querySelector("[data-inside-desktop-grid]");
-      if (!grid) return;
-
-      const triggers = Array.from(grid.querySelectorAll("[data-inside-desktop-trigger]"));
-      const rows = Array.from(grid.querySelectorAll("[data-inside-desktop-row]"));
-      const panels = Array.from(grid.querySelectorAll("[data-inside-desktop-panel]"));
-
-      const setPanelHeight = (panel) => {
-        panel.style.maxHeight = panel.classList.contains("is-open") ? `${panel.scrollHeight}px` : "0px";
-      };
-
-      const closeAll = () => {
-        triggers.forEach((trigger) => {
-          trigger.setAttribute("aria-expanded", "false");
-          trigger.setAttribute("aria-label", "Expand answer");
-          trigger.closest(".article-card")?.classList.remove("is-selected");
-        });
-        panels.forEach((panel) => {
-          panel.classList.remove("is-open");
-          setPanelHeight(panel);
-        });
-        rows.forEach((row) => row.classList.remove("is-open"));
-      };
-
-      const openAnswer = (trigger) => {
-        const panel = document.getElementById(trigger.getAttribute("aria-controls"));
-        const row = panel?.closest("[data-inside-desktop-row]");
-        if (!panel || !row) return;
-
-        closeAll();
-        row.classList.add("is-open");
-        panel.classList.add("is-open");
-        setPanelHeight(panel);
-        trigger.setAttribute("aria-expanded", "true");
-        trigger.setAttribute("aria-label", "Collapse answer");
-        trigger.closest(".article-card")?.classList.add("is-selected");
-      };
-
-      triggers.forEach((trigger) => {
-        trigger.addEventListener("click", () => {
-          const isOpen = trigger.getAttribute("aria-expanded") === "true";
-          closeAll();
-          if (!isOpen) openAnswer(trigger);
-        });
-      });
-
-      window.addEventListener("resize", () => {
-        panels.forEach(setPanelHeight);
-      });
-    }
-
-    initInsideDesktopAnswers();
-
     function initFaqCtaFilePreviewFallback() {
       if (window.location.protocol !== "file:") return;
       const faqCta = document.querySelector('#articles .inside-section-cta a[href="/faq/"]');
@@ -255,6 +201,11 @@
           const isOpen = trigger.getAttribute("aria-expanded") === "true";
           triggers.forEach(closePanel);
           if (!isOpen) openPanel(trigger);
+        });
+        trigger.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          trigger.click();
         });
       });
 
@@ -936,6 +887,16 @@
       document.getElementById("countdown-hours").textContent = String(hours).padStart(2, "0");
       document.getElementById("countdown-minutes").textContent = String(minutes).padStart(2, "0");
       document.getElementById("countdown-seconds").textContent = String(seconds).padStart(2, "0");
+      const clock = document.querySelector("[data-countdown-clock]");
+      const loading = document.querySelector("[data-countdown-loading]");
+      if (clock) {
+        clock.classList.remove("is-loading");
+        clock.classList.add("is-ready");
+        clock.setAttribute("aria-busy", "false");
+      }
+      if (loading) {
+        loading.setAttribute("hidden", "");
+      }
     }
 
     let rsvpMobileMode = "select";

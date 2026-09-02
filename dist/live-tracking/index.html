@@ -113,12 +113,11 @@
       <div class="tracker-hero-inner">
         <div class="tracker-headline">
           <div class="mission-logo-stack" aria-hidden="true">
-            <span class="mission-logo-crop mission-logo-brand"><img src="/assets/mission-america-logo.png" alt="" width="2534" height="1045"></span>
-            <span class="mission-logo-crop mission-logo-title"><img src="/assets/mission-america-logo.png" alt="" width="2534" height="1045"></span>
+            <span class="mission-logo-crop mission-logo-brand"></span>
+            <span class="mission-logo-crop mission-logo-title"></span>
           </div>
           <h1 id="page-title">GOODWIN Generated Mission America</h1>
-          <p class="hero-desktop-copy"><span class="mission-line">50 marathons. 50 states. 24 days.</span>William Goodge is attempting to become the fastest person ever to run a marathon in all 50 U.S. states.<br><br>Chasing a world record. Pushing the limits of human endurance. Carrying the memory of his mother, Amanda, through every mile.</p>
-          <p class="hero-mobile-copy"><span class="mission-line">50 marathons.<br>50 states. 24 days.</span><span>William Goodge is attempting to become the fastest person ever to run a marathon in all 50 U.S. states.</span><span>A world record on the line. His mother Amanda's memory behind every mile.</span></p>
+          <p class="hero-copy"><span class="mission-line">50 marathons.<br class="hero-mobile-break"> 50 states. 24 days.</span><span>William Goodge is attempting to become the fastest person ever to run a marathon in all 50 U.S. states.</span><span class="hero-copy-secondary">Chasing a world record. Pushing the limits of human endurance. Carrying the memory of his mother, Amanda, through every mile.</span></p>
           <a class="tracker-button hero-mobile-action" href="#map">Enter Mission Control ↓</a>
         </div>
       </div>
@@ -190,11 +189,12 @@
             <h3 class="tracker-panel-heading">Countdown to race day</h3>
             <p class="tracker-panel-copy">October 9, 2026 · Honolulu</p>
             <!-- After launch, replace this countdown block with live Mission Control progress statistics. -->
-            <div class="metric-row">
-              <div class="metric"><strong id="countdown-days">00</strong><span data-short="DAYS">Days</span></div>
-              <div class="metric"><strong id="countdown-hours">00</strong><span data-short="HRS">Hours</span></div>
-              <div class="metric"><strong id="countdown-minutes">00</strong><span data-short="MIN">Minutes</span></div>
-              <div class="metric"><strong id="countdown-seconds">00</strong><span data-short="SEC">Seconds</span></div>
+            <div class="metric-row is-loading" data-countdown-clock aria-busy="true">
+              <div class="mission-clock-loading" data-countdown-loading aria-live="polite"><span data-countdown-loading-text>CALCULATING...</span><noscript><span>MISSION CLOCK UNAVAILABLE</span><style>[data-countdown-loading-text]{display:none}</style></noscript></div>
+              <div class="metric"><strong id="countdown-days"></strong><span data-short="DAYS">Days</span></div>
+              <div class="metric"><strong id="countdown-hours"></strong><span data-short="HRS">Hours</span></div>
+              <div class="metric"><strong id="countdown-minutes"></strong><span data-short="MIN">Minutes</span></div>
+              <div class="metric"><strong id="countdown-seconds"></strong><span data-short="SEC">Seconds</span></div>
             </div>
             <p class="tracker-panel-copy">24 days later: Marathon #50. New York City.</p>
           </div>
@@ -235,10 +235,6 @@
 
       <div class="mobile-photo-break mobile-photo-break-road">
         <img src="/assets/road-aerial-DbGvJBXy.jpg" alt="" width="1200" height="675">
-        <div class="mobile-photo-break-heading">
-          <div class="tracker-eyebrow">INSIDE GOODWIN GENERATED MISSION AMERICA</div>
-          <h2>How do you run 50 marathons in 24 days?</h2>
-        </div>
       </div>
 
       <section class="tracker-section" id="articles">
@@ -246,97 +242,6 @@
           <div>
             <div class="tracker-eyebrow">INSIDE GOODWIN GENERATED MISSION AMERICA</div>
             <h2>How do you run 50 marathons in 24 days?</h2>
-          </div>
-        </div>
-        <div class="article-grid" data-inside-desktop-grid hidden>
-          <article class="article-card">
-            <button class="article-card-trigger" type="button" aria-label="Expand answer" aria-expanded="false" aria-controls="inside-desktop-answer-will" id="inside-desktop-question-will" data-inside-desktop-trigger>
-              <div class="tracker-eyebrow">THE ATHLETE</div>
-              <h3>Who is Will Goodge?</h3>
-              <p>Known by some as the fastest man to run across Australia, Goodge has spent the last decade building a body and mind for extreme endurance.</p>
-              <span class="article-card-affordance" aria-hidden="true">+</span>
-            </button>
-          </article>
-          <article class="article-card">
-            <button class="article-card-trigger" type="button" aria-label="Expand answer" aria-expanded="false" aria-controls="inside-desktop-answer-goodwin" id="inside-desktop-question-goodwin" data-inside-desktop-trigger>
-              <div class="tracker-eyebrow">THE PARTNERSHIP</div>
-              <h3>Why is Goodwin involved?</h3>
-              <p>Goodwin backs athletes attempting things history hasn't seen yet. William Goodge doesn't talk about limits — he builds his life around running through them.</p>
-              <span class="article-card-affordance" aria-hidden="true">+</span>
-            </button>
-          </article>
-          <article class="article-card">
-            <button class="article-card-trigger" type="button" aria-label="Expand answer" aria-expanded="false" aria-controls="inside-desktop-answer-origin" id="inside-desktop-question-origin" data-inside-desktop-trigger>
-              <div class="tracker-eyebrow">THE ORIGIN</div>
-              <h3>How did this all come together?</h3>
-              <p>One run. One world-record dream. And a joke about having access to time machines.</p>
-              <span class="article-card-affordance" aria-hidden="true">+</span>
-            </button>
-          </article>
-          <div class="inside-desktop-answer-row" data-inside-desktop-row>
-            <div class="inside-desktop-answer-panel" id="inside-desktop-answer-will" role="region" aria-labelledby="inside-desktop-question-will" data-inside-desktop-panel>
-              <div class="inside-desktop-answer-content">
-                <p>Goodge, known by some as the fastest man to run across Australia, crossed the country on foot in just over 35 days (2,361 miles). He has also run from Los Angeles to New York in 55 days (3,011 miles), and spent the last decade engineering a body and mind capable of what most consider biologically impossible.</p>
-                <p>He runs in memory of his mother, Amanda, who died of non-Hodgkin's lymphoma in 2018. Every project he takes on is a fundraiser. Every mile is a tribute.</p>
-              </div>
-            </div>
-            <div class="inside-desktop-answer-panel" id="inside-desktop-answer-goodwin" role="region" aria-labelledby="inside-desktop-question-goodwin" data-inside-desktop-panel>
-              <div class="inside-desktop-answer-content">
-                <p>Goodwin Generated Mission America is the first chapter of the Goodwin Endurance Series — an ultra-endurance platform built around athletes attempting things history hasn't seen yet.</p>
-                <p>The Goodwin Company backs people willing to push beyond what most consider possible. William Goodge was chosen to kick off the series because he doesn't talk about limits. He runs through them.</p>
-                <p>Mission America brings those two ideas together: an athlete built for extreme endurance and a company built to solve the operational challenges required to make an attempt of this scale possible.</p>
-              </div>
-            </div>
-            <div class="inside-desktop-answer-panel" id="inside-desktop-answer-origin" role="region" aria-labelledby="inside-desktop-question-origin" data-inside-desktop-panel>
-              <div class="inside-desktop-answer-content">
-                <p>The Founder of Goodwin and Will Goodge went on a run and talked about what challenge Will was looking to take on next. Will's dream was to set a world record by running 50 marathons in 50 states in the quickest time ever. Goodwin's Founder joked that he had access to "time machines" — airplanes — and a dream started to turn into a plan.</p>
-              </div>
-            </div>
-          </div>
-          <article class="article-card">
-            <button class="article-card-trigger" type="button" aria-label="Expand answer" aria-expanded="false" aria-controls="inside-desktop-answer-join" id="inside-desktop-question-join" data-inside-desktop-trigger>
-              <div class="tracker-eyebrow">RUN WITH WILL</div>
-              <h3>Can anyone join?</h3>
-              <p>Yes. Every marathon gives runners the chance to join Will for the first 5K — individually, with friends, or alongside an entire run club.</p>
-              <span class="article-card-affordance" aria-hidden="true">+</span>
-            </button>
-          </article>
-          <article class="article-card">
-            <button class="article-card-trigger" type="button" aria-label="Expand answer" aria-expanded="false" aria-controls="inside-desktop-answer-eat-sleep" id="inside-desktop-question-eat-sleep" data-inside-desktop-trigger>
-              <div class="tracker-eyebrow">RECOVERY</div>
-              <h3>Where does Will eat and sleep?</h3>
-              <p>Wherever the schedule allows. Nutrition, hydration, sleep and recovery happen on the move, with a team managing the protocol between every marathon.</p>
-              <span class="article-card-affordance" aria-hidden="true">+</span>
-            </button>
-          </article>
-          <article class="article-card">
-            <button class="article-card-trigger" type="button" aria-label="Expand answer" aria-expanded="false" aria-controls="inside-desktop-answer-logistics" id="inside-desktop-question-logistics" data-inside-desktop-trigger>
-              <div class="tracker-eyebrow">LOGISTICS</div>
-              <h3>How is travel between states handled?</h3>
-              <p>Private aviation, commercial flights and RV transfers connect 50 start lines. Goodwin coordinates the moving pieces against a clock with almost no margin for error.</p>
-              <span class="article-card-affordance" aria-hidden="true">+</span>
-            </button>
-          </article>
-          <div class="inside-desktop-answer-row" data-inside-desktop-row>
-            <div class="inside-desktop-answer-panel" id="inside-desktop-answer-join" role="region" aria-labelledby="inside-desktop-question-join" data-inside-desktop-panel>
-              <div class="inside-desktop-answer-content">
-                <p>Every run will have an option for outside participants to join in this historic achievement by running the first 5K of the marathon with Will. Since he is running in every state, there is a good chance he will be running close to you, and this is the perfect time to be part of a world record and run with William Goodge.</p>
-                <p>Whether you want to sign up as an entire run club or as an individual, use the Run With Will signup to register your interest.</p>
-                <div class="button-row"><a class="tracker-button secondary" href="#rsvp">Run With Will →</a></div>
-              </div>
-            </div>
-            <div class="inside-desktop-answer-panel" id="inside-desktop-answer-eat-sleep" role="region" aria-labelledby="inside-desktop-question-eat-sleep" data-inside-desktop-panel>
-              <div class="inside-desktop-answer-content">
-                <p>Goodge will be eating and sleeping on the go — in the RV and wherever the schedule allows. Team members are providing nutrition and hydration protocols for every run, along with a regimented rest and sleep schedule.</p>
-                <div class="button-row"><a class="tracker-button secondary" href="/fifty-runs/">View the Itinerary →</a></div>
-              </div>
-            </div>
-            <div class="inside-desktop-answer-panel" id="inside-desktop-answer-logistics" role="region" aria-labelledby="inside-desktop-question-logistics" data-inside-desktop-panel>
-              <div class="inside-desktop-answer-content">
-                <p>Goodwin Generated Mission America runs on precision. The Goodwin Company provides the aerial transport, support fleet, and operational intelligence that make 50 marathons in 24 days physically possible.</p>
-                <p>The same exacting standards Goodwin applies to flight are applied to human performance. The Goodwin Company coordinates the entire route, including private-aviation rotations, commercial airlines, and RV transfers.</p>
-              </div>
-            </div>
           </div>
         </div>
         <div class="inside-mobile-accordion" data-inside-accordion>
@@ -431,11 +336,6 @@
 
       <div class="mobile-photo-break mobile-photo-break-portrait">
         <img src="/assets/goodge-portrait-BKrZBh3V.jpg" alt="" width="430" height="506">
-        <div class="mobile-photo-break-heading">
-          <div class="tracker-eyebrow">WHY</div>
-          <h2>Every Mile Has a Reason</h2>
-          <p>Will began running after losing his mother, Amanda, to cancer in 2018. What started as a way to honor her memory has grown into something much bigger.</p>
-        </div>
       </div>
 
       <section class="tracker-section" id="why">
